@@ -81,8 +81,9 @@ class m230426_155330_create_price_table extends Migration
             'biom'=>'Венозная кровь',
             ]
         );
-        
-        echo shell_exec("php yii gii/model --tableName=price --modelClass=Prices --interactive=0 --overwrite=1 --ns=app\\models");
+
+        // echo shell_exec("php yii gii/model --tableName=price --modelClass=Prices --interactive=0 --overwrite=1 --ns=app\\models");
+        // echo shell_exec("php yii gii/crud --modelClass=app\\models\\Prices --controllerClass=app\\controllers\PricesController");
     }
 
     /**
