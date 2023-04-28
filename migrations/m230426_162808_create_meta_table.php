@@ -27,8 +27,10 @@ class m230426_162808_create_meta_table extends Migration
         $this->insert('{{%meta}}', array('name'=>'Венозная кровь','type'=>'2'));
         $this->insert('{{%meta}}', array('name'=>'Сыворотка крови; Плазма крови','type'=>'2'));
 
-        echo shell_exec("php yii gii/model --tableName=meta --modelClass=Meta --interactive=0 --overwrite=1 --ns=app\\models");
+        $this->insert('{{%meta}}', array('name'=>'ГЕМАТОЛОГИЧЕСКИЕ ИССЛЕДОВАНИЯ','type'=>'3'));
+        $this->insert('{{%meta}}', array('name'=>'ИММУНОГЕМАТОЛОГИЯ','type'=>'3'));
 
+        echo shell_exec("php yii gii/model --tableName=meta --modelClass=Meta --interactive=0 --overwrite=1 --ns=app\\models");
     }
 
     /**

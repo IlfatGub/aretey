@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "prices_analyses".
+ * This is the model class for table "price".
  *
  * @property int $id
  * @property string $name Наименование услуги
@@ -18,14 +18,14 @@ use Yii;
  * @property int|null $id_type Тип услуги
  * @property int|null $id_biom Биоматериал
  */
-class PricesAnalyses extends \yii\db\ActiveRecord
+class Prices extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'prices_analyses';
+        return 'price';
     }
 
     /**
