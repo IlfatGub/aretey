@@ -1,0 +1,75 @@
+<?php
+
+namespace app\models;
+
+use Yii;
+
+/**
+ * This is the model class for table "patient".
+ *
+ * @property int $id
+ * @property string $surname Фамилия
+ * @property string $name Имя
+ * @property string $patronymic Отчество
+ * @property string $fullname ФИО
+ * @property string|null $address_city Адрес. Населенный пункт
+ * @property string|null $address_street Адрес. Улица
+ * @property string|null $address_home Адрес. Дом
+ * @property string|null $address_room Адрес. Квартира
+ * @property string $document Документ
+ * @property string $passport_serial Серия
+ * @property string $passport_number Номер
+ * @property string $passport_issued Кем выдан
+ * @property string $phone Телефон
+ * @property int|null $parent_id Законный представитель
+ * @property int|null $brithday Дата рождения
+ */
+class Patient extends ModelInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return 'patient';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['surname', 'name', 'patronymic', 'document', 'passport_serial', 'passport_number', 'passport_issued', 'phone'], 'required'],
+            [['parent_id'], 'integer'],
+            [['brithday'], 'safe'],
+            [['surname', 'name', 'patronymic', 'fullname', 'address_city', 'address_street', 'address_home', 'address_room', 'document', 'passport_serial', 'passport_number', 'passport_issued', 'phone'], 'string', 'max' => 255],
+            [['passport_serial', 'passport_number'], 'unique', 'targetAttribute' => ['passport_serial', 'passport_number']],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'surname' => 'Фамилия',
+            'name' => 'Имя',
+            'patronymic' => 'Отчество',
+            'fullname' => 'ФИО',
+            'address_city' => 'Населенный пункт',
+            'address_street' => 'Улица',
+            'address_home' => 'Дом',
+            'address_room' => 'Квартира',
+            'document' => 'Документ',
+            'passport_serial' => 'Серия',
+            'passport_number' => 'Номер',
+            'passport_issued' => 'Когда, кем выдан',
+            'phone' => 'Телефон',
+            'parent_id' => '',
+            'brithday' => 'Дата рождения',
+        ];
+    }
+}

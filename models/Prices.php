@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "prices_analyses".
+ * This is the model class for table "price".
  *
  * @property int $id
  * @property string $name Наименование услуги
@@ -15,17 +15,17 @@ use Yii;
  * @property int|null $price Цена
  * @property int|null $count Количество
  * @property int|null $deleted Удален
- * @property int|null $id_type Тип услуги
- * @property int|null $id_biom Биоматериал
+ * @property string $type Тип услуги
+ * @property string $biom Биоматериал
  */
-class PricesAnalyses extends \yii\db\ActiveRecord
+class Prices extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'prices_analyses';
+        return 'price';
     }
 
     /**
@@ -34,10 +34,11 @@ class PricesAnalyses extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'category', 'code'], 'required'],
-            [['name'], 'string'],
-            [['price', 'count', 'deleted', 'id_type', 'id_biom'], 'integer'],
+            [['name', 'category', 'code', 'type', 'biom'], 'required'],
+            [['name', 'type', 'biom'], 'string'],
+            [['price', 'count', 'deleted'], 'integer'],
             [['category', 'code', 'time'], 'string', 'max' => 255],
+            [['code'], 'unique'],
         ];
     }
 
@@ -55,8 +56,8 @@ class PricesAnalyses extends \yii\db\ActiveRecord
             'price' => 'Price',
             'count' => 'Count',
             'deleted' => 'Deleted',
-            'id_type' => 'Id Type',
-            'id_biom' => 'Id Biom',
+            'type' => 'Type',
+            'biom' => 'Biom',
         ];
     }
 }
