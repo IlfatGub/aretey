@@ -10,22 +10,32 @@ use kartik\date\DatePicker;
 
 <div class="patient-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'class' => 'form-inline',
+    ]); ?>
 
     <div class="row">
         <div class="col">
-            <?= $form->field($model, 'surname')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Фамилия'])->label() ?>
+            <?= $form->field($model, 'surname', [
+   'template' => '{label}{input}{error}{hint}',
+   'options' => ['class' => 'form-group form-inline col'],])->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm col ml-3', 'placeholder' => 'Фамилия'])->label() ?>
         </div>
         <div class="col">
-            <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Имя'])->label() ?>
+            <?= $form->field($model, 'name', [
+   'template' => '{label}{input}{error}{hint}',
+   'options' => ['class' => 'form-group form-inline col'],])->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm col ml-3', 'placeholder' => 'Имя'])->label() ?>
         </div>
         <div class="col">
-            <?= $form->field($model, 'patronymic')->textInput(['maxlength' => true,  'class' => 'form-control form-control-sm', 'placeholder' => 'Отчество'])->label() ?>
+            <?= $form->field($model, 'patronymic', [
+   'template' => '{label}{input}{error}{hint}',
+   'options' => ['class' => 'form-group form-inline col'],])->textInput(['maxlength' => true,  'class' => 'form-control form-control-sm col ml-3', 'placeholder' => 'Отчество'])->label() ?>
         </div>
         <div class="col">
             <?php
             // Usage with model and Active Form (with no default initial value)
-            echo $form->field($model, 'brithday')->widget(DatePicker::classname(), [
+            echo $form->field($model, 'brithday', [
+                'template' => '{label}{input}{error}{hint}',
+                'options' => ['class' => 'form-group form-inline'],])->widget(DatePicker::classname(), [
                 'options' => ['placeholder' => 'Дата рождения'],
                 'size' => 'sm',
                 'pluginOptions' => [
