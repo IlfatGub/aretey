@@ -19,18 +19,6 @@ use kartik\typeahead\Typeahead;
 
     <div class="row">
         <div class="col">
-            <?php
-            echo $form->field($model, 'surname')->widget(Typeahead::classname(), [
-                'options' => ['placeholder' => 'Filter as you type ...'],
-                'pluginOptions' => ['highlight'=>true],
-                'dataset' => [
-                    [
-                        'local' => $model::find()->select(['fullname'])->column(),
-                        'limit' => 10
-                    ]
-                ]
-            ]);
-            ?>
             <?= $form->field($model, 'surname')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Фамилия'])->label() ?>
         </div>
         <div class="col">
