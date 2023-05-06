@@ -3,6 +3,9 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
+use kartik\select2\Select2;
+use kartik\typeahead\Typeahead;
+
 /** @var yii\web\View $this */
 /** @var app\models\Patient $model */
 /** @var yii\widgets\ActiveForm $form */
@@ -16,26 +19,30 @@ use kartik\date\DatePicker;
 
     <div class="row">
         <div class="col">
-            <?= $form->field($model, 'surname', [
-   'template' => '{label}{input}{error}{hint}',
-   'options' => ['class' => 'form-group form-inline col'],])->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm col ml-3', 'placeholder' => 'Фамилия'])->label() ?>
+            <?php
+            echo $form->field($model, 'surname')->widget(Typeahead::classname(), [
+                'options' => ['placeholder' => 'Filter as you type ...'],
+                'pluginOptions' => ['highlight'=>true],
+                'dataset' => [
+                    [
+                        'local' => $model::find()->select(['fullname'])->column(),
+                        'limit' => 10
+                    ]
+                ]
+            ]);
+            ?>
+            <?= $form->field($model, 'surname')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Фамилия'])->label() ?>
         </div>
         <div class="col">
-            <?= $form->field($model, 'name', [
-   'template' => '{label}{input}{error}{hint}',
-   'options' => ['class' => 'form-group form-inline col'],])->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm col ml-3', 'placeholder' => 'Имя'])->label() ?>
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Имя'])->label() ?>
         </div>
         <div class="col">
-            <?= $form->field($model, 'patronymic', [
-   'template' => '{label}{input}{error}{hint}',
-   'options' => ['class' => 'form-group form-inline col'],])->textInput(['maxlength' => true,  'class' => 'form-control form-control-sm col ml-3', 'placeholder' => 'Отчество'])->label() ?>
+            <?= $form->field($model, 'patronymic')->textInput(['maxlength' => true,  'class' => 'form-control form-control-sm', 'placeholder' => 'Отчество'])->label() ?>
         </div>
         <div class="col">
             <?php
             // Usage with model and Active Form (with no default initial value)
-            echo $form->field($model, 'brithday', [
-                'template' => '{label}{input}{error}{hint}',
-                'options' => ['class' => 'form-group form-inline'],])->widget(DatePicker::classname(), [
+            echo $form->field($model, 'brithday')->widget(DatePicker::classname(), [
                 'options' => ['placeholder' => 'Дата рождения'],
                 'size' => 'sm',
                 'pluginOptions' => [
@@ -82,7 +89,7 @@ use kartik\date\DatePicker;
     </div>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>
     <?php ActiveForm::end(); ?>
 </div>
