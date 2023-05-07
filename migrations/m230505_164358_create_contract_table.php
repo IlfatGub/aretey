@@ -16,10 +16,10 @@ class m230505_164358_create_contract_table extends Migration
             'id' => $this->primaryKey(),
             'id_patient' => $this->smallInteger()->notNull()->comment('Пациент'),
             'id_patient_representative' => $this->smallInteger()->defaultValue(null)->comment('Законный представитель'),
-            'date_to' => $this->smallInteger()->null()->defaultValue(null)->comment('Дата начала'),
-            'date_do' => $this->smallInteger()->null()->defaultValue(null)->comment('Дата окончания'),
-            'date_ct' => $this->smallInteger()->notNull()->comment('Дата'),
-            'name' => $this->smallInteger()->notNull()->comment('Наименование договора'),
+            'date_to' => $this->integer()->null()->defaultValue(null)->comment('Дата начала'),
+            'date_do' => $this->integer()->null()->defaultValue(null)->comment('Дата окончания'),
+            'date_ct' => $this->integer()->notNull()->comment('Дата'),
+            'name' => $this->string(255)->notNull()->comment('Наименование договора'),
             'visible' => $this->smallInteger()->null()->defaultValue(null)->comment('Видимость'),
         ]);
 

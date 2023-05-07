@@ -17,7 +17,7 @@ use Yii;
  * @property int|null $visible Видимость
  * @property int|null $service Услуга
  */
-class Contract extends \yii\db\ActiveRecord
+class Contract extends ModelInterface
 {
 
     public $service;
@@ -35,8 +35,9 @@ class Contract extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_patient', 'date_ct', 'name'], 'required'],
-            [['id_patient', 'id_patient_representative', 'date_to', 'date_do', 'date_ct', 'name', 'visible', 'service'], 'integer'],
+            [['id_patient', 'date_to', 'date_do', 'name'], 'required'],
+            [['id_patient', 'id_patient_representative', 'date_ct', 'name', 'visible'], 'integer'],
+            [['date_to', 'date_do', 'service'], 'safe'],
         ];
     }
 
@@ -57,4 +58,35 @@ class Contract extends \yii\db\ActiveRecord
             'service' => 'Услуга',
         ];
     }
+
+    public function afterFind()
+    {
+        $this->date_to = date('Y-m-d',$this->date_to);
+        $this->date_do = date('Y-m-d',$this->date_do);
+        $this->date_ct = date('Y-m-d',$this->date_ct);
+    }
+
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            $this->date_to = strtotime($this->date_to);
+            $this->date_do = strtotime($this->date_do);
+            // $this->date_ct = strtotime($this->date_ct);
+            // $this->date_ct = $this->date_ct ? strtotime($this->date_ct) : strtotime('now');
+            return true;
+        }
+        return false;
+
+    }
+
+
+    public function getPatient()
+	{
+		return $this->hasOne(Patient::className(), ['id' => 'id_patient']);
+	}
+    public function getRepresentative()
+	{
+		return $this->hasOne(Patient::className(), ['id' => 'id_patient_representative']);
+	}
 }

@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Contract;
+use app\models\Patient;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -8,9 +9,10 @@ use yii\grid\GridView;
 
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
+/** @var $model */
 
-$this->title = 'Contracts';
-$this->params['breadcrumbs'][] = $this->title;
+$patient = new Patient();
+$patinet_list = $patient->PatientList;
 ?>
 <div class="contract-index">
 
@@ -24,22 +26,62 @@ $this->params['breadcrumbs'][] = $this->title;
 
     </div>
 
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'tableOptions' => [
+            'class' => 'table table-hover table-bordered table-sm'
+        ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'id_patient',
-            'date_to',
-            'date_ct',
-            'name',
+            [
+                'attribute'=>'name',
+                'filterInputOptions' => ['class' => 'form-control form-control-sm'],
+            ],
+            [
+                'attribute'=>'id_patient',
+                'filterInputOptions' => ['class' => 'form-control form-control-sm'],
+                'contentOptions' =>['class' => 'table_class'],
+                'content'=>function($data){
+                    return $data->patient->fullname;
+                }
+            ],
+            [
+                'attribute'=>'date_to',
+                'filterInputOptions' => ['class' => 'form-control form-control-sm'],
+            ],
+            [
+                'attribute'=>'date_do',
+                'filterInputOptions' => ['class' => 'form-control form-control-sm'],
+            ],
+            [
+                'attribute'=>'date_ct',
+                'filterInputOptions' => ['class' => 'form-control form-control-sm'],
+            ],
+            [
+                'attribute'=>'id_patient_representative',
+                'filterInputOptions' => ['class' => 'form-control form-control-sm'],
+                'contentOptions' =>['class' => 'table_class'],
+                'content'=>function($data){
+                    return $data->representative->fullname;
+                }
+            ],
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Contract $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                'template' => ' {update} {delete} {link}',
+                // 'urlCreator' => function ($action, Contract $model, $key, $index, $column) {
+                //     return Url::toRoute([$action, 'id' => $model->id]);
+                //  },
+                //  'buttons' => [
+                //     'update' => function ($url,$model) {
+                //         return Html::a(
+                //         '<span class="glyphicon glyphicon-screenshot">1</span>', 
+                //         $url);
+                //     },
+                //     'link' => function ($url,$model,$key) {
+                //         return Html::a('Действие', $url);
+                //     },
+                // ],
             ],
         ],
     ]); ?>

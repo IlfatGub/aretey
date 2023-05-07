@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "patient".
@@ -75,5 +76,9 @@ class Patient extends ModelInterface
 
     public function getPatient(){
         return $this->passport_serial.'  '.$this->passport_number.' | '.$this->fullname;
+    }
+
+    public function getPatientList(){
+        return ArrayHelper::map($this::find()->where(['visible' => null])->all(), 'id', 'fullname');
     }
 }

@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "contract_service".
@@ -12,8 +13,10 @@ use Yii;
  * @property int $id_service Услуга
  * @property int|null $visible Видимость
  */
-class ContractService extends \yii\db\ActiveRecord
+class ContractService extends ModelInterface
 {
+    public $service_list;
+
     /**
      * {@inheritdoc}
      */
@@ -44,5 +47,27 @@ class ContractService extends \yii\db\ActiveRecord
             'id_service' => 'Id Service',
             'visible' => 'Visible',
         ];
+    }
+
+    public function addService()
+    {
+        $this->deleteServiceForContract();
+
+        foreach ($this->service_list as $items) {
+            $_service = new ContractService();
+            $_service->id_contract = $this->id_contract;
+            $_service->id_service = $items;
+            $_service->visible = null;
+            $_service->getSave();
+        }
+    }
+
+    public function deleteServiceForContract(){
+        if(self::find()->where(['id_contract' => $this->id_contract])->exists())
+            return self::deleteAll(['id_contract' => $this->id_contract]);
+    }
+
+    public function getServieByContract(){
+        return ArrayHelper::map(self::findAll(['id_contract' => $this->id_contract]), 'id', 'id_service');
     }
 }

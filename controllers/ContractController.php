@@ -3,10 +3,12 @@
 namespace app\controllers;
 
 use app\models\Contract;
-use yii\data\ActiveDataProvider;
+use app\models\ContractSerach;
+use app\models\ContractService;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Url;
 
 /**
  * ContractController implements the CRUD actions for Contract model.
@@ -38,28 +40,28 @@ class ContractController extends Controller
      */
     public function actionIndex()
     {
-
         $model = new Contract();
-
-        if ($model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        Url::remember();
+        if ($model->load($this->request->post())) {
+            try {
+                $model->date_ct = strtotime('now');
+                if($model->getSave()){
+                    $service = new ContractService();
+                    $service->service_list = $model->service;
+                    $service->id_contract = $model->id;
+                    $service->addService();
+                }
+            } catch (\Exception $ex) {
+                echo '<pre>'; print_r($ex); echo '</pre>';
+                die();
+            }
         }
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => Contract::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
+        $searchModel = new ContractSerach();
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'model' => $model,
         ]);
@@ -111,8 +113,24 @@ class ContractController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            // echo '<pre>'; print_r($model); echo '</pre>'; die();
+            try {
+                // echo '<pre>'; print_r($model); echo '</pre>'; die();
+                // $model->date_to = strtotime($model->date_to);
+                // $model->date_do = strtotime($model->date_do);
+                $model->date_ct = strtotime($model->date_ct);
+                if($model->getSave()){
+                    $service = new ContractService();
+                    $service->service_list = $model->service;
+                    $service->id_contract = $model->id;
+                    $service->addService();
+                }
+            } catch (\Exception $ex) {
+                echo '<pre>'; print_r($ex); echo '</pre>';
+                die();
+            }
+            return $this->redirect(Url::previous());
         }
 
         return $this->render('update', [
