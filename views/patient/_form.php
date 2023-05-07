@@ -3,6 +3,9 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
+use kartik\select2\Select2;
+use kartik\typeahead\Typeahead;
+
 /** @var yii\web\View $this */
 /** @var app\models\Patient $model */
 /** @var yii\widgets\ActiveForm $form */
@@ -10,7 +13,9 @@ use kartik\date\DatePicker;
 
 <div class="patient-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'class' => 'form-inline',
+    ]); ?>
 
     <div class="row">
         <div class="col">
@@ -34,7 +39,6 @@ use kartik\date\DatePicker;
                 ],
             ])->label();
             ?>
-
         </div>
     </div>
 
@@ -72,7 +76,7 @@ use kartik\date\DatePicker;
     </div>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>
     <?php ActiveForm::end(); ?>
 </div>

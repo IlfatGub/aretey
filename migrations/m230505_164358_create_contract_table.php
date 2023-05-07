@@ -14,14 +14,16 @@ class m230505_164358_create_contract_table extends Migration
     {
         $this->createTable('{{%contract}}', [
             'id' => $this->primaryKey(),
-            'id_patient' => $this->smallInteger()->defaultValue(null)->comment('Пациент'),
-            'date_to' => $this->smallInteger()->defaultValue(null)->comment('Дата начала'),
-            'date_to' => $this->smallInteger()->defaultValue(null)->comment('Дата окончания'),
-            'date_ct' => $this->smallInteger()->defaultValue(null)->comment('Дата'),
-            'name' => $this->smallInteger()->defaultValue(null)->comment('Наименование договора'),
+            'id_patient' => $this->smallInteger()->notNull()->comment('Пациент'),
+            'id_patient_representative' => $this->smallInteger()->defaultValue(null)->comment('Законный представитель'),
+            'date_to' => $this->integer()->null()->defaultValue(null)->comment('Дата начала'),
+            'date_do' => $this->integer()->null()->defaultValue(null)->comment('Дата окончания'),
+            'date_ct' => $this->integer()->notNull()->comment('Дата'),
+            'name' => $this->string(255)->notNull()->comment('Наименование договора'),
+            'visible' => $this->smallInteger()->null()->defaultValue(null)->comment('Видимость'),
         ]);
 
-        // echo shell_exec("php yii gii/model --tableName=contract --modelClass=Contract --interactive=0 --overwrite=1 --ns=app\\models");
+        echo shell_exec("php yii gii/model --tableName=contract --modelClass=Contract --interactive=0 --overwrite=1 --ns=app\\models");
         // echo shell_exec("php yii gii/crud --modelClass=app\\models\\Contract --controllerClass=app\\controllers\ContractController");
     }
 
