@@ -60,4 +60,9 @@ class Prices extends \yii\db\ActiveRecord
             'biom' => 'Biom',
         ];
     }
+
+    public function getService(){
+        // return $this->category.'. '.$this->name;
+        return $this->name;
+    }
 }

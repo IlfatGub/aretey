@@ -29,6 +29,7 @@ class m230505_152556_create_patient_table extends Migration
             'phone' => $this->string(255)->notNull()->comment('Телефон'),
             'parent_id' => $this->smallInteger()->null()->defaultValue(null)->comment('Законный представитель'),
             'brithday' => $this->integer()->null()->defaultValue(null)->comment('Дата рождения'),
+            'visible' => $this->integer()->null()->defaultValue(null)->comment('Видимость'),
         ]);
 
        

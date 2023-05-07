@@ -2,16 +2,16 @@
 
 namespace app\controllers;
 
-use app\models\Contract;
+use app\models\ContractService;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ContractController implements the CRUD actions for Contract model.
+ * ContractServiceController implements the CRUD actions for ContractService model.
  */
-class ContractController extends Controller
+class ContractServiceController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,21 +32,14 @@ class ContractController extends Controller
     }
 
     /**
-     * Lists all Contract models.
+     * Lists all ContractService models.
      *
      * @return string
      */
     public function actionIndex()
     {
-
-        $model = new Contract();
-
-        if ($model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
         $dataProvider = new ActiveDataProvider([
-            'query' => Contract::find(),
+            'query' => ContractService::find(),
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -61,12 +54,11 @@ class ContractController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-            'model' => $model,
         ]);
     }
 
     /**
-     * Displays a single Contract model.
+     * Displays a single ContractService model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -79,13 +71,13 @@ class ContractController extends Controller
     }
 
     /**
-     * Creates a new Contract model.
+     * Creates a new ContractService model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Contract();
+        $model = new ContractService();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -101,7 +93,7 @@ class ContractController extends Controller
     }
 
     /**
-     * Updates an existing Contract model.
+     * Updates an existing ContractService model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -121,7 +113,7 @@ class ContractController extends Controller
     }
 
     /**
-     * Deletes an existing Contract model.
+     * Deletes an existing ContractService model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -135,15 +127,15 @@ class ContractController extends Controller
     }
 
     /**
-     * Finds the Contract model based on its primary key value.
+     * Finds the ContractService model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Contract the loaded model
+     * @return ContractService the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Contract::findOne(['id' => $id])) !== null) {
+        if (($model = ContractService::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

@@ -29,6 +29,7 @@ class m230506_172324_generate_patient_value extends Migration
             'phone' => '+79878888888',
             'parent_id' => '',
             'brithday' => '05.05.1989',
+            'visible' => null,
             ]
         );
 
@@ -49,6 +50,7 @@ class m230506_172324_generate_patient_value extends Migration
             'phone' => '+798799999999',
             'parent_id' => '',
             'brithday' => '11.06.1988',
+            'visible' => null,
             ]
         );
 
@@ -69,6 +71,7 @@ class m230506_172324_generate_patient_value extends Migration
             'phone' => '+74878888888',
             'parent_id' => '',
             'brithday' => '12.05.1969',
+            'visible' => null,
             ]
         );
 
@@ -89,6 +92,7 @@ class m230506_172324_generate_patient_value extends Migration
             'phone' => '+79878883488',
             'parent_id' => '',
             'brithday' => '05.05.1989',
+            'visible' => null,
             ]
         );
     }
@@ -102,19 +106,4 @@ class m230506_172324_generate_patient_value extends Migration
 
         return false;
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m230506_172324_generate_patient_value cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

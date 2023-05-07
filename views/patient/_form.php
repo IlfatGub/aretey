@@ -39,7 +39,6 @@ use kartik\typeahead\Typeahead;
                 ],
             ])->label();
             ?>
-
         </div>
     </div>
 

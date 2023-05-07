@@ -59,9 +59,8 @@ use yii\helpers\Html;
     <form class="form-inline ml-3">
         <div class="input-group input-group-sm">
             <!-- <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search"> -->
-            <?=
-            Typeahead::widget([
-                'name' => 'state_10',
+            <?php echo Typeahead::widget([
+                'name' => 'search',
                 'options' => ['placeholder' => 'Filter as you type ...'],
                 'pluginOptions' => ['highlight' => true],
                 'dataset' => [

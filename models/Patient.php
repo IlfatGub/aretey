@@ -72,4 +72,8 @@ class Patient extends ModelInterface
             'brithday' => 'Дата рождения',
         ];
     }
+
+    public function getPatient(){
+        return $this->passport_serial.'  '.$this->passport_number.' | '.$this->fullname;
+    }
 }
