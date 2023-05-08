@@ -26,6 +26,8 @@ $model->service = $id ? $service->getServieByContract() : null; // указыв�
 
 $model->date_to = date('Y-m-d'); // задаем дату
 $model->date_do = date('Y-m-d'); // задаем дату
+$model->id_patient = $id_patient ?? $model->id_patient; // Задаем пациента
+$model->id_patient_representative = $id_patient_representative ?? $model->id_patient_representative; // Задаем законного представителя
 
 ?>
 
@@ -65,7 +67,7 @@ $model->date_do = date('Y-m-d'); // задаем дату
     <div class="row">
         <div class="col">
             <div class="row">
-                <div class="col-10 pr-0">
+                <div class="col-11 pr-0">
                     <?php echo $form->field($model, 'id_patient')->widget(Select2::classname(), [
                         'data' => ArrayHelper::map(Patient::find()->orderBy(['fullname' => SORT_ASC])->all(), 'id', 'patient'),
                         'options' => ['placeholder' => 'Пациент'],
@@ -75,24 +77,31 @@ $model->date_do = date('Y-m-d'); // задаем дату
                         ],
                     ]);
                     ?></div>
-                <div class="col-2 ml-0 pl-0" style="top:32px">
-                    <button class="btn btn-info btn-sm modalButton" title="Добавление партиями" value="<?= Url::toRoute(['/patient/index', 'ajax' => 1, 'id_patient' => 1]) ?>">
+                <div class="col-1 ml-0 pl-0" style="top:32px">
+                    <button class="btn btn-info btn-sm modalButton" title="Пациент" value="<?= Url::toRoute(['/patient/index', 'ajax' => 1, 'type' => 1, 'id_patient_representative' => $id_patient_representative]) ?>">
                         <i class="fa fa-address-card"></i>
                     </button>
                 </div>
             </div>
-
         </div>
         <div class="col">
-            <?php echo $form->field($model, 'id_patient_representative')->widget(Select2::classname(), [
-                'data' => ArrayHelper::map(Patient::find()->orderBy(['fullname' => SORT_ASC])->all(), 'id', 'patient'),
-                'options' => ['placeholder' => 'Пациент'],
-                'size' => 'sm',
-                'pluginOptions' => [
-                    'allowClear' => true,
-                ],
-            ]);
-            ?>
+            <div class="row">
+                <div class="col-11 pr-0">
+                    <?php echo $form->field($model, 'id_patient_representative')->widget(Select2::classname(), [
+                        'data' => ArrayHelper::map(Patient::find()->orderBy(['fullname' => SORT_ASC])->all(), 'id', 'patient'),
+                        'options' => ['placeholder' => 'Законный представитель'],
+                        'size' => 'sm',
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ]);
+                    ?></div>
+                <div class="col-1 ml-0 pl-0" style="top:32px">
+                    <button class="btn btn-info btn-sm modalButton" title="Законный представитель" value="<?= Url::toRoute(['/patient/index', 'ajax' => 1, 'type' => 2, 'id_patient'=> $id_patient]) ?>">
+                        <i class="fa fa-address-card"></i>
+                    </button>
+                </div>
+            </div>
         </div>
         <div class="col">
             <?php echo $form->field($model, 'service')->widget(Select2::classname(), [

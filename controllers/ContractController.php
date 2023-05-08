@@ -45,7 +45,7 @@ class ContractController extends Controller
         if ($model->load($this->request->post())) {
             try {
                 $model->date_ct = strtotime('now');
-                if($model->getSave()){
+                if($model->getSave()  && $model->service){
                     $service = new ContractService();
                     $service->service_list = $model->service;
                     $service->id_contract = $model->id;
@@ -120,7 +120,7 @@ class ContractController extends Controller
                 // $model->date_to = strtotime($model->date_to);
                 // $model->date_do = strtotime($model->date_do);
                 $model->date_ct = strtotime($model->date_ct);
-                if($model->getSave()){
+                if($model->getSave() && $model->service){
                     $service = new ContractService();
                     $service->service_list = $model->service;
                     $service->id_contract = $model->id;

@@ -67,18 +67,20 @@ class ContractSerach extends Contract
         $query->andFilterWhere(['like', 'p.fullname', $this->id_patient]);
         $query->andFilterWhere(['like', 'p.fullname', $this->id_patient]);
 
-        if($this->date_to)
+        if ($this->date_to)
             $query->andFilterWhere(['>=', 'date_to', strtotime($this->date_to . '00:00:00')])
                 ->andFilterWhere(['<=', 'date_to', strtotime($this->date_to . '23:59:59')]);
 
-        if($this->date_do)
+        if ($this->date_do)
             $query->andFilterWhere(['>=', 'date_do', strtotime($this->date_do . '00:00:00')])
                 ->andFilterWhere(['<=', 'date_do', strtotime($this->date_do . '23:59:59')]);
 
-        if($this->date_ct)
+        if ($this->date_ct)
             $query->andFilterWhere(['>=', 'date_do', strtotime($this->date_ct . '00:00:00')])
                 ->andFilterWhere(['<=', 'date_do', strtotime($this->date_ct . '23:59:59')]);
 
+        $query->orderBy(['date_ct' => SORT_DESC]);
+        
         return $dataProvider;
     }
 }

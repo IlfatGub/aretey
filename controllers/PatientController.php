@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Patient;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -33,26 +34,36 @@ class PatientController extends Controller
 
     /**
      * Lists all Patient models.
-     *
+     * @param int $ajax при ajax запросе старницы 
+     * @param int $id_patient пациента 
+     * @param int $id_patient_representative законный представитель 
+     * @param int $type тип запроса. 1 - добавление пациента, 2 - добавление законного представителя
+     * 
      * @return string
      */
-    public function actionIndex($ajax = null)
+    public function actionIndex($ajax = null, $id_patient = null, $id_patient_representative = null, $type = null)
     {
         $model = new Patient();
 
-            if ($model->load($this->request->post())) {
-                try {
-                    $model->fullname = $model->surname . ' ' . $model->name . ' ' . $model->patronymic;
-                    $model->brithday = strtotime($model->brithday);
-                    $model->getSave();
-                } catch (\Exception $ex) {
-                    // $result = (['result' =>false, 'message' => 'Ошибка: '. $ex->getMessage()]);
-                    echo '<pre>'; print_r($ex); echo '</pre>';
-                    die();
-                }
-
-                return $this->redirect(['index']);
+        if (Yii::$app->request->isAjax && $model->load($this->request->post())) {
+            try {
+                $model->fullname = $model->surname . ' ' . $model->name . ' ' . $model->patronymic;
+                $model->brithday = strtotime($model->brithday);
+                $model->getSave();
+            } catch (\Exception $ex) {
+                // $result = (['result' =>false, 'message' => 'Ошибка: '. $ex->getMessage()]);
+                echo '<pre>'; print_r($ex);echo '</pre>';  die();
             }
+
+            if ($ajax):
+                if ($type == 1)
+                    return $this->redirect(['/contract/index', 'id_patient' =>  $model->id, 'id_patient_representative' => $id_patient_representative]);
+                if ($type == 2)
+                    return $this->redirect(['/contract/index', 'id_patient_representative' => $model->id, 'id_patient' => $id_patient]);
+            endif;
+
+            return $this->redirect(['index']);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => Patient::find(),
@@ -73,7 +84,7 @@ class PatientController extends Controller
             'model' => $model,
         ];
 
-        if($ajax)
+        if ($ajax)
             return $this->renderAjax('index', $data);
 
         return $this->render('index', $data);

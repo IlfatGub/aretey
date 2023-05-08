@@ -82,3 +82,11 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+.fs-8{
+    font-family: Verdana, Geneva, sans-serif !important;
+    font-size: 8pt !important;
+}
+.fs-10{
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 10pt;
+}

@@ -3,15 +3,20 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
-use kartik\select2\Select2;
-use kartik\typeahead\Typeahead;
 
 /** @var yii\web\View $this */
 /** @var app\models\Patient $model */
 /** @var yii\widgets\ActiveForm $form */
-?>
 
-<div class="patient-form">
+// $id_patient = $_GET['id_patient'] ?? null;
+$type = $_GET['type'] ?? null;
+$ajax = $_GET['ajax'] ?? null;
+// $id_patient_representative = $_GET['id_patient_representative'] ?? null;
+
+echo '<pre>'; print_r($_GET); echo '</pre>';
+
+?>
+<div class="patient-form <?= $ajax ? 'fs-8': ''?>">
 
     <?php $form = ActiveForm::begin([
         'class' => 'form-inline',
@@ -28,6 +33,9 @@ use kartik\typeahead\Typeahead;
             <?= $form->field($model, 'patronymic')->textInput(['maxlength' => true,  'class' => 'form-control form-control-sm', 'placeholder' => 'Отчество'])->label() ?>
         </div>
         <div class="col">
+                <?= $form->field($model, 'phone')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Телефон'])->label() ?>
+            </div>
+        <div class="col">
             <?php
             // Usage with model and Active Form (with no default initial value)
             echo $form->field($model, 'brithday')->widget(DatePicker::classname(), [
@@ -42,23 +50,22 @@ use kartik\typeahead\Typeahead;
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-4">
-            <?= $form->field($model, 'address_city')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Населенный пункт'])->label() ?>
+    <?php if ($type <> 2) : ?>
+        <div class="row">
+            <div class="col-4">
+                <?= $form->field($model, 'address_city')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Населенный пункт'])->label() ?>
+            </div>
+            <div class="col-4">
+                <?= $form->field($model, 'address_street')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Улица'])->label() ?>
+            </div>
+            <div class="col-2">
+                <?= $form->field($model, 'address_home')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Дом'])->label() ?>
+            </div>
+            <div class="col-2">
+                <?= $form->field($model, 'address_room')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Квартира'])->label() ?>
+            </div>
         </div>
-        <div class="col-4">
-            <?= $form->field($model, 'address_street')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Улица'])->label() ?>
-        </div>
-        <div class="col-1">
-            <?= $form->field($model, 'address_home')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Дом'])->label() ?>
-        </div>
-        <div class="col-1">
-            <?= $form->field($model, 'address_room')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Квартира'])->label() ?>
-        </div>
-        <div class="col-2">
-            <?= $form->field($model, 'phone')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Телефон'])->label() ?>
-        </div>
-    </div>
+    <?php endif; ?>
 
     <div class="row">
         <div class="col-3">
