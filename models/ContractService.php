@@ -52,13 +52,17 @@ class ContractService extends ModelInterface
     public function addService()
     {
         $this->deleteServiceForContract();
-
         foreach ($this->service_list as $items) {
-            $_service = new ContractService();
-            $_service->id_contract = $this->id_contract;
-            $_service->id_service = $items;
-            $_service->visible = null;
-            $_service->getSave();
+            try {
+                $_service = new ContractService();
+                $_service->id_contract = $this->id_contract;
+                $_service->id_service = $items;
+                $_service->visible = null;
+                $_service->getSave();
+            } catch (\Exception $ex) {
+                echo '<pre>'; print_r($ex); echo '</pre>';
+                die();
+            }
         }
     }
 
