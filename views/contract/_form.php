@@ -15,15 +15,17 @@ use yii\widgets\ActiveForm;
 /** @var app\models\Contract $model */
 /** @var yii\widgets\ActiveForm $form */
 
+$id_patient = $_GET['id_patient'] ?? null;
+$id_patient_representative = $_GET['id_patient_representative'] ?? null;
 $id = $_GET['id'] ?? null;
 
 $service = new ContractService();
 $service->id_contract = $id;
 
-$model->service = $id ? $service->getServieByContract() : null;
+$model->service = $id ? $service->getServieByContract() : null; // указываем услуги
 
-$model->date_to = date('Y-m-d');
-$model->date_do = date('Y-m-d');
+$model->date_to = date('Y-m-d'); // задаем дату
+$model->date_do = date('Y-m-d'); // задаем дату
 
 ?>
 
@@ -74,7 +76,7 @@ $model->date_do = date('Y-m-d');
                     ]);
                     ?></div>
                 <div class="col-2 ml-0 pl-0" style="top:32px">
-                    <button class="btn btn-info btn-sm modalButton" title="Добавление партиями" value="<?= Url::toRoute(['/patient/index', 'ajax' => 1]) ?>">
+                    <button class="btn btn-info btn-sm modalButton" title="Добавление партиями" value="<?= Url::toRoute(['/patient/index', 'ajax' => 1, 'id_patient' => 1]) ?>">
                         <i class="fa fa-address-card"></i>
                     </button>
                 </div>
