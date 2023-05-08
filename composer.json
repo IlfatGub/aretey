@@ -21,7 +21,8 @@
         "hail812/yii2-adminlte3": "~1.1",
         "kartik-v/yii2-widget-select2": "*",
         "kartik-v/yii2-widget-datepicker": "dev-master",
-        "kartik-v/yii2-widget-typeahead": "dev-master"
+        "kartik-v/yii2-widget-typeahead": "dev-master",
+        "kartik-v/yii2-widget-datetimepicker": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
