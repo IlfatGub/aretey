@@ -5,7 +5,6 @@ use app\models\Patient;
 use app\models\Prices;
 use kartik\date\DatePicker;
 use kartik\select2\Select2;
-use kartik\select2\Select2Asset;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
