@@ -36,7 +36,7 @@ class PatientController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($ajax = null)
     {
         $model = new Patient();
 
@@ -68,10 +68,15 @@ class PatientController extends Controller
             */
         ]);
 
-        return $this->render('index', [
+        $data = [
             'dataProvider' => $dataProvider,
             'model' => $model,
-        ]);
+        ];
+
+        if($ajax)
+            return $this->renderAjax('index', $data);
+
+        return $this->render('index', $data);
     }
 
     /**
