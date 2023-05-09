@@ -6,6 +6,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+// use kartik\grid\GridView;
 
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -30,10 +31,10 @@ $patinet_list = $patient->PatientList;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'tableOptions' => [
-            'class' => 'table table-hover table-bordered table-sm'
+            'class' => 'table table-hover table-bordered table-sm fs-10'
         ],
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            // ['class' => 'yii\grid\SerialColumn'],
             [
                 'attribute'=>'name',
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],

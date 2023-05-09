@@ -18,6 +18,8 @@ use yii\grid\GridView;
             'model' => $model,
         ]) ?>
     </div>
+    
+    <?php if(!$_GET['ajax']): ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -47,6 +49,5 @@ use yii\grid\GridView;
             ],
         ],
     ]); ?>
-
-
+    <?php endif ?>
 </div>

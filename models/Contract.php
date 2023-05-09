@@ -63,7 +63,7 @@ class Contract extends ModelInterface
     {
         $this->date_to = date('Y-m-d',$this->date_to);
         $this->date_do = date('Y-m-d',$this->date_do);
-        $this->date_ct = date('Y-m-d',$this->date_ct);
+        $this->date_ct = date('Y-m-d H:i:s',$this->date_ct);
     }
 
 

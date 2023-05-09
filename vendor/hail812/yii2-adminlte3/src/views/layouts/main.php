@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use yii\bootstrap5\Modal;
 use yii\helpers\Html;
 
 \hail812\adminlte3\assets\FontAwesomeAsset::register($this);
@@ -46,6 +47,22 @@ $this->registerJsFile($publishedRes[1].'/control_sidebar.js', ['depends' => '\ha
 
     <!-- Main Footer -->
     <?= $this->render('footer') ?>
+</div>
+
+<div class="body-content">
+    <p>
+        <?php
+            Modal::begin([
+                'options' => [
+                    'id' => 'modal',
+                    'tabindex' => false, // important for Select2 to work properly
+                ],
+                'size' => 'modal-lg',
+            ]);
+            echo "<div id='modalContent' class='' ></div>";
+            Modal::end();
+        ?>
+    </p>
 </div>
 
 <?php $this->endBody() ?>
