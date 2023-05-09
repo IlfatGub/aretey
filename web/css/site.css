@@ -90,3 +90,9 @@ a.desc:after {
     font-family: Verdana, Geneva, sans-serif;
     font-size: 10pt;
 }
+.inherit{
+    background: inherit !important;
+}
+.border-none{
+    border: 0px solid black !important;
+}

@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "price".
@@ -18,7 +20,7 @@ use Yii;
  * @property string $type Тип услуги
  * @property string $biom Биоматериал
  */
-class Prices extends \yii\db\ActiveRecord
+class Prices extends ModelInterface
 {
     /**
      * {@inheritdoc}
@@ -49,20 +51,31 @@ class Prices extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'category' => 'Category',
-            'code' => 'Code',
-            'time' => 'Time',
-            'price' => 'Price',
-            'count' => 'Count',
+            'name' => 'Наименование',
+            'category' => 'Категория',
+            'code' => 'Код',
+            'time' => 'Время',
+            'price' => 'Цена',
+            'count' => 'Количество',
             'deleted' => 'Deleted',
-            'type' => 'Type',
-            'biom' => 'Biom',
+            'type' => 'Тип услуги',
+            'biom' => 'Биоматериал',
         ];
     }
 
     public function getService(){
         // return $this->category.'. '.$this->name;
         return $this->name;
+    }
+
+    public function getTextarea($filed){
+        return Html::textarea($filed, $this->$filed, ['class' => 'form-control form-control-sm inherit border-none fs-8',
+        'onchange' => '$.post(" '.Url::toRoute(['edit-field']).'?id='.$this->id.'&field='.$filed.'&value='.'"+encodeURIComponent($(this).val()));']);
+    }
+
+    public function getInput($filed){
+        return Html::input($filed == 'time' ? 'times' : $filed, 'string', $this->$filed, ['class' => 'form-control form-control-sm inherit border-none fs-8',
+        'onchange' => '$.post(" '.Url::toRoute(['edit-field']).'?id='.$this->id.'&field='.$filed.'&value='.'"+encodeURIComponent($(this).val()));'
+    ]);
     }
 }

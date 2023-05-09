@@ -1,38 +1,58 @@
 <?php
 
+use app\components\TypeheadWidget;
+use kartik\typeahead\Typeahead;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
 /** @var app\models\Prices $model */
 /** @var yii\widgets\ActiveForm $form */
+
+$biom = $model::find()->distinct('biom')->select('biom')->column();
+$type = $model::find()->distinct('type')->select('type')->column();
+$category = $model::find()->distinct('category')->select('category')->column();
+
 ?>
+
+<style>
+    body{
+        background: white !important;
+    }
+</style>
+
 
 <div class="prices-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'category')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'time')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'price')->textInput() ?>
-
-    <?= $form->field($model, 'count')->textInput() ?>
-
-    <?= $form->field($model, 'deleted')->textInput() ?>
-
-    <?= $form->field($model, 'type')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'biom')->textarea(['rows' => 6]) ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+    <div class="row">
+        <div class="col"><?= $form->field($model, 'name')->textInput(['class' => 'form-control form-control-sm']) ?></div>
+        <div class="col">
+            <?= TypeheadWidget::widget(['form' => $form, 'model' => $model, 'field' => 'category', 'local' => $category, 'placeholder' => 'Категория']) ?>
+        </div>
+        <div class="col"><?= $form->field($model, 'code')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm']) ?></div>
+        <div class="col"><?= $form->field($model, 'time')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm']) ?></div>
     </div>
+
+    <div class="row">
+        <div class="col"><?= $form->field($model, 'price')->textInput(['class' => 'form-control form-control-sm']) ?></div>
+        <div class="col">
+            <?= TypeheadWidget::widget(['form' => $form, 'model' => $model, 'field' => 'type', 'local' => $type, 'placeholder' => 'Тип']) ?>
+        </div>
+        <div class="col">
+            <?= TypeheadWidget::widget(['form' => $form, 'model' => $model, 'field' => 'biom', 'local' => $biom, 'placeholder' => 'Биоматераил']) ?>
+        </div>
+        <div class="col">
+        <label for="" style="color:inherit !important"> - </label>
+
+            <div class="form-group">
+                <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
+            </div>
+        </div>
+    </div>
+
+
 
     <?php ActiveForm::end(); ?>
 
