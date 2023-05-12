@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Prices;
+use app\models\PricesSearch;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -38,22 +39,37 @@ class PricesController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Prices::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
+        $model = new Prices();
+        if ($model->load($this->request->post())) {
+            try {
+                $model->getSave();
+            } catch (\Exception $ex) {
+                echo '<pre>'; print_r($ex); echo '</pre>';
+                die();
+            }
+        }
+
+        $searchModel = new PricesSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        // $dataProvider = new ActiveDataProvider([
+        //     'query' => Prices::find(),
+        //     /*
+        //     'pagination' => [
+        //         'pageSize' => 50
+        //     ],
+        //     'sort' => [
+        //         'defaultOrder' => [
+        //             'id' => SORT_DESC,
+        //         ]
+        //     ],
+        //     */
+        // ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'model' => $model,
         ]);
     }
 
@@ -124,6 +140,19 @@ class PricesController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionEditField($field, $value, $id){
+        try {
+            $model = Prices::findOne($id);
+            $model->$field = $value;
+            if($model->getSave())
+                return true;
+        } catch (\Exception $ex) {
+            echo '<pre>'; print_r($ex); echo '</pre>';
+            die();
+        }
+        return false;
     }
 
     /**
