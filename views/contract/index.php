@@ -2,6 +2,7 @@
 
 use app\models\Contract;
 use app\models\Patient;
+use kartik\date\DatePicker;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -16,15 +17,10 @@ $patient = new Patient();
 $patinet_list = $patient->PatientList;
 ?>
 <div class="contract-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <div class="contract-create">
-
-<?= $this->render('_form', [
-        'model' => $model,
+        <?= $this->render('_form', [
+            'model' => $model,
         ]) ?>
-
     </div>
 
     <?= GridView::widget([
@@ -36,40 +32,84 @@ $patinet_list = $patient->PatientList;
         'columns' => [
             // ['class' => 'yii\grid\SerialColumn'],
             [
-                'attribute'=>'name',
+                'attribute' => 'date_ct',
+                'contentOptions' => ['class' => 'col-2'],
+                'filter' => DatePicker::widget([
+                    'model' => $searchModel, 
+                    'attribute' => 'date_ct_to',
+                    'attribute2' => 'date_ct_do',
+                    'type' => DatePicker::TYPE_RANGE,
+                    'size' => 'sm',
+                    'separator' => '-',
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy-mm-dd'
+                    ]
+                ]),
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],
             ],
             [
-                'attribute'=>'id_patient',
-                'filterInputOptions' => ['class' => 'form-control form-control-sm'],
-                'contentOptions' =>['class' => 'table_class'],
-                'content'=>function($data){
-                    return $data->patient->fullname;
-                }
-            ],
-            [
-                'attribute'=>'date_to',
+                'attribute' => 'name',
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],
             ],
             [
-                'attribute'=>'date_do',
+                'attribute' => 'patient_surname',
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],
+                'contentOptions' => ['class' => 'table_class '],
+                'value' => 'patient.surname',
+                'label' => 'Фамилия',
             ],
             [
-                'attribute'=>'date_ct',
+                'attribute' => 'patient_name',
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],
+                'contentOptions' => ['class' => 'table_class '],
+                'value' => 'patient.name',
+                'label' => 'Имя',
             ],
             [
-                'attribute'=>'id_patient_representative',
+                'attribute' => 'patient_patronymic',
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],
-                'contentOptions' =>['class' => 'table_class'],
-                'content'=>function($data){
-                    return $data->representative->fullname;
-                }
+                'contentOptions' => ['class' => 'table_class '],
+                'value' => 'patient.patronymic',
+                'label' => 'Отчество',
             ],
+            [
+                'attribute' => 'patient_brithday',
+                'filterInputOptions' => ['class' => 'form-control form-control-sm'],
+                'contentOptions' => ['class' => 'table_class '],
+                'value' => 'patient.brithday',
+                'label' => 'Дата рождения',
+            ],
+            [
+                'attribute' => 'patient_role',
+                'filterInputOptions' => ['class' => 'form-control form-control-sm'],
+                'contentOptions' => ['class' => 'table_class '],
+                'value' => 'patient.phone',
+                'label' => 'Телефон',
+            ],
+            // [
+            //     'attribute'=>'date_to',
+            //     'filterInputOptions' => ['class' => 'form-control form-control-sm'],
+            // ],
+            // [
+            //     'attribute'=>'date_do',
+            //     'filterInputOptions' => ['class' => 'form-control form-control-sm'],
+            // ],
+            // [
+            //     'attribute'=>'date_ct',
+            //     'filterInputOptions' => ['class' => 'form-control form-control-sm'],
+            // ],
+            // [
+            //     'attribute'=>'id_patient_representative',
+            //     'filterInputOptions' => ['class' => 'form-control form-control-sm'],
+            //     'contentOptions' =>['class' => 'table_class'],
+            //     'content'=>function($data){
+            //         return $data->representative->fullname;
+            //     }
+            // ],
             [
                 'class' => ActionColumn::className(),
-                'template' => ' {update} {delete} {link}',
+                'template' => '{update} {delete} {download}',
                 // 'urlCreator' => function ($action, Contract $model, $key, $index, $column) {
                 //     return Url::toRoute([$action, 'id' => $model->id]);
                 //  },

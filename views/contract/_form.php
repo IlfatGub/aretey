@@ -23,8 +23,7 @@ $service->id_contract = $id;
 
 $model->service = $id ? $service->getServieByContract() : null; // указываем услуги
 
-$model->date_to = date('Y-m-d'); // задаем дату
-$model->date_do = date('Y-m-d'); // задаем дату
+$model->date_ct = date('Y-m-d'); // задаем дату
 $model->id_patient = $id_patient ?? $model->id_patient; // Задаем пациента
 $model->id_patient_representative = $id_patient_representative ?? $model->id_patient_representative; // Задаем законного представителя
 
@@ -36,34 +35,6 @@ $model->id_patient_representative = $id_patient_representative ?? $model->id_pat
         <div class="col">
             <?= $form->field($model, 'name')->textInput(['class' => 'form-control form-control-sm', 'value' => strtotime('now')]) ?>
         </div>
-        <div class="col">
-            <?php
-            echo $form->field($model, 'date_to')->widget(DatePicker::classname(), [
-                'options' => ['placeholder' => 'Дата начала'],
-                'size' => 'sm',
-                'pluginOptions' => [
-                    'startDate' => date('Y-m-d', time()),
-                    'autoclose' => true,
-                    'format' => 'yyyy-mm-dd'
-                ],
-            ])->label();
-            ?>
-        </div>
-        <div class="col">
-            <?php
-            echo $form->field($model, 'date_do')->widget(DatePicker::classname(), [
-                'options' => ['placeholder' => 'Дата окончания'],
-                'size' => 'sm',
-                'pluginOptions' => [
-                    'startDate' => date('Y-m-d', time()),
-                    'autoclose' => true,
-                    'format' => 'yyyy-mm-dd'
-                ],
-            ])->label();
-            ?>
-        </div>
-    </div>
-    <div class="row">
         <div class="col">
             <div class="row">
                 <div class="col-11 pr-0">
@@ -96,13 +67,27 @@ $model->id_patient_representative = $id_patient_representative ?? $model->id_pat
                     ]);
                     ?></div>
                 <div class="col-1 ml-0 pl-0" style="top:32px">
-                    <button class="btn btn-info btn-sm modalButton" title="Законный представитель" value="<?= Url::toRoute(['/patient/index', 'ajax' => 1, 'type' => 2, 'id_patient'=> $id_patient]) ?>">
+                    <button class="btn btn-info btn-sm modalButton" title="Законный представитель" value="<?= Url::toRoute(['/patient/index', 'ajax' => 1, 'type' => 2, 'id_patient' => $id_patient]) ?>">
                         <i class="fa fa-address-card"></i>
                     </button>
                 </div>
             </div>
         </div>
-        <div class="col">
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <?= $form->field($model, 'date_ct')->widget(DatePicker::classname(), [
+                'options' => ['placeholder' => 'Дата начала'],
+                'size' => 'sm',
+                'pluginOptions' => [
+                    'startDate' => date('Y-m-d', time()),
+                    'autoclose' => true,
+                    'format' => 'yyyy-mm-dd'
+                ],
+            ])->label();
+            ?>
+        </div>
+        <div class="col-8">
             <?php echo $form->field($model, 'service')->widget(Select2::classname(), [
                 'data' => ArrayHelper::map(Prices::find()->orderBy(['category' => SORT_ASC])->all(), 'id', 'service'),
                 'size' => 'sm',

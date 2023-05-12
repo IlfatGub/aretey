@@ -13,7 +13,6 @@ use yii\grid\GridView;
 <div class="patient-index">
 
     <div class="patient-create">
-    <h1><?= Html::encode($this->title) ?></h1>
         <?= $this->render('_form', [
             'model' => $model,
         ]) ?>

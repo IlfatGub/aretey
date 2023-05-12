@@ -16,7 +16,7 @@ $category = $model::find()->distinct('category')->select('category')->column();
 ?>
 
 <style>
-    body{
+    body {
         background: white !important;
     }
 </style>
@@ -27,15 +27,22 @@ $category = $model::find()->distinct('category')->select('category')->column();
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="row">
-        <div class="col"><?= $form->field($model, 'name')->textInput(['class' => 'form-control form-control-sm']) ?></div>
-        <div class="col">
+        <div class="col-5"><?= $form->field($model, 'name')->textInput(['class' => 'form-control']) ?></div>
+        <div class="col-3">
             <?= TypeheadWidget::widget(['form' => $form, 'model' => $model, 'field' => 'category', 'local' => $category, 'placeholder' => 'Категория']) ?>
         </div>
+        <div class="col-3"><?= $form->field($model, 'price')->textInput(['class' => 'form-control']) ?></div>
+        <div class="col-1">
+            <label for="" style="color:inherit !important"> - </label>
+            <div class="form-group">
+                <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
+            </div>
+        </div>
+    </div>
+<hr>
+    <!-- <div class="row">
         <div class="col"><?= $form->field($model, 'code')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm']) ?></div>
         <div class="col"><?= $form->field($model, 'time')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm']) ?></div>
-    </div>
-
-    <div class="row">
         <div class="col"><?= $form->field($model, 'price')->textInput(['class' => 'form-control form-control-sm']) ?></div>
         <div class="col">
             <?= TypeheadWidget::widget(['form' => $form, 'model' => $model, 'field' => 'type', 'local' => $type, 'placeholder' => 'Тип']) ?>
@@ -44,13 +51,13 @@ $category = $model::find()->distinct('category')->select('category')->column();
             <?= TypeheadWidget::widget(['form' => $form, 'model' => $model, 'field' => 'biom', 'local' => $biom, 'placeholder' => 'Биоматераил']) ?>
         </div>
         <div class="col">
-        <label for="" style="color:inherit !important"> - </label>
+            <label for="" style="color:inherit !important"> - </label>
 
             <div class="form-group">
                 <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
             </div>
         </div>
-    </div>
+    </div> -->
 
 
 
