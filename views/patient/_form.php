@@ -17,7 +17,9 @@ $ajax = $_GET['ajax'] ?? null;
 <div class="patient-form <?= $ajax ? 'fs-8': ''?>">
 
     <?php $form = ActiveForm::begin([
-        'class' => 'form-inline',
+        'options' => ['class' => ''],
+        'id' => 'patient-form',
+        // 'enableAjaxValidation' => true,
     ]); ?>
 
     <div class="row">
@@ -76,7 +78,7 @@ $ajax = $_GET['ajax'] ?? null;
             <?= $form->field($model, 'passport_number')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Номер'])->label() ?>
         </div>
         <div class="col-5">
-            <?= $form->field($model, 'passport_issued')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Когдаб кем выдано'])->label() ?>
+            <?= $form->field($model, 'passport_issued')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Когда, кем выдано'])->label() ?>
         </div>
     </div>
 

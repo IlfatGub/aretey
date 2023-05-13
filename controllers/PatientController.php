@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Patient;
+use kartik\form\ActiveForm;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -44,8 +45,14 @@ class PatientController extends Controller
     public function actionIndex($ajax = null, $id_patient = null, $id_patient_representative = null, $type = null)
     {
         $model = new Patient();
+        // echo '<pre>'; print_r($this->request->post()); echo '</pre>'; die();
+        if ($model->load($this->request->post())) {
 
-        if (Yii::$app->request->isAjax && $model->load($this->request->post())) {
+            if(!$model->validate() && Yii::$app->request->isAjax){
+                Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+                return \yii\widgets\ActiveForm::validate($model);
+            }
+
             try {
                 $model->fullname = $model->surname . ' ' . $model->name . ' ' . $model->patronymic;
                 $model->brithday = strtotime($model->brithday);

@@ -69,12 +69,12 @@ class Prices extends ModelInterface
     }
 
     public function getTextarea($filed){
-        return Html::textarea($filed, $this->$filed, ['rows' => 1, 'class' => 'form-control form-control-sm inherit border-none',
+        return Html::textarea($filed, $this->$filed, ['rows' => 1, 'class' => 'form-control form-control-sm cl-black inherit border-none',
         'onchange' => '$.post(" '.Url::toRoute(['edit-field']).'?id='.$this->id.'&field='.$filed.'&value='.'"+encodeURIComponent($(this).val()));']);
     }
 
     public function getInput($filed){
-        return Html::input($filed == 'time' ? 'times' : $filed, 'string', $this->$filed, ['class' => 'form-control form-control-sm inherit border-none',
+        return Html::input($filed == 'time' ? 'times' : $filed, 'string', $this->$filed, ['class' => 'form-control form-control-sm cl-black  inherit border-none',
         'onchange' => '$.post(" '.Url::toRoute(['edit-field']).'?id='.$this->id.'&field='.$filed.'&value='.'"+encodeURIComponent($(this).val()));'
     ]);
     }
