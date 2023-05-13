@@ -64,17 +64,17 @@ class Prices extends ModelInterface
     }
 
     public function getService(){
-        // return $this->category.'. '.$this->name;
-        return $this->name;
+        return $this->category.' - '.$this->name;
+        // return $this->name;
     }
 
     public function getTextarea($filed){
-        return Html::textarea($filed, $this->$filed, ['class' => 'form-control form-control-sm inherit border-none fs-8',
+        return Html::textarea($filed, $this->$filed, ['rows' => 1, 'class' => 'form-control form-control-sm inherit border-none',
         'onchange' => '$.post(" '.Url::toRoute(['edit-field']).'?id='.$this->id.'&field='.$filed.'&value='.'"+encodeURIComponent($(this).val()));']);
     }
 
     public function getInput($filed){
-        return Html::input($filed == 'time' ? 'times' : $filed, 'string', $this->$filed, ['class' => 'form-control form-control-sm inherit border-none fs-8',
+        return Html::input($filed == 'time' ? 'times' : $filed, 'string', $this->$filed, ['class' => 'form-control form-control-sm inherit border-none',
         'onchange' => '$.post(" '.Url::toRoute(['edit-field']).'?id='.$this->id.'&field='.$filed.'&value='.'"+encodeURIComponent($(this).val()));'
     ]);
     }

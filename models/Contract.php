@@ -19,8 +19,8 @@ use Yii;
  */
 class Contract extends ModelInterface
 {
-
     public $service;
+
     /**
      * {@inheritdoc}
      */
@@ -35,9 +35,9 @@ class Contract extends ModelInterface
     public function rules()
     {
         return [
-            [['id_patient', 'date_to', 'date_do', 'name'], 'required'],
-            [['id_patient', 'id_patient_representative', 'date_ct', 'name', 'visible'], 'integer'],
-            [['date_to', 'date_do', 'service'], 'safe'],
+            [['id_patient', 'date_ct', 'name'], 'required'],
+            [['id_patient', 'id_patient_representative',  'name', 'visible'], 'integer'],
+            [['date_to', 'date_do', 'service', 'date_ct'], 'safe'],
         ];
     }
 
@@ -72,6 +72,7 @@ class Contract extends ModelInterface
         if (parent::beforeSave($insert)) {
             $this->date_to = strtotime($this->date_to);
             $this->date_do = strtotime($this->date_do);
+            // $this->date_ct = strtotime($this->date_ct);
             // $this->date_ct = strtotime($this->date_ct);
             // $this->date_ct = $this->date_ct ? strtotime($this->date_ct) : strtotime('now');
             return true;

@@ -136,7 +136,12 @@ class PatientController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            try {
+                $model->getSave();
+            } catch (\Exception $ex) {
+                echo '<pre>'; print_r($ex);echo '</pre>';  die();
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

@@ -74,8 +74,23 @@ class Patient extends ModelInterface
         ];
     }
 
+    public function afterFind()
+    {
+        $this->brithday = date('Y-m-d',$this->brithday);
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            $this->brithday = strtotime($this->brithday);
+            return true;
+        }
+        return false;
+
+    }
+
     public function getPatient(){
-        return $this->passport_serial.'  '.$this->passport_number.' | '.$this->fullname;
+        return $this->fullname.'. '.$this->passport_serial.'  '.$this->passport_number;
     }
 
     public function getPatientList(){

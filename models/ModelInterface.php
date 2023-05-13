@@ -29,19 +29,18 @@ abstract class ModelInterface extends  \yii\db\ActiveRecord
             foreach ($this->errors as $key => $value) {
                 $error .= '<br>'.$key.': '.$value[0];
             }
-            // if ($show)
-                // ShowError::getError('danger', 'Ошибка записи.'.$error);
-
-            $result = false; $message = $error;
-
-            echo "<pre>";
-            print_r($this->errors);
+            echo "ModelInterface <pre>";
+            print_r($error);
             die();
         }
 
         // return ['result' => $result, 'message' => $message, 'data' => $this];
     }
 
+    public function setVisible(){
+        $this->visible = $this->visible ? null : 1;
+        $this->getSave();
+    }
 
     public function existsId()
     {

@@ -22,7 +22,7 @@ use yii\grid\GridView;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'tableOptions' => [
-            'class' => 'table table-hover table-bordered table-striped table-sm fs-10'
+            'class' => 'table table-hover table-bordered table-striped table-sm'
         ],
         'columns' => [
             // ['class' => 'yii\grid\SerialColumn'],
@@ -30,7 +30,7 @@ use yii\grid\GridView;
             [
                 'attribute'=>'name',
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],
-                'contentOptions' => ['class' => 'col-4'],
+                'contentOptions' => ['class' => 'col-7'],
                 'headerOptions' => [],
                 'content'=>function($data){
                     return $data->getTextarea('name');
@@ -39,46 +39,47 @@ use yii\grid\GridView;
             [
                 'attribute'=>'category',
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],
-                'contentOptions' => ['class' => 'col-2'],
+                'contentOptions' => ['class' => 'col-3'],
                 'content'=>function($data){
                     return $data->getTextarea('category');
                 }
             ],
-            [
-                'attribute'=>'code',
-                'filterInputOptions' => ['class' => 'form-control form-control-sm'],
-                'content'=>function($data){
-                    return $data->getInput('code');
-                }
-            ],
-            [
-                'attribute'=>'time',
-                'filterInputOptions' => ['class' => 'form-control form-control-sm'],
-                'content'=>function($data){
-                    return $data->getInput('time');
-                }
-            ],
+            // [
+            //     'attribute'=>'code',
+            //     'filterInputOptions' => ['class' => 'form-control form-control-sm'],
+            //     'content'=>function($data){
+            //         return $data->getInput('code');
+            //     }
+            // ],
+            // [
+            //     'attribute'=>'time',
+            //     'filterInputOptions' => ['class' => 'form-control form-control-sm'],
+            //     'content'=>function($data){
+            //         return $data->getInput('time');
+            //     }
+            // ],
             [
                 'attribute'=>'price',
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],
+                'contentOptions' => ['class' => 'col-1'],
                 'content'=>function($data){
                     return $data->getInput('price');
                 }
             ],
-            [
-                'attribute'=>'type',
-                'filterInputOptions' => ['class' => 'form-control form-control-sm'],
-                'content'=>function($data){
-                    return $data->getInput('type');
-                }
-            ],
-            [
-                'attribute'=>'biom',
-                'filterInputOptions' => ['class' => 'form-control form-control-sm'],
-                'content'=>function($data){
-                    return $data->getInput('biom');
-                }
-            ],
+            // [
+            //     'attribute'=>'type',
+            //     'filterInputOptions' => ['class' => 'form-control form-control-sm'],
+            //     'content'=>function($data){
+            //         return $data->getInput('type');
+            //     }
+            // ],
+            // [
+            //     'attribute'=>'biom',
+            //     'filterInputOptions' => ['class' => 'form-control form-control-sm'],
+            //     'content'=>function($data){
+            //         return $data->getInput('biom');
+            //     }
+            // ],
             [
                 'class' => ActionColumn::className(),
                 'template' => ' {update} {delete} {link}',

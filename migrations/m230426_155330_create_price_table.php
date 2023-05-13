@@ -16,71 +16,65 @@ class m230426_155330_create_price_table extends Migration
             'id' => $this->primaryKey(),
             'name' => $this->text()->notNull()->comment('Наименование услуги'),
             'category' => $this->string(255)->notNull()->comment('Категория'),
-            'code' => $this->string(255)->notNull()->unique()->comment('Код'),
+            'code' => $this->string(255)->defaultValue(null)->comment('Код'),
             'time' => $this->string(255)->defaultValue(null)->comment('Срок'),
             'price' => $this->smallInteger()->defaultValue(null)->comment('Цена'),
             'count' => $this->smallInteger()->defaultValue(null)->comment('Количество'),
             'deleted' => $this->smallInteger()->defaultValue(null)->comment('Удален'),
-            'type' => $this->text()->notNull()->comment('Тип услуги'),
-            'biom' => $this->text()->notNull()->comment('Биоматериал'),
+            'type' => $this->text()->defaultValue(null)->comment('Тип услуги'),
+            'biom' => $this->text()->defaultValue(null)->comment('Биоматериал'),
         ]);
 
 
         $this->insert('{{%price}}', [
-            'name'=>'ПРОФИЛЬ Клинический (общий) анализ крови (CBC, 5-Diff) с микроскопией мазка крови при выявлении патологических изменений + СОЭ',
-            'category'=>'ГЕМАТОЛОГИЧЕСКИЕ ИССЛЕДОВАНИЯ',
-            'code'=>'11-10-004',
-            'time'=>'1 р. д.',
-            'price'=>'185',
-            'type'=>'колич',
-            'biom'=>'Венозная кровь',
+            'name' => 'Прием (осмотр, консультация) врача-педиатра первичный',
+            'category' => 'Педиатр',
+            'price' => '800',
             ]
         );
 
         $this->insert('{{%price}}', [
-            'name'=>'Лейкоцитарная формула (микроскопия)',
-            'category'=>'ГЕМАТОЛОГИЧЕСКИЕ ИССЛЕДОВАНИЯ',
-            'code'=>'11-10-003',
-            'time'=>'1 р. д.',
-            'price'=>'185',
-            'type'=>'колич',
-            'biom'=>'Венозная кровь',
+            'name' => 'Прием (осмотр, консультация) врача-педиатра повторный (в течении 2х недель)',
+            'category' => 'Педиатр',
+            'price' => '750',
             ]
         );
 
         $this->insert('{{%price}}', [
-            'name'=>'Осмотическая стойкость эритроцитов (анемии)',
-            'category'=>'ГЕМАТОЛОГИЧЕСКИЕ ИССЛЕДОВАНИЯ',
-            'code'=>'11-10-002',
-            'time'=>'1 р. д.',
-            'price'=>'185',
-            'type'=>'колич',
-            'biom'=>'Венозная кровь',
-            ]
-        );
-
-
-        $this->insert('{{%price}}', [
-            'name'=>'Аллоиммунные антиэритроцитарные антитела (в непрямой реакции Кумбса, включая антирезус Ат)',
-            'category'=>'ИММУНОГЕМАТОЛОГИЯ',
-            'code'=>'12-10-006',
-            'time'=>'1 р. д.',
-            'price'=>'185',
-            'type'=>'колич',
-            'biom'=>'Венозная кровь',
+            'name' => 'Прием врача с интерпретацией проведенного обследования без повторного осмотра ребенка, выдача справок (дет.сад, школа, бассейн, пионерлагерь и др.)',
+            'category' => 'Педиатр',
+            'price' => '390',
             ]
         );
 
         $this->insert('{{%price}}', [
-            'name'=>'Антигены системы Kell',
-            'category'=>'ИММУНОГЕМАТОЛОГИЯ',
-            'code'=>'12-10-010',
-            'time'=>'1 р. д.',
-            'price'=>'185',
-            'type'=>'колич',
-            'biom'=>'Венозная кровь',
+            'name' => 'УЗИ брюшной полости (печень, селезенка, желчный пузырь, поджелудочная железа) (Натощак)',
+            'category' => 'УЗИ Общесоматическое',
+            'price' => '350',
             ]
         );
+
+        $this->insert('{{%price}}', [
+            'name' => 'Ультразвуковое исследование мочевого пузыря с определением остаточной мочи. (Полный мочевой пузырь)',
+            'category' => 'УЗИ Общесоматическое',
+            'price' => '152',
+            ]
+        );
+
+        $this->insert('{{%price}}', [
+            'name' => 'Ультразвуковое исследование поджелудочной железы . (Натощак)',
+            'category' => 'УЗИ Общесоматическое',
+            'price' => '1000',
+            ]
+        );
+
+        $this->insert('{{%price}}', [
+            'name' => 'Прием (осмотр, консультация) врача — детского эндокринолога первичный',
+            'category' => 'Детский эндокринолог',
+            'price' => '900',
+            ]
+        );
+
 
         // echo shell_exec("php yii gii/model --tableName=price --modelClass=Prices --interactive=0 --overwrite=1 --ns=app\\models");
         // echo shell_exec("php yii gii/crud --modelClass=app\\models\\Prices --controllerClass=app\\controllers\PricesController");

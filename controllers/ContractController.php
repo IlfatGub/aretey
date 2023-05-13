@@ -5,6 +5,8 @@ namespace app\controllers;
 use app\models\Contract;
 use app\models\ContractSerach;
 use app\models\ContractService;
+use app\models\Patient;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -147,9 +149,9 @@ class ContractController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $this->findModel($id)->setVisible();
 
-        return $this->redirect(['index']);
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
     /**
