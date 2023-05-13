@@ -41,7 +41,7 @@ class Patient extends ModelInterface
     public function rules()
     {
         return [
-            [['surname', 'name', 'patronymic', 'document', 'passport_serial', 'passport_number', 'passport_issued', 'phone'], 'required'],
+            [['surname', 'name', 'patronymic', 'document', 'passport_serial', 'passport_number', 'passport_issued', 'phone', 'brithday'], 'required'],
             [['parent_id'], 'integer'],
             [['brithday'], 'safe'],
             [['surname', 'name', 'patronymic', 'fullname', 'address_city', 'address_street', 'address_home', 'address_room', 'document', 'passport_serial', 'passport_number', 'passport_issued', 'phone'], 'string', 'max' => 255],

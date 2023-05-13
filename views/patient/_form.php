@@ -13,6 +13,7 @@ $type = $_GET['type'] ?? null;
 $ajax = $_GET['ajax'] ?? null;
 // $id_patient_representative = $_GET['id_patient_representative'] ?? null;
 
+echo '<pre>'; print_r($_GET); echo '</pre>';
 ?>
 <div class="patient-form <?= $ajax ? 'fs-8': ''?>">
 

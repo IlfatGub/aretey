@@ -5,6 +5,7 @@ use app\models\Patient;
 use app\models\Prices;
 use Faker\Core\DateTime;
 use kartik\date\DatePicker;
+use kartik\datetime\DateTimePicker;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -43,7 +44,7 @@ $patient_list = ArrayHelper::map(Patient::find()->orderBy(['fullname' => SORT_AS
                     <?php $model->select2($form, 'id_patient', $patient_list, 'Пациент'); ?>
                 </div>
                 <div class="col-1 ml-0 pl-0" style="top:32px">
-                    <button class="btn btn-info btn-sm modalButton" type="button" title="Пациент" value="<?= Url::toRoute(['/patient/index', 'ajax' => 1, 'type' => 1, 'id_patient_representativ1e' => $id_patient_representative]) ?>">
+                    <button class="btn btn-info btn-sm modalButton" type="button" title="Пациент" value="<?= Url::toRoute(['/patient/index', 'ajax' => 1, 'type' => 1, 'id_patient_representative' => $id_patient_representative]) ?>">
                         <i class="fa fa-address-card"></i>
                     </button>
                 </div>
@@ -55,7 +56,7 @@ $patient_list = ArrayHelper::map(Patient::find()->orderBy(['fullname' => SORT_AS
                     <?php $model->select2($form, 'id_patient_representative', $patient_list, 'Законный представитель'); ?>
                 </div>
                 <div class="col-1 ml-0 pl-0" style="top:32px">
-                    <button class="btn btn-info btn-sm modalButton" type="button" title="Законный представитель" value="<?= Url::toRoute(['/patient/index', 'ajax' => 1, 'type' => 2, 'id_pati1ent' => $id_patient]) ?>">
+                    <button class="btn btn-info btn-sm modalButton" type="button" title="Законный представитель" value="<?= Url::toRoute(['/patient/index', 'ajax' => 1, 'type' => 2, 'id_patient' => $id_patient]) ?>">
                         <i class="fa fa-address-card"></i>
                     </button>
                 </div>
@@ -64,13 +65,13 @@ $patient_list = ArrayHelper::map(Patient::find()->orderBy(['fullname' => SORT_AS
     </div>
     <div class="row">
         <div class="col-4">
-            <?= $form->field($model, 'date_ct')->widget(DateTime::classname(), [
+            <?= $form->field($model, 'date_ct')->widget(DateTimePicker::classname(), [
                 'options' => ['placeholder' => 'Дата начала'],
                 'size' => 'sm',
                 'pluginOptions' => [
                     'startDate' => date('Y-m-d', time()),
                     'autoclose' => true,
-                    'format' => 'yyyy-mm-dd'
+                    'format' => 'yyyy-mm-dd H:i:s'
                 ],
             ])->label();
             ?>
@@ -82,7 +83,8 @@ $patient_list = ArrayHelper::map(Patient::find()->orderBy(['fullname' => SORT_AS
                 'theme' => Select2::THEME_KRAJEE,
                 'options' => ['placeholder' => 'Услуги', 'multiple' => true, 'autocomplete' => 'off'],
                 'pluginOptions' => [
-                    'allowClear' => true
+                    'allowClear' => true,
+                    'closeOnSelect' => false,
                 ],
             ]);
             ?>
