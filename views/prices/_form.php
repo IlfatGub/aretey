@@ -31,7 +31,7 @@ $category = $model::find()->distinct('category')->select('category')->column();
         <div class="col-3">
             <?= TypeheadWidget::widget(['form' => $form, 'model' => $model, 'field' => 'category', 'local' => $category, 'placeholder' => 'Категория']) ?>
         </div>
-        <div class="col-3"><?= $form->field($model, 'price')->textInput(['class' => 'form-control']) ?></div>
+        <div class="col-3"><?= $form->field($model, 'price')->textInput(['type' => 'number', 'class' => 'form-control']) ?></div>
         <div class="col-1">
             <label for="" style="color:inherit !important"> - </label>
             <div class="form-group">
@@ -43,7 +43,7 @@ $category = $model::find()->distinct('category')->select('category')->column();
     <!-- <div class="row">
         <div class="col"><?= $form->field($model, 'code')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm']) ?></div>
         <div class="col"><?= $form->field($model, 'time')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm']) ?></div>
-        <div class="col"><?= $form->field($model, 'price')->textInput(['class' => 'form-control form-control-sm']) ?></div>
+        <div class="col"><?= $form->field($model, 'price')->textInput(['type' => 'number', 'class' => 'form-control form-control-sm']) ?></div>
         <div class="col">
             <?= TypeheadWidget::widget(['form' => $form, 'model' => $model, 'field' => 'type', 'local' => $type, 'placeholder' => 'Тип']) ?>
         </div>

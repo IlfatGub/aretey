@@ -3,11 +3,15 @@
 namespace app\controllers;
 
 use app\models\Patient;
+use app\models\PatientSearch;
+use kartik\form\ActiveForm;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
+date_default_timezone_set('Asia/Yekaterinburg');
 
 /**
  * PatientController implements the CRUD actions for Patient model.
@@ -45,7 +49,13 @@ class PatientController extends Controller
     {
         $model = new Patient();
 
-        if (Yii::$app->request->isAjax && $model->load($this->request->post())) {
+        if ($model->load($this->request->post())) {
+
+            if(!$model->validate() && Yii::$app->request->isAjax){
+                Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+                return \yii\widgets\ActiveForm::validate($model);
+            }
+
             try {
                 $model->fullname = $model->surname . ' ' . $model->name . ' ' . $model->patronymic;
                 $model->brithday = strtotime($model->brithday);
@@ -65,27 +75,18 @@ class PatientController extends Controller
             return $this->redirect(['index']);
         }
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => Patient::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
+        $searchModel = new PatientSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
         $data = [
             'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
             'model' => $model,
         ];
 
-        if ($ajax)
+        if ($ajax){
             return $this->renderAjax('index', $data);
+        }
 
         return $this->render('index', $data);
     }
@@ -159,7 +160,7 @@ class PatientController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $this->findModel($id)->setVisible();
 
         return $this->redirect(['index']);
     }

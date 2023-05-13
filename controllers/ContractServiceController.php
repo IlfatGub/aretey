@@ -8,6 +8,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+date_default_timezone_set('Asia/Yekaterinburg');
+
 /**
  * ContractServiceController implements the CRUD actions for ContractService model.
  */

@@ -3,7 +3,9 @@
 use app\models\ContractService;
 use app\models\Patient;
 use app\models\Prices;
+use Faker\Core\DateTime;
 use kartik\date\DatePicker;
+use kartik\datetime\DateTimePicker;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -23,10 +25,13 @@ $service->id_contract = $id;
 
 $model->service = $id ? $service->getServieByContract() : null; // указываем услуги
 
-$model->date_ct = date('Y-m-d'); // задаем дату
+$model->date_ct = date('Y-m-d H:i:s'); // задаем дату
+$model->date_to = $model->date_to ?? date('Y-m-d'); // задаем дату
+$model->date_do = $model->date_do ?? date('Y-m-d'); // задаем дату
 $model->id_patient = $id_patient ?? $model->id_patient; // Задаем пациента
 $model->id_patient_representative = $id_patient_representative ?? $model->id_patient_representative; // Задаем законного представителя
 
+$patient_list = ArrayHelper::map(Patient::find()->orderBy(['fullname' => SORT_ASC])->all(), 'id', 'patient');
 ?>
 
 <div class="contract-form">
@@ -38,17 +43,10 @@ $model->id_patient_representative = $id_patient_representative ?? $model->id_pat
         <div class="col">
             <div class="row">
                 <div class="col-11 pr-0">
-                    <?php echo $form->field($model, 'id_patient')->widget(Select2::classname(), [
-                        'data' => ArrayHelper::map(Patient::find()->orderBy(['fullname' => SORT_ASC])->all(), 'id', 'patient'),
-                        'options' => ['placeholder' => 'Пациент'],
-                        'size' => 'sm',
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ]);
-                    ?></div>
+                    <?php $model->select2($form, 'id_patient', $patient_list, 'Пациент'); ?>
+                </div>
                 <div class="col-1 ml-0 pl-0" style="top:32px">
-                    <button class="btn btn-info btn-sm modalButton" title="Пациент" value="<?= Url::toRoute(['/patient/index', 'ajax' => 1, 'type' => 1, 'id_patient_representative' => $id_patient_representative]) ?>">
+                    <button class="btn btn-info btn-sm modalButton" type="button" title="Пациент" value="<?= Url::toRoute(['/patient/index', 'ajax' => 1, 'type' => 1, 'id_patient_representative' => $id_patient_representative]) ?>">
                         <i class="fa fa-address-card"></i>
                     </button>
                 </div>
@@ -57,17 +55,10 @@ $model->id_patient_representative = $id_patient_representative ?? $model->id_pat
         <div class="col">
             <div class="row">
                 <div class="col-11 pr-0">
-                    <?php echo $form->field($model, 'id_patient_representative')->widget(Select2::classname(), [
-                        'data' => ArrayHelper::map(Patient::find()->orderBy(['fullname' => SORT_ASC])->all(), 'id', 'patient'),
-                        'options' => ['placeholder' => 'Законный представитель'],
-                        'size' => 'sm',
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ]);
-                    ?></div>
+                    <?php $model->select2($form, 'id_patient_representative', $patient_list, 'Законный представитель'); ?>
+                </div>
                 <div class="col-1 ml-0 pl-0" style="top:32px">
-                    <button class="btn btn-info btn-sm modalButton" title="Законный представитель" value="<?= Url::toRoute(['/patient/index', 'ajax' => 1, 'type' => 2, 'id_patient' => $id_patient]) ?>">
+                    <button class="btn btn-info btn-sm modalButton" type="button" title="Законный представитель" value="<?= Url::toRoute(['/patient/index', 'ajax' => 1, 'type' => 2, 'id_patient' => $id_patient]) ?>">
                         <i class="fa fa-address-card"></i>
                     </button>
                 </div>
@@ -75,9 +66,21 @@ $model->id_patient_representative = $id_patient_representative ?? $model->id_pat
         </div>
     </div>
     <div class="row">
-        <div class="col-4">
-            <?= $form->field($model, 'date_ct')->widget(DatePicker::classname(), [
+        <div class="col-2">
+            <?= $form->field($model, 'date_to')->widget(DatePicker::className(), [
                 'options' => ['placeholder' => 'Дата начала'],
+                'size' => 'sm',
+                'pluginOptions' => [
+                    'startDate' => date('Y-m-d', time()),
+                    'autoclose' => true,
+                    'format' => 'yyyy-mm-dd'
+                ],
+            ])->label();
+            ?>
+        </div>
+        <div class="col-2">
+            <?= $form->field($model, 'date_do')->widget(DatePicker::className(), [
+                'options' => ['placeholder' => 'Дата окончания'],
                 'size' => 'sm',
                 'pluginOptions' => [
                     'startDate' => date('Y-m-d', time()),
@@ -89,12 +92,13 @@ $model->id_patient_representative = $id_patient_representative ?? $model->id_pat
         </div>
         <div class="col-8">
             <?php echo $form->field($model, 'service')->widget(Select2::classname(), [
-                'data' => ArrayHelper::map(Prices::find()->orderBy(['category' => SORT_ASC])->all(), 'id', 'service'),
+                'data' => ArrayHelper::map(Prices::find()->orderBy(['category' => SORT_ASC])->all(), 'id', 'service', 'category'),
                 'size' => 'sm',
                 'theme' => Select2::THEME_KRAJEE,
                 'options' => ['placeholder' => 'Услуги', 'multiple' => true, 'autocomplete' => 'off'],
                 'pluginOptions' => [
-                    'allowClear' => true
+                    'allowClear' => true,
+                    'closeOnSelect' => false,
                 ],
             ]);
             ?>

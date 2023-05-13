@@ -35,3 +35,8 @@ tests/_support/_generated
 
 #vagrant folder
 /.vagrant
+
+web/upload/*
+!web/upload/contract.docx
+!web/upload/child_approval.docx
+!web/upload/contarct_child.docx

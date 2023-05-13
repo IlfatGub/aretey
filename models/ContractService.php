@@ -49,6 +49,15 @@ class ContractService extends ModelInterface
         ];
     }
 
+    public function getContract()
+	{
+		return $this->hasOne(Contract::className(), ['id' => 'id_contract']);
+	}
+
+    public function getPrice()
+	{
+		return $this->hasOne(Prices::className(), ['id' => 'id_service']);
+	}
     public function addService()
     {
         $this->deleteServiceForContract();

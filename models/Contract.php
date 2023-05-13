@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use PhpOffice\PhpWord\TemplateProcessor;
 use Yii;
 
 /**
@@ -20,6 +21,7 @@ use Yii;
 class Contract extends ModelInterface
 {
     public $service;
+    public $date_range;
 
     /**
      * {@inheritdoc}
@@ -37,7 +39,7 @@ class Contract extends ModelInterface
         return [
             [['id_patient', 'date_ct', 'name'], 'required'],
             [['id_patient', 'id_patient_representative',  'name', 'visible'], 'integer'],
-            [['date_to', 'date_do', 'service', 'date_ct'], 'safe'],
+            [['date_to', 'date_do', 'service', 'date_ct', 'date_range'], 'safe'],
         ];
     }
 
@@ -63,7 +65,7 @@ class Contract extends ModelInterface
     {
         $this->date_to = date('Y-m-d',$this->date_to);
         $this->date_do = date('Y-m-d',$this->date_do);
-        $this->date_ct = date('Y-m-d H:i:s',$this->date_ct);
+        $this->date_ct = date('Y-m-d',$this->date_ct);
     }
 
 
@@ -72,7 +74,6 @@ class Contract extends ModelInterface
         if (parent::beforeSave($insert)) {
             $this->date_to = strtotime($this->date_to);
             $this->date_do = strtotime($this->date_do);
-            // $this->date_ct = strtotime($this->date_ct);
             // $this->date_ct = strtotime($this->date_ct);
             // $this->date_ct = $this->date_ct ? strtotime($this->date_ct) : strtotime('now');
             return true;
@@ -90,4 +91,21 @@ class Contract extends ModelInterface
 	{
 		return $this->hasOne(Patient::className(), ['id' => 'id_patient_representative']);
 	}
+
+    public function month(){
+        return [
+            'Январь',
+            'Февраль',
+            'Март',
+            'Апрель',
+            'Май',
+            'Июнь',
+            'Июль',
+            'Август',
+            'Сентябрь',
+            'Октябрь',
+            'Ноябрь',
+            'Декабрь'
+          ];
+    }
 }
