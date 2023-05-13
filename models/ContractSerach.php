@@ -19,6 +19,7 @@ class ContractSerach extends Contract
     public $patient_patronymic;
     public $patient_role;
     public $patient_brithday;
+    public $patient_fullname;
     /**
      * {@inheritdoc}
      */
@@ -27,7 +28,7 @@ class ContractSerach extends Contract
         return [
             [['id', 'id_patient', 'id_patient_representative', 'date_to', 'date_do', 'date_ct', 'visible'], 'safe'],
             [['name', 'date_ct_to', 'date_ct_do'], 'safe'],
-            [['patient_patronymic', 'patient_role', 'patient_surname', 'patient_brithday', 'patient_name', 'patient_name'], 'safe'],
+            [['patient_patronymic', 'patient_role', 'patient_surname', 'patient_brithday', 'patient_name', 'patient_name','patient_fullname','date_range'], 'safe'],
         ];
     }
 
@@ -70,6 +71,11 @@ class ContractSerach extends Contract
             'desc' => [Patient::tableName().'.brithday' => SORT_DESC],
         ];
 
+        $dataProvider->sort->attributes['patient_fullname'] = [
+            'asc' => [Patient::tableName().'.fullname' => SORT_ASC],
+            'desc' => [Patient::tableName().'.fullname' => SORT_DESC],
+        ];
+
         $dataProvider->sort->attributes['patient_surname'] = [
             'asc' => [Patient::tableName().'.surname' => SORT_ASC],
             'desc' => [Patient::tableName().'.surname' => SORT_DESC],
@@ -87,6 +93,9 @@ class ContractSerach extends Contract
 
         $this->load($params);
 
+        $this->date_ct_to = array_shift(explode('/', $this->date_range));
+        $this->date_ct_do = array_pop(explode('/', $this->date_range));
+
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
@@ -101,6 +110,7 @@ class ContractSerach extends Contract
         $query->andFilterWhere(['like', Patient::tableName().'.phone', $this->patient_role]);
         $query->andFilterWhere(['like', Patient::tableName().'.surname', $this->patient_surname]);
         $query->andFilterWhere(['like', Patient::tableName().'.name', $this->patient_name]);
+        $query->andFilterWhere(['like', Patient::tableName().'.fullname', $this->patient_fullname]);
         $query->andFilterWhere(['like', Patient::tableName().'.patronymic', $this->patient_patronymic]);
         $query->andFilterWhere(['like', 'contract.name', $this->name]);
         // $query->andFilterWhere(['like', 'patient.fullname', $this->id_patient]);

@@ -3,6 +3,7 @@
 use app\models\Contract;
 use app\models\Patient;
 use kartik\date\DatePicker;
+use kartik\daterange\DateRangePicker;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -14,8 +15,8 @@ use yii\grid\GridView;
 
 $patient = new Patient();
 $patinet_list = $patient->PatientList;
-
 ?>
+
 <div class="contract-index">
     <div class="contract-create">
         <?= $this->render('_form', [
@@ -34,16 +35,25 @@ $patinet_list = $patient->PatientList;
             [
                 'attribute' => 'date_ct',
                 'contentOptions' => ['class' => 'col-2'],
-                'filter' => DatePicker::widget([
+                // 'filter' => DatePicker::widget([
+                //     'model' => $searchModel,
+                //     'attribute' => 'date_ct_to',
+                //     'attribute2' => 'date_ct_do',
+                //     'type' => DatePicker::TYPE_RANGE,
+                //     'size' => 'sm',
+                //     'separator' => '-',
+                //     'pluginOptions' => [
+                //         'autoclose' => true,
+                //         'format' => 'yyyy-mm-dd'
+                //     ]
+                // ]),
+                'filter' =>  DateRangePicker::widget([
                     'model' => $searchModel,
-                    'attribute' => 'date_ct_to',
-                    'attribute2' => 'date_ct_do',
-                    'type' => DatePicker::TYPE_RANGE,
-                    'size' => 'sm',
-                    'separator' => '-',
-                    'pluginOptions' => [
-                        'autoclose' => true,
-                        'format' => 'yyyy-mm-dd'
+                    'name'=>'date_range',
+                    'attribute' => 'date_range',
+                    'convertFormat'=>true,
+                    'pluginOptions'=>[
+                        'locale'=>['format'=>'Y-m-d', 'separator'=>'/']
                     ]
                 ]),
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],
@@ -76,7 +86,7 @@ $patinet_list = $patient->PatientList;
             [
                 'attribute' => 'patient_fullname',
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],
-                'contentOptions' => ['class' => 'table_class '],
+                'contentOptions' => ['class' => 'table_class col-3'],
                 'value' => 'patient.fullname',
                 'label' => 'ФИО',
             ],            
@@ -116,6 +126,7 @@ $patinet_list = $patient->PatientList;
             // ],
             [
                 'class' => ActionColumn::className(),
+                'contentOptions' => ['style' => 'width:65px;'],
                 'template' => '{update} {delete} {download}',
                 'urlCreator' => function ($action, Contract $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);

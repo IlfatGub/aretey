@@ -21,6 +21,7 @@ use Yii;
 class Contract extends ModelInterface
 {
     public $service;
+    public $date_range;
 
     /**
      * {@inheritdoc}
@@ -38,7 +39,7 @@ class Contract extends ModelInterface
         return [
             [['id_patient', 'date_ct', 'name'], 'required'],
             [['id_patient', 'id_patient_representative',  'name', 'visible'], 'integer'],
-            [['date_to', 'date_do', 'service', 'date_ct'], 'safe'],
+            [['date_to', 'date_do', 'service', 'date_ct', 'date_range'], 'safe'],
         ];
     }
 
@@ -64,7 +65,7 @@ class Contract extends ModelInterface
     {
         $this->date_to = date('Y-m-d',$this->date_to);
         $this->date_do = date('Y-m-d',$this->date_do);
-        $this->date_ct = date('Y-m-d H:i:s',$this->date_ct);
+        $this->date_ct = date('Y-m-d',$this->date_ct);
     }
 
 

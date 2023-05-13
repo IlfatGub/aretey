@@ -99,3 +99,11 @@ a.desc:after {
 .cl-black{
     color: black !important;
 }
+#contractserach-date_range{
+    font-size: 10pt !important;
+    height: calc(1.8125rem + 2px);
+    padding: 0.25rem 0.5rem;
+    font-size: .875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
