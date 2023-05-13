@@ -1,5 +1,4 @@
 <?php
-
 use yii\db\Migration;
 
 /**
@@ -32,7 +31,6 @@ class m230505_152556_create_patient_table extends Migration
             'visible' => $this->integer()->null()->defaultValue(null)->comment('Видимость'),
         ]);
 
-       
         // echo shell_exec("php yii gii/model --tableName=patient --modelClass=Patient --interactive=0 --overwrite=1 --ns=app\\models");
         // echo shell_exec("php yii gii/crud --modelClass=app\\models\\Patient --controllerClass=app\\controllers\PatientController");
     }

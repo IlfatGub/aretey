@@ -9,6 +9,7 @@ namespace app\models;
 
 
 use app\models\ShowError;
+use kartik\select2\Select2;
 
 abstract class ModelInterface extends  \yii\db\ActiveRecord
 {
@@ -40,6 +41,25 @@ abstract class ModelInterface extends  \yii\db\ActiveRecord
     public function setVisible(){
         $this->visible = $this->visible ? null : 1;
         $this->getSave();
+    }
+
+    /**
+     * @param form $form
+     * @param int $field
+     * @param ActiveRecord $data
+     * @param string $placeholder
+     * @param string $size
+     * 
+     */
+    public function select2($form, $field, $data, $placeholder = '', $size = 'sm'){
+        echo $form->field($this, $field)->widget(Select2::classname(), [
+            'data' => $data,
+            'options' => ['placeholder' => $placeholder],
+            'size' => $size,
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]);
     }
 
     public function existsId()

@@ -12,6 +12,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
 
+date_default_timezone_set('Asia/Yekaterinburg');
 /**
  * ContractController implements the CRUD actions for Contract model.
  */
@@ -46,7 +47,7 @@ class ContractController extends Controller
         Url::remember();
         if ($model->load($this->request->post())) {
             try {
-                $model->date_ct = strtotime('now');
+                // $model->date_ct = strtotime('now');
                 if($model->getSave()  && $model->service){
                     $service = new ContractService();
                     $service->service_list = $model->service;

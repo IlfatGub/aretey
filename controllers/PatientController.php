@@ -3,12 +3,15 @@
 namespace app\controllers;
 
 use app\models\Patient;
+use app\models\PatientSearch;
 use kartik\form\ActiveForm;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
+date_default_timezone_set('Asia/Yekaterinburg');
 
 /**
  * PatientController implements the CRUD actions for Patient model.
@@ -45,9 +48,8 @@ class PatientController extends Controller
     public function actionIndex($ajax = null, $id_patient = null, $id_patient_representative = null, $type = null)
     {
         $model = new Patient();
-        // echo '<pre>'; print_r($this->request->post()); echo '</pre>'; die();
-        if ($model->load($this->request->post())) {
 
+        if ($model->load($this->request->post())) {
             if(!$model->validate() && Yii::$app->request->isAjax){
                 Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
                 return \yii\widgets\ActiveForm::validate($model);
@@ -72,27 +74,17 @@ class PatientController extends Controller
             return $this->redirect(['index']);
         }
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => Patient::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
+        $searchModel = new PatientSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
         $data = [
             'dataProvider' => $dataProvider,
             'model' => $model,
         ];
 
-        if ($ajax)
+        if ($ajax){
             return $this->renderAjax('index', $data);
+        }
 
         return $this->render('index', $data);
     }

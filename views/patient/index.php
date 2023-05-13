@@ -8,6 +8,7 @@ use yii\grid\GridView;
 
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
+/** @var app\models\PatientSearch $searchModel  */
 
 ?>
 <div class="patient-index">
@@ -22,13 +23,14 @@ use yii\grid\GridView;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             // 'id',
-            // 'surname',
+            'surname',
             'name',
             'patronymic',
-            'fullname',
+            // 'fullname',
             'address_city',
             'address_street',
             'address_home',
