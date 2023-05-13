@@ -36,7 +36,7 @@ class Prices extends ModelInterface
     public function rules()
     {
         return [
-            [['name', 'category', 'code', 'type', 'biom'], 'required'],
+            [['name', 'category'], 'required'],
             [['name', 'type', 'biom'], 'string'],
             [['price', 'count', 'deleted'], 'integer'],
             [['category', 'code', 'time'], 'string', 'max' => 255],

@@ -150,6 +150,7 @@ class ContractController extends Controller
      */
     public function actionDelete($id)
     {
+
         $this->findModel($id)->setVisible();
 
         return $this->redirect(Yii::$app->request->referrer);

@@ -50,6 +50,7 @@ class PatientController extends Controller
         $model = new Patient();
 
         if ($model->load($this->request->post())) {
+
             if(!$model->validate() && Yii::$app->request->isAjax){
                 Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
                 return \yii\widgets\ActiveForm::validate($model);
@@ -79,6 +80,7 @@ class PatientController extends Controller
 
         $data = [
             'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
             'model' => $model,
         ];
 
@@ -158,7 +160,7 @@ class PatientController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $this->findModel($id)->setVisible();
 
         return $this->redirect(['index']);
     }

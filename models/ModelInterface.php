@@ -39,7 +39,7 @@ abstract class ModelInterface extends  \yii\db\ActiveRecord
     }
 
     public function setVisible(){
-        $this->visible = $this->visible ? null : 1;
+        $this->visible = isset($this->visible) ? 1 : 1;
         $this->getSave();
     }
 
@@ -48,7 +48,7 @@ abstract class ModelInterface extends  \yii\db\ActiveRecord
      * @param int $field
      * @param ActiveRecord $data
      * @param string $placeholder
-     * @param string $size
+     * @param ActiveRecord $size
      * 
      */
     public function select2($form, $field, $data, $placeholder = '', $size = 'sm'){

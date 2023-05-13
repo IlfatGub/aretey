@@ -3,6 +3,7 @@
 use app\models\ContractService;
 use app\models\Patient;
 use app\models\Prices;
+use Faker\Core\DateTime;
 use kartik\date\DatePicker;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
@@ -23,7 +24,7 @@ $service->id_contract = $id;
 
 $model->service = $id ? $service->getServieByContract() : null; // указываем услуги
 
-$model->date_ct = date('Y-m-d'); // задаем дату
+$model->date_ct = date('Y-m-d H:i:s'); // задаем дату
 $model->id_patient = $id_patient ?? $model->id_patient; // Задаем пациента
 $model->id_patient_representative = $id_patient_representative ?? $model->id_patient_representative; // Задаем законного представителя
 
@@ -63,7 +64,7 @@ $patient_list = ArrayHelper::map(Patient::find()->orderBy(['fullname' => SORT_AS
     </div>
     <div class="row">
         <div class="col-4">
-            <?= $form->field($model, 'date_ct')->widget(DatePicker::classname(), [
+            <?= $form->field($model, 'date_ct')->widget(DateTime::classname(), [
                 'options' => ['placeholder' => 'Дата начала'],
                 'size' => 'sm',
                 'pluginOptions' => [
@@ -76,7 +77,7 @@ $patient_list = ArrayHelper::map(Patient::find()->orderBy(['fullname' => SORT_AS
         </div>
         <div class="col-8">
             <?php echo $form->field($model, 'service')->widget(Select2::classname(), [
-                'data' => ArrayHelper::map(Prices::find()->orderBy(['category' => SORT_ASC])->all(), 'id', 'service'),
+                'data' => ArrayHelper::map(Prices::find()->orderBy(['category' => SORT_ASC])->all(), 'id', 'service', 'category'),
                 'size' => 'sm',
                 'theme' => Select2::THEME_KRAJEE,
                 'options' => ['placeholder' => 'Услуги', 'multiple' => true, 'autocomplete' => 'off'],

@@ -117,6 +117,9 @@ class ContractSerach extends Contract
             $query->andFilterWhere(['>=', 'date_ct', strtotime($this->date_ct_to . '00:00:00')])
                 ->andFilterWhere(['<=', 'date_ct', strtotime($this->date_ct_do . '23:59:59')]);
 
+        $query->andFilterWhere(['is', 'contract.visible', new \yii\db\Expression('null')]);
+
+
         $query->orderBy(['date_ct' => SORT_DESC]);
         
         return $dataProvider;
