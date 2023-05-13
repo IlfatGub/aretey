@@ -1,8 +1,10 @@
 <?php
 
+use app\components\TypeheadWidget;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
+use yii\helpers\ArrayHelper;
 
 /** @var yii\web\View $this */
 /** @var app\models\Patient $model */
@@ -13,8 +15,13 @@ $type = $_GET['type'] ?? null;
 $ajax = $_GET['ajax'] ?? null;
 // $id_patient_representative = $_GET['id_patient_representative'] ?? null;
 
-echo '<pre>'; print_r($_GET); echo '</pre>';
+$patient = $model::find()->all();
+$city = $model->arrayFilter($patient, 'address_city');
+$street = $model->arrayFilter($patient, 'address_street');
+$document = $model->arrayFilter($patient, 'document');
+$passport_issued = $model->arrayFilter($patient, 'passport_issued');
 ?>
+
 <div class="patient-form <?= $ajax ? 'fs-8': ''?>">
 
     <?php $form = ActiveForm::begin([
@@ -54,10 +61,10 @@ echo '<pre>'; print_r($_GET); echo '</pre>';
     <?php if ($type <> 2) : ?>
         <div class="row">
             <div class="col-4">
-                <?= $form->field($model, 'address_city')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Населенный пункт'])->label() ?>
+                <?= TypeheadWidget::widget(['form' => $form, 'model' => $model, 'field' => 'address_city', 'local' => $city, 'placeholder' => 'Населенный пункт']) ?>
             </div>
             <div class="col-4">
-                <?= $form->field($model, 'address_street')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Улица'])->label() ?>
+            <?= TypeheadWidget::widget(['form' => $form, 'model' => $model, 'field' => 'address_street', 'local' => $street, 'placeholder' => 'Улица']) ?>
             </div>
             <div class="col-2">
                 <?= $form->field($model, 'address_home')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Дом'])->label() ?>
@@ -70,7 +77,7 @@ echo '<pre>'; print_r($_GET); echo '</pre>';
 
     <div class="row">
         <div class="col-3">
-            <?= $form->field($model, 'document')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Документ'])->label() ?>
+            <?= TypeheadWidget::widget(['form' => $form, 'model' => $model, 'field' => 'document', 'local' => $document, 'placeholder' => 'Документ']) ?>
         </div>
         <div class="col">
             <?= $form->field($model, 'passport_serial')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Серия'])->label() ?>
@@ -79,7 +86,7 @@ echo '<pre>'; print_r($_GET); echo '</pre>';
             <?= $form->field($model, 'passport_number')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Номер'])->label() ?>
         </div>
         <div class="col-5">
-            <?= $form->field($model, 'passport_issued')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'placeholder' => 'Когда, кем выдано'])->label() ?>
+            <?= TypeheadWidget::widget(['form' => $form, 'model' => $model, 'field' => 'passport_issued', 'local' => $passport_issued, 'placeholder' => 'Когда, кем выдано']) ?>
         </div>
     </div>
 

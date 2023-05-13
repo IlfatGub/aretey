@@ -96,4 +96,11 @@ class Patient extends ModelInterface
     public function getPatientList(){
         return ArrayHelper::map($this::find()->where(['visible' => null])->all(), 'id', 'fullname');
     }
+
+    public function arrayFilter($data, $field){
+        $_var = ArrayHelper::map($data, 'id', $field);
+        $_var = array_unique(array_filter($_var, static function($var){return $var !== null;}));
+        sort($_var);
+        return $_var;
+    }
 }
