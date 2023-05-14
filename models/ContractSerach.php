@@ -129,8 +129,7 @@ class ContractSerach extends Contract
 
         $query->andFilterWhere(['is', 'contract.visible', new \yii\db\Expression('null')]);
 
-
-        $query->orderBy(['date_ct' => SORT_DESC]);
+        // $query->orderBy(['date_ct' => SORT_DESC]);
         
         return $dataProvider;
     }
