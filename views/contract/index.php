@@ -61,6 +61,9 @@ $patinet_list = $patient->PatientList;
             [
                 'attribute' => 'name',
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],
+                'content'=>function($data){
+                    return Html::a($data->name, Url::toRoute(['update', 'id' => $data->id]))  ;
+                },
             ],
             // [
             //     'attribute' => 'patient_surname',
@@ -87,7 +90,10 @@ $patinet_list = $patient->PatientList;
                 'attribute' => 'patient_fullname',
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],
                 'contentOptions' => ['class' => 'table_class col-3'],
-                'value' => 'patient.fullname',
+                // 'value' => 'patient.fullname',
+                'content'=>function($data){
+                    return Html::a($data->patient->fullname, Url::toRoute(['patient/update', 'id' => $data->id_patient]))  ;
+                },
                 'label' => 'ФИО',
             ],            
             [
@@ -126,8 +132,8 @@ $patinet_list = $patient->PatientList;
             // ],
             [
                 'class' => ActionColumn::className(),
-                'contentOptions' => ['style' => 'width:65px;'],
-                'template' => '{update} {delete} {download}',
+                'contentOptions' => ['style' => 'width:25px;'],
+                'template' => '{download}',
                 'urlCreator' => function ($action, Contract $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                 },

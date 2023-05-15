@@ -24,8 +24,10 @@ use yii\grid\GridView;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'tableOptions' => [
+            'class' => 'table table-hover table-bordered table-sm cl-black fs-8'
+        ],
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
             // 'id',
             'surname',
             'name',
