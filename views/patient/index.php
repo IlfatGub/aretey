@@ -46,9 +46,8 @@ use yii\grid\GridView;
             'brithday',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Patient $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                'contentOptions' => ['style' => 'width:25px;'],
+                'template' => '{update}{delete}',
             ],
         ],
     ]); ?>

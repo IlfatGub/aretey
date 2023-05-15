@@ -61,7 +61,6 @@ class ContractSerach extends Contract
             'query' => $query,
         ]);
 
-                
         $dataProvider->sort->attributes['patient_role'] = [
             'asc' => [Patient::tableName().'.phone' => SORT_ASC],
             'desc' => [Patient::tableName().'.phone' => SORT_DESC],
@@ -125,6 +124,9 @@ class ContractSerach extends Contract
                 ->andFilterWhere(['<=', 'date_ct', strtotime($this->date_ct_do . '23:59:59')]);
 
         $query->andFilterWhere(['is', 'contract.visible', new \yii\db\Expression('null')]);
+
+        if(!$_GET['sort'])
+            $query->orderBy(['date_ct' => SORT_DESC]);
 
         return $dataProvider;
     }
