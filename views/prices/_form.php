@@ -27,11 +27,11 @@ $category = $model::find()->distinct('category')->select('category')->column();
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="row">
-        <div class="col-5"><?= $form->field($model, 'name')->textInput(['class' => 'form-control']) ?></div>
+        <div class="col-5"><?= $form->field($model, 'name')->textInput(['class' => 'form-control form-control-sm']) ?></div>
         <div class="col-3">
             <?= TypeheadWidget::widget(['form' => $form, 'model' => $model, 'field' => 'category', 'local' => $category, 'placeholder' => 'Категория']) ?>
         </div>
-        <div class="col-3"><?= $form->field($model, 'price')->textInput(['type' => 'number', 'class' => 'form-control']) ?></div>
+        <div class="col-3"><?= $form->field($model, 'price')->textInput(['type' => 'number', 'class' => 'form-control  form-control-sm']) ?></div>
         <div class="col-1">
             <label for="" style="color:inherit !important"> - </label>
             <div class="form-group">

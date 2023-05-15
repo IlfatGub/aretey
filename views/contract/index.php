@@ -18,6 +18,14 @@ $patinet_list = $patient->PatientList;
 
 $ajax = $_GET['ajax'] ?? null;
 ?>
+<?php if($ajax): ?>
+<style>
+    .summary{
+        display: none !important;
+    }
+</style>
+<?php endif; ?>
+
 
 <div class="contract-index">
     <?php if(!$ajax): ?>
