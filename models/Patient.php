@@ -105,7 +105,7 @@ class Patient extends ModelInterface
     }
 
     public function existsContract(){
-        return Contract::find()->where(['id_patient' => $this->id])->exists();
+        return Contract::find()->where(['id_patient' => $this->id])->andFilterWhere(['is', 'visible', new \yii\db\Expression('null')])->exists();
     }
 
     public function getContract(){
