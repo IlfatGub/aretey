@@ -103,4 +103,12 @@ class Patient extends ModelInterface
         sort($_var);
         return $_var;
     }
+
+    public function existsContract(){
+        return Contract::find()->where(['id_patient' => $this->id])->exists();
+    }
+
+    public function getContract(){
+        return Contract::find()->where(['id_patient' => $this->id])->all();
+    }
 }

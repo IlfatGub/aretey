@@ -94,4 +94,5 @@ $passport_issued = $model->arrayFilter($patient, 'passport_issued');
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>
     <?php ActiveForm::end(); ?>
+
 </div>

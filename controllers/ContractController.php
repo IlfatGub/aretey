@@ -43,7 +43,7 @@ class ContractController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($ajax = null, $patient_id = null)
     {
         $model = new Contract();
         Url::remember();
@@ -64,14 +64,19 @@ class ContractController extends Controller
             }
         }
 
-        $searchModel = new ContractSerach();
+        $searchModel = new ContractSerach(['patient_id' => $patient_id]);
         $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('index', [
+        $data =  [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'model' => $model,
-        ]);
+        ];
+
+        if ($ajax)
+            return $this->renderAjax('index', $data);
+
+        return $this->render('index', $data);
     }
 
     public function actionDownload($id)

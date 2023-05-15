@@ -15,18 +15,22 @@ use yii\grid\GridView;
 
 $patient = new Patient();
 $patinet_list = $patient->PatientList;
+
+$ajax = $_GET['ajax'] ?? null;
 ?>
 
 <div class="contract-index">
+    <?php if(!$ajax): ?>
     <div class="contract-create">
         <?= $this->render('_form', [
             'model' => $model,
         ]) ?>
     </div>
+    <?php endif; ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        'filterModel' => !$ajax ? $searchModel : null,
         'tableOptions' => [
             'class' => 'table table-hover table-bordered table-sm fs-10'
         ],

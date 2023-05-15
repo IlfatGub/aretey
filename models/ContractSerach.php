@@ -20,6 +20,7 @@ class ContractSerach extends Contract
     public $patient_role;
     public $patient_brithday;
     public $patient_fullname;
+    public $patient_id;
     /**
      * {@inheritdoc}
      */
@@ -28,7 +29,7 @@ class ContractSerach extends Contract
         return [
             [['id', 'id_patient', 'id_patient_representative', 'date_to', 'date_do', 'date_ct', 'visible'], 'safe'],
             [['name', 'date_ct_to', 'date_ct_do'], 'safe'],
-            [['patient_patronymic', 'patient_role', 'patient_surname', 'patient_brithday', 'patient_name', 'patient_name','patient_fullname','date_range'], 'safe'],
+            [['patient_patronymic', 'patient_role', 'patient_surname', 'patient_brithday', 'patient_name', 'patient_name','patient_fullname','date_range','patient_id'], 'safe'],
         ];
     }
 
@@ -111,17 +112,13 @@ class ContractSerach extends Contract
         $query->andFilterWhere(['like', Patient::tableName().'.surname', $this->patient_surname]);
         $query->andFilterWhere(['like', Patient::tableName().'.name', $this->patient_name]);
         $query->andFilterWhere(['like', Patient::tableName().'.fullname', $this->patient_fullname]);
+        $query->andFilterWhere(['like', Patient::tableName().'.id', $this->patient_id]);
         $query->andFilterWhere(['like', Patient::tableName().'.patronymic', $this->patient_patronymic]);
         $query->andFilterWhere(['like', 'contract.name', $this->name]);
-        // $query->andFilterWhere(['like', 'patient.fullname', $this->id_patient]);
 
         if ($this->patient_brithday)
             $query->andFilterWhere(['>=', Patient::tableName().'.brithday', strtotime($this->patient_brithday . '00:00:00')])
                 ->andFilterWhere(['<=', Patient::tableName().'.brithday', strtotime($this->patient_brithday . '23:59:59')]);
-
-        // if ($this->date_do)
-        //     $query->andFilterWhere(['>=', 'date_do', strtotime($this->date_do . '00:00:00')])
-        //         ->andFilterWhere(['<=', 'date_do', strtotime($this->date_do . '23:59:59')]);
 
         if ($this->date_ct_to)
             $query->andFilterWhere(['>=', 'date_ct', strtotime($this->date_ct_to . '00:00:00')])
@@ -129,8 +126,6 @@ class ContractSerach extends Contract
 
         $query->andFilterWhere(['is', 'contract.visible', new \yii\db\Expression('null')]);
 
-        // $query->orderBy(['date_ct' => SORT_DESC]);
-        
         return $dataProvider;
     }
 }
