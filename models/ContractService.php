@@ -53,8 +53,11 @@ class ContractService extends ModelInterface
 	{
 		return $this->hasOne(Contract::className(), ['id' => 'id_contract']);
 	}
-
     public function getPrice()
+	{
+		return $this->hasOne(Prices::className(), ['id' => 'id_service']);
+	}
+    public function getPrices()
 	{
 		return $this->hasOne(Prices::className(), ['id' => 'id_service']);
 	}
@@ -66,6 +69,7 @@ class ContractService extends ModelInterface
                 $_service = new ContractService();
                 $_service->id_contract = $this->id_contract;
                 $_service->id_service = $items;
+                $_service->price = Prices::findOne($items)->price;
                 $_service->visible = null;
                 $_service->getSave();
             } catch (\Exception $ex) {
@@ -82,5 +86,15 @@ class ContractService extends ModelInterface
 
     public function getServieByContract(){
         return ArrayHelper::map(self::findAll(['id_contract' => $this->id_contract]), 'id', 'id_service');
+    }
+
+
+    /**
+     * выводим услуги по договору
+     */
+    public function getContratService(){
+        if(ContractService::find()->where(['id_contract' => $this->id_contract])->exists())
+            return ContractService::find()->joinWith(['prices'])->where(['id_contract' => $this->id_contract])->all();
+        return false;
     }
 }

@@ -51,6 +51,7 @@ class ContractController extends Controller
             try {
                 $model->date_ct = strtotime('now');
                 if ($model->getSave()  && $model->service) {
+                    // Добавляем услуги
                     $service = new ContractService();
                     $service->service_list = $model->service;
                     $service->id_contract = $model->id;

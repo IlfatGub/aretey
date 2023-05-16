@@ -16,6 +16,7 @@ class m230507_144844_create_contract_service_table extends Migration
             'id' => $this->primaryKey(),
             'id_contract' => $this->smallInteger()->notNull()->comment('Договор'),
             'id_service' => $this->smallInteger()->notNull()->comment('Услуга'),
+            'price' => $this->Integer()->notNull()->comment('Цена'),
             'visible' => $this->smallInteger()->null()->defaultValue(null)->comment('Видимость'),
         ]);
 

@@ -1,9 +1,13 @@
 <?php
 
+use app\models\ContractService;
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
 /** @var app\models\Contract $model */
+$id = $_GET['id'] ?? null;
+
+$_cs = new ContractService(['id_contract' => $id]);
 ?>
 <div class="contract-update">
     <?= $this->render('_form', [
@@ -13,6 +17,7 @@ use yii\helpers\Html;
 <?php $p = $model->patient; ?>
 <?php $pe = $model->representative; ?>
 <hr>
+<div class="p-4">
 <table class="table table-sm table-bordered border-primary" style="background: white;">
   <thead>
     <tr>
@@ -33,7 +38,7 @@ use yii\helpers\Html;
       <td><?= $pe->brithday ?></td>
     </tr>
     <tr>
-      <th scope="row">Адрес Регистрации</th>
+      <th scope="row">Документ</th>
       <td><?= $p->address_city.', '. $p->address_street.', '. $p->address_home.', '.$p->address_room ?></td>
       <td><?= $pe->address_city ? $pe->address_city.', '. $pe->address_street.', '. $pe->address_home.', '.$pe->address_room : ''?></td>
     </tr>
@@ -49,5 +54,29 @@ use yii\helpers\Html;
     </tr>
   </tbody>
 </table>
+
+</div>
+
+<div class="p-4">
+<table class="table table-sm table-bordered border-primary" style="background: white;">
+  <thead>
+    <tr>
+      <th scope="col">Категория</th>
+      <th scope="col">Услуга</th>
+      <th scope="col">Цена</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php foreach($_cs->getContratService() as $item): ?>
+    <tr>
+      <td><?= $item->prices->category ?></td>
+      <td><?= $item->prices->name ?></td>
+      <td><?= $item->price ?></td>
+    </tr>
+    <?php endforeach; ?>
+  </tbody>
+</table>
+
+</div>
 
 </div>
