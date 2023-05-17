@@ -267,7 +267,7 @@ class ContractController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Contract::find(['id' => $id])->joinWith(['patient', 'representative'])->one()) !== null) {
+        if (($model = Contract::find()->where(['contract.id' => $id])->joinWith(['patient', 'representative'])->one()) !== null) {
             return $model;
         }
 
