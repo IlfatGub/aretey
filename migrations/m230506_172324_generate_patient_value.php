@@ -33,7 +33,7 @@ class m230506_172324_generate_patient_value extends Migration
                 'phone' => $faker->phoneNumber(),
                 'parent_id' => '',
                 'brithday' => strtotime($faker->date('Y-m-d')),
-                'visible' => null,  
+                'deleted' => null,  
             ]);
         }
         

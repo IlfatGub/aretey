@@ -5,6 +5,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 
 /** @var yii\web\View $this */
 /** @var app\models\Patient $model */
@@ -95,6 +96,19 @@ $patronymic = $model->arrayFilter($patient, 'patrronymic');
 
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
+
+        <?php if (Yii::$app->controller->action->id == 'update') : ?>
+            <?=
+            Html::a('Удалить', ['delete', 'id' => $_GET['id']], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => 'Вы уверены, что хотите удалить этот элемент?',
+                    'method' => 'post',
+                ],
+            ])
+            ?>
+        <?php endif; ?>
+
     </div>
     <?php ActiveForm::end(); ?>
 

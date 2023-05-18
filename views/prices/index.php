@@ -17,30 +17,35 @@ use yii\grid\GridView;
         'model' => $model,
     ]) ?>
 
+    <?= Html::a('Показать все(вместе с удаленными)', ['index', 'record' => 'all'], ['class' => 'btn btn-sm btn-primary',])  ?>
+    <?= Html::a('Показать активные', ['index',], ['class' => 'btn btn-sm btn-primary',])  ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'tableOptions' => [
-            'class' => 'table table-hover table-bordered table-striped table-sm'
+            'class' => 'table table-hover table-bordered table-sm color-black'
         ],
+        
+	'rowOptions' => function($model, $key, $index, $grid) {
+			return ['class' => $model->deleted ? 'bgr-red' : ''];},
         'columns' => [
             // ['class' => 'yii\grid\SerialColumn'],
             // 'id',
             [
-                'attribute'=>'name',
+                'attribute' => 'name',
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],
                 'contentOptions' => ['class' => 'col-7'],
                 'headerOptions' => [],
-                'content'=>function($data){
+                'content' => function ($data) {
                     return $data->getTextarea('name');
                 }
             ],
             [
-                'attribute'=>'category',
+                'attribute' => 'category',
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],
-                'contentOptions' => ['class' => 'col-3'],
-                'content'=>function($data){
+                'contentOptions' => ['class' => ''],
+                'content' => function ($data) {
                     return $data->getTextarea('category');
                 }
             ],
@@ -59,10 +64,10 @@ use yii\grid\GridView;
             //     }
             // ],
             [
-                'attribute'=>'price',
+                'attribute' => 'price',
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],
-                'contentOptions' => ['class' => 'col-1'],
-                'content'=>function($data){
+                'contentOptions' => ['class' => ''],
+                'content' => function ($data) {
                     return $data->getInput('price');
                 }
             ],
@@ -82,7 +87,8 @@ use yii\grid\GridView;
             // ],
             [
                 'class' => ActionColumn::className(),
-                'template' => ' {update} {delete} {link}',
+                'contentOptions' => ['style' => 'width:45px; text-align:center;'],
+                'template' => ' {delete} ',
                 // 'urlCreator' => function ($action, Contract $model, $key, $index, $column) {
                 //     return Url::toRoute([$action, 'id' => $model->id]);
                 //  },

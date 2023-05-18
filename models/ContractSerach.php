@@ -27,7 +27,7 @@ class ContractSerach extends Contract
     public function rules()
     {
         return [
-            [['id', 'id_patient', 'id_patient_representative', 'date_to', 'date_do', 'date_ct', 'visible'], 'safe'],
+            [['id', 'id_patient', 'id_patient_representative', 'date_to', 'date_do', 'date_ct', 'deleted'], 'safe'],
             [['name', 'date_ct_to', 'date_ct_do'], 'safe'],
             [['patient_patronymic', 'patient_role', 'patient_surname', 'patient_brithday', 'patient_name', 'patient_name','patient_fullname','date_range','patient_id'], 'safe'],
         ];
@@ -104,7 +104,7 @@ class ContractSerach extends Contract
 
         $query->andFilterWhere([
             'id_patient_representative' => $this->id_patient_representative,
-            'visible' => $this->visible,
+            'deleted' => $this->deleted,
         ]);
 
         $query->andFilterWhere(['like', Patient::tableName().'.phone', $this->patient_role]);
@@ -123,7 +123,7 @@ class ContractSerach extends Contract
             $query->andFilterWhere(['>=', 'date_ct', strtotime($this->date_ct_to . '00:00:00')])
                 ->andFilterWhere(['<=', 'date_ct', strtotime($this->date_ct_do . '23:59:59')]);
 
-        $query->andFilterWhere(['is', 'contract.visible', new \yii\db\Expression('null')]);
+        $query->andFilterWhere(['is', 'contract.deleted', new \yii\db\Expression('null')]);
 
         if(!$_GET['sort'])
             $query->orderBy(['date_ct' => SORT_DESC]);

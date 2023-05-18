@@ -20,7 +20,7 @@ class m230505_164358_create_contract_table extends Migration
             'date_do' => $this->integer()->null()->defaultValue(null)->comment('Дата окончания'),
             'date_ct' => $this->integer()->notNull()->comment('Дата'),
             'name' => $this->string(255)->notNull()->comment('Наименование договора'),
-            'visible' => $this->smallInteger()->null()->defaultValue(null)->comment('Видимость'),
+            'deleted' => $this->smallInteger()->null()->defaultValue(null)->comment('Видимость'),
         ]);
 
         echo shell_exec("php yii gii/model --tableName=contract --modelClass=Contract --interactive=0 --overwrite=1 --ns=app\\models");

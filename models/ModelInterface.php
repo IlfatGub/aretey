@@ -39,7 +39,7 @@ abstract class ModelInterface extends  \yii\db\ActiveRecord
     }
 
     public function setVisible(){
-        $this->visible = isset($this->visible) ? 1 : 1;
+        $this->deleted = isset($this->deleted) ? null : 1;
         $this->getSave();
     }
 

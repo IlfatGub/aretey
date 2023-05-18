@@ -137,7 +137,7 @@ class PricesController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $this->findModel($id)->setVisible();
 
         return $this->redirect(['index']);
     }

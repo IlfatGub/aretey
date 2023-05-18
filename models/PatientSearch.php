@@ -17,7 +17,7 @@ class PatientSearch extends Patient
     public function rules()
     {
         return [
-            [['id', 'parent_id', 'brithday', 'visible'], 'integer'],
+            [['id', 'parent_id', 'brithday', 'deleted'], 'integer'],
             [['surname', 'name', 'patronymic', 'fullname', 'address_city', 'address_street', 'address_home', 'address_room', 'document', 'passport_serial', 'passport_number', 'passport_issued', 'phone'], 'safe'],
         ];
     }
@@ -61,7 +61,7 @@ class PatientSearch extends Patient
             'id' => $this->id,
             'parent_id' => $this->parent_id,
             'brithday' => $this->brithday,
-            'visible' => $this->visible,
+            'deleted' => $this->deleted,
         ]);
 
         $query->andFilterWhere(['like', 'surname', $this->surname])
@@ -77,6 +77,8 @@ class PatientSearch extends Patient
             ->andFilterWhere(['like', 'passport_number', $this->passport_number])
             ->andFilterWhere(['like', 'passport_issued', $this->passport_issued])
             ->andFilterWhere(['like', 'phone', $this->phone]);
+
+        $query->andFilterWhere(['is', 'deleted', new \yii\db\Expression('null')]);
 
         return $dataProvider;
     }

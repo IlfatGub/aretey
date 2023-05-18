@@ -38,7 +38,7 @@ class Contract extends ModelInterface
     {
         return [
             [['id_patient', 'date_ct', 'name'], 'required'],
-            [['id_patient', 'id_patient_representative',  'name', 'visible'], 'integer'],
+            [['id_patient', 'id_patient_representative',  'name', 'deleted'], 'integer'],
             [['date_to', 'date_do', 'service', 'date_ct', 'date_range'], 'safe'],
         ];
     }
@@ -56,7 +56,7 @@ class Contract extends ModelInterface
             'date_do' => 'Дата окончания',
             'date_ct' => 'Дата создания',
             'name' => 'Договора №',
-            'visible' => 'Видмость',
+            'deleted' => 'Видмость',
             'service' => 'Услуга',
         ];
     }

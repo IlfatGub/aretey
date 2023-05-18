@@ -32,7 +32,7 @@ class ContractService extends ModelInterface
     {
         return [
             [['id_contract', 'id_service'], 'required'],
-            [['id_contract', 'id_service', 'visible'], 'integer'],
+            [['id_contract', 'id_service', 'deleted'], 'integer'],
         ];
     }
 
@@ -45,7 +45,7 @@ class ContractService extends ModelInterface
             'id' => 'ID',
             'id_contract' => 'Id Contract',
             'id_service' => 'Id Service',
-            'visible' => 'Visible',
+            'deleted' => 'deleted',
         ];
     }
 
@@ -70,7 +70,7 @@ class ContractService extends ModelInterface
                 $_service->id_contract = $this->id_contract;
                 $_service->id_service = $items;
                 $_service->price = Prices::findOne($items)->price;
-                $_service->visible = null;
+                $_service->deleted = null;
                 $_service->getSave();
             } catch (\Exception $ex) {
                 echo '<pre>'; print_r($ex); echo '</pre>';

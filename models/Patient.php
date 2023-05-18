@@ -94,7 +94,7 @@ class Patient extends ModelInterface
     }
 
     public function getPatientList(){
-        return ArrayHelper::map($this::find()->where(['visible' => null])->all(), 'id', 'fullname');
+        return ArrayHelper::map($this::find()->where(['deleted' => null])->all(), 'id', 'fullname');
     }
 
     public function arrayFilter($data, $field){
@@ -105,7 +105,7 @@ class Patient extends ModelInterface
     }
 
     public function existsContract(){
-        return Contract::find()->where(['id_patient' => $this->id])->andFilterWhere(['is', 'visible', new \yii\db\Expression('null')])->exists();
+        return Contract::find()->where(['id_patient' => $this->id])->andFilterWhere(['is', 'deleted', new \yii\db\Expression('null')])->exists();
     }
 
     public function getContract(){

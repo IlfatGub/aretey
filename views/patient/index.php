@@ -46,8 +46,8 @@ use yii\grid\GridView;
             'brithday',
             [
                 'class' => ActionColumn::className(),
-                'contentOptions' => ['style' => 'width:25px;'],
-                'template' => '{update}{delete}',
+                'contentOptions' => ['style' => 'width:20px;'],
+                'template' => '{update}',
             ],
         ],
     ]); ?>

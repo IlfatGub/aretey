@@ -40,6 +40,8 @@ class PricesSearch extends Prices
      */
     public function search($params)
     {
+        $record = $_GET['record'] ?? null;
+
         $query = Prices::find();
 
         // add conditions that should always apply here
@@ -70,6 +72,9 @@ class PricesSearch extends Prices
             ->andFilterWhere(['like', 'time', $this->time])
             ->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'biom', $this->biom]);
+
+        if($record !== 'all')
+            $query->andFilterWhere(['is', 'deleted', new \yii\db\Expression('null')]);
 
         return $dataProvider;
     }
