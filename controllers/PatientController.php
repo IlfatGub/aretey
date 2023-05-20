@@ -59,7 +59,8 @@ class PatientController extends Controller
             try {
                 $model->fullname = $model->surname . ' ' . $model->name . ' ' . $model->patronymic;
                 $model->brithday = strtotime($model->brithday);
-                $model->getSave();
+                if($model->getSave())
+                    return $this->redirect('index');
             } catch (\Exception $ex) {
                 // $result = (['result' =>false, 'message' => 'Ошибка: '. $ex->getMessage()]);
                 echo '<pre>'; print_r($ex);echo '</pre>';  die();

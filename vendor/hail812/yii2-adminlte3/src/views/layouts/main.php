@@ -26,7 +26,7 @@ $this->registerJsFile($publishedRes[1].'/control_sidebar.js', ['depends' => '\ha
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-fixed sidebar-collapse">
 <?php $this->beginBody() ?>
 
 <div class="wrapper">

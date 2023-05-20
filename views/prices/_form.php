@@ -16,11 +16,10 @@ $category = $model::find()->distinct('category')->select('category')->column();
 ?>
 
 <style>
-    body {
+    /* body {
         background: white !important;
-    }
+    } */
 </style>
-
 
 <div class="prices-form">
 

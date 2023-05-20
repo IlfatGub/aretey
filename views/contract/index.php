@@ -5,10 +5,12 @@ use app\models\Patient;
 use kartik\date\DatePicker;
 use kartik\daterange\DateRangePicker;
 use kartik\export\ExportMenu;
+use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Php;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use yii\widgets\ListView;
 
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -171,13 +173,12 @@ $ajax = $_GET['ajax'] ?? null;
         'columns' => $column,
     ]); 
     
+    // Renders a export dropdown menu
+    echo ExportMenu::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => $column
+    ]);
 
-        // Renders a export dropdown menu
-        echo ExportMenu::widget([
-            'dataProvider' => $dataProvider,
-            'columns' => $column
-        ]);
-    
     ?>
 
     

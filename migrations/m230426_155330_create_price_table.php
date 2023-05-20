@@ -18,7 +18,7 @@ class m230426_155330_create_price_table extends Migration
             'category' => $this->string(255)->notNull()->comment('Категория'),
             'code' => $this->string(255)->defaultValue(null)->comment('Код'),
             'time' => $this->string(255)->defaultValue(null)->comment('Срок'),
-            'price' => $this->smallInteger()->defaultValue(null)->comment('Цена'),
+            'price' => $this->integer()->defaultValue(null)->comment('Цена'),
             'count' => $this->smallInteger()->defaultValue(null)->comment('Количество'),
             'deleted' => $this->smallInteger()->defaultValue(null)->comment('Удален'),
             'type' => $this->text()->defaultValue(null)->comment('Тип услуги'),

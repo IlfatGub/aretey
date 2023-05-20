@@ -2,8 +2,10 @@
 
 namespace app\controllers;
 
+use app\components\NotifyWidget;
 use app\models\Prices;
 use app\models\PricesSearch;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -42,29 +44,16 @@ class PricesController extends Controller
         $model = new Prices();
         if ($model->load($this->request->post())) {
             try {
+                Yii::$app->session->setFlash('error', 'Ticket has already been closed!');
                 $model->getSave();
+                    return $this->redirect('index');
             } catch (\Exception $ex) {
-                echo '<pre>'; print_r($ex); echo '</pre>';
-                die();
+                echo NotifyWidget::widget(['type' => 'danger', 'message' => $ex->getMessage(), 'title' => 'Ошибка. '.Yii::$app->controller->id . '/' . Yii::$app->controller->action->id]);
             }
         }
 
         $searchModel = new PricesSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-
-        // $dataProvider = new ActiveDataProvider([
-        //     'query' => Prices::find(),
-        //     /*
-        //     'pagination' => [
-        //         'pageSize' => 50
-        //     ],
-        //     'sort' => [
-        //         'defaultOrder' => [
-        //             'id' => SORT_DESC,
-        //         ]
-        //     ],
-        //     */
-        // ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
@@ -146,12 +135,13 @@ class PricesController extends Controller
         try {
             $model = Prices::findOne($id);
             $model->$field = $value;
-            if($model->getSave())
+            if($model->getSave('Запись обновлена'))
                 return true;
         } catch (\Exception $ex) {
             echo '<pre>'; print_r($ex); echo '</pre>';
             die();
         }
+        
         return false;
     }
 

@@ -1,3 +1,6 @@
+body {
+    background: #f4f6f9 !important;
+} 
 main > .container {
     padding: 70px 15px 20px;
 }
@@ -111,3 +114,23 @@ a.desc:after {
     border-radius: 0.2rem;
 }
 
+.pagination >li>a{
+    padding: 0px 12px;
+}
+.pagination > .disabled{
+    padding: 4px 12px;
+}
+.pagination >li{
+    border: 1px solid silver !important;
+    padding: 4px 0px;
+}
+.pagination >li:nth-last-child(1) {
+    border-radius: 0 5px 5px 0;
+}
+.pagination >li:nth-child(1) {
+    border-radius: 5px 0 0 5px;
+}
+.pagination >li:hover {
+    background: powderblue;
+    cursor: pointer;
+}

@@ -7,9 +7,10 @@
 
 namespace app\models;
 
-
+use app\components\NotifyWidget;
 use app\models\ShowError;
 use kartik\select2\Select2;
+use Yii;
 
 abstract class ModelInterface extends  \yii\db\ActiveRecord
 {
@@ -19,28 +20,27 @@ abstract class ModelInterface extends  \yii\db\ActiveRecord
 
     //Вывод ошибки при сохранени
     public function getSave($message = 'Запись добавлена'){
-
         if($this->save()){
-            // if ($show)
-                // ShowError::getError('success', $message);
-            // $result = true;
+            Yii::$app->session->setFlash('type_notify', 'success');
+            Yii::$app->session->setFlash('success', $message);
+            // echo NotifyWidget::widget(['type' => 'success', 'message' => $message, 'title' => '']);
             return true;
         }else{
             $error = '';
             foreach ($this->errors as $key => $value) {
-                $error .= '<br>'.$key.': '.$value[0];
+                $error .= $key.': '.$value[0];
             }
-            echo "ModelInterface <pre>";
-            print_r($error);
-            die();
-        }
+            Yii::$app->session->setFlash('type_notify', 'danger');
+            Yii::$app->session->setFlash('danger', $error);
 
-        // return ['result' => $result, 'message' => $message, 'data' => $this];
+            // echo NotifyWidget::widget(['type' => 'danger', 'message' => $error, 'title' => 'Ошибка. '.Yii::$app->controller->id . '/' . Yii::$app->controller->action->id]);
+        }
+        return false;
     }
 
     public function setVisible(){
         $this->deleted = isset($this->deleted) ? null : 1;
-        $this->getSave();
+        $this->getSave('Запись удалена');
     }
 
     /**
