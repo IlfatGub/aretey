@@ -7,9 +7,10 @@
 
 namespace app\models;
 
-
+use app\components\NotifyWidget;
 use app\models\ShowError;
 use kartik\select2\Select2;
+use Yii;
 
 abstract class ModelInterface extends  \yii\db\ActiveRecord
 {
@@ -28,11 +29,14 @@ abstract class ModelInterface extends  \yii\db\ActiveRecord
         }else{
             $error = '';
             foreach ($this->errors as $key => $value) {
-                $error .= '<br>'.$key.': '.$value[0];
+                $error .= $key.': '.$value[0];
             }
-            echo "ModelInterface <pre>";
-            print_r($error);
-            die();
+            // echo "ModelInterface <pre>";
+
+            echo NotifyWidget::widget(['type' => 'danger', 'message' => $error, 'title' => 'Ошибка. '.Yii::$app->controller->id . '/' . Yii::$app->controller->action->id]);
+            
+            // print_r($error);
+            // die();
         }
 
         // return ['result' => $result, 'message' => $message, 'data' => $this];

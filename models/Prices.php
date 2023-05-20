@@ -40,7 +40,8 @@ class Prices extends ModelInterface
             [['name', 'type', 'biom'], 'string'],
             [['price', 'count', 'deleted'], 'integer'],
             [['category', 'code', 'time'], 'string', 'max' => 255],
-            [['code'], 'unique'],
+            // [['code'], 'unique'],
+            [['name', 'category'], 'unique', 'targetAttribute' => ['name', 'category']]
         ];
     }
 
