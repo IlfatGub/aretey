@@ -74,8 +74,8 @@ class Prices extends ModelInterface
         'onchange' => '$.post(" '.Url::toRoute(['edit-field']).'?id='.$this->id.'&field='.$filed.'&value='.'"+encodeURIComponent($(this).val()));']);
     }
 
-    public function getInput($filed){
-        return Html::input($filed == 'time' ? 'times' : $filed, 'string', $this->$filed, ['class' => 'form-control form-control-sm inherit border-none',
+    public function getInput($filed, $type = null){
+        return Html::input($filed == 'time' ? 'times' : $filed, 'string', $this->$filed, ['type' => $type, 'class' => 'form-control form-control-sm inherit border-none',
         'onchange' => '$.post(" '.Url::toRoute(['edit-field']).'?id='.$this->id.'&field='.$filed.'&value='.'"+encodeURIComponent($(this).val()));'
     ]);
     }

@@ -20,31 +20,27 @@ abstract class ModelInterface extends  \yii\db\ActiveRecord
 
     //Вывод ошибки при сохранени
     public function getSave($message = 'Запись добавлена'){
-
         if($this->save()){
-            // if ($show)
-                // ShowError::getError('success', $message);
-            // $result = true;
+            Yii::$app->session->setFlash('type_notify', 'success');
+            Yii::$app->session->setFlash('success', $message);
+            // echo NotifyWidget::widget(['type' => 'success', 'message' => $message, 'title' => '']);
             return true;
         }else{
             $error = '';
             foreach ($this->errors as $key => $value) {
                 $error .= $key.': '.$value[0];
             }
-            // echo "ModelInterface <pre>";
+            Yii::$app->session->setFlash('type_notify', 'danger');
+            Yii::$app->session->setFlash('danger', $error);
 
-            echo NotifyWidget::widget(['type' => 'danger', 'message' => $error, 'title' => 'Ошибка. '.Yii::$app->controller->id . '/' . Yii::$app->controller->action->id]);
-            
-            // print_r($error);
-            // die();
+            // echo NotifyWidget::widget(['type' => 'danger', 'message' => $error, 'title' => 'Ошибка. '.Yii::$app->controller->id . '/' . Yii::$app->controller->action->id]);
         }
-
-        // return ['result' => $result, 'message' => $message, 'data' => $this];
+        return false;
     }
 
     public function setVisible(){
         $this->deleted = isset($this->deleted) ? null : 1;
-        $this->getSave();
+        $this->getSave('Запись удалена');
     }
 
     /**

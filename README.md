@@ -5,10 +5,10 @@ mysqldump -uroot -p aretey > ./aretey.sql
 
 
 
-REQUIREMENTS
+Вопросы
 ------------
 
-The minimum requirement by this project template that your Web server supports PHP 7.4.
+1. Поле документ. Какие документы бывают?
 
 
 INSTALLATION

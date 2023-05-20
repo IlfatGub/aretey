@@ -56,6 +56,7 @@ class ContractController extends Controller
                     $service->service_list = $model->service;
                     $service->id_contract = $model->id;
                     $service->addService();
+                    return $this->redirect('index');
                 }
             } catch (\Exception $ex) {
                 echo '<pre>';
@@ -122,19 +123,6 @@ class ContractController extends Controller
         $table->addCell()->addText('Наименование услуги', ['size' => 8]);
         $table->addCell()->addText('Стоимость', ['size' => 8]);
         foreach ($service_list as $item) {
-
-            // $device_name  = $item->typeDevice->name;
-            // $old_pass = isset($item->old_passport) ? PHP_EOL.'('.$item->old_passport.')' : '';
-
-            // //проверкат на дополнительное оборудование
-            // if ($ram->existsRam()){
-            //     $_rams = $ram->getRamByTehnic();
-            //     $device_name .= ".";
-            //     foreach ($_rams as $_ram) {
-            //         $device_name .= ' + '.$_ram->name.'';
-            //     }
-            // }
-
             $table->addRow();
             $table->addCell()->addText($item->contract->date_to . '/' . $item->contract->date_do, ['size' => 6]);
             $table->addCell()->addText($item->prices->id, ['size' => 6]);
