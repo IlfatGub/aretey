@@ -109,10 +109,12 @@ class ContractController extends Controller
         $table = new Table(array('borderSize' => 0, 'borderColor' => 'black', 'borderTopSize' => 1, 'width' => '100%'));
         $table->getStyle(['width' => 100]);
         $service_list = ContractService::find()
-            ->joinWith(['price'])
+            ->joinWith(['prices'])
             ->joinWith(['contract'])
             ->where(['id_contract' => $id])
             ->all();
+
+        echo '<pre>'; print_r($service_list); echo '</pre>'; die();
 
         $table->addRow();
         $table->addCell()->addText('Дата/ Срок исполнения', ['size' => 8]);
@@ -134,10 +136,10 @@ class ContractController extends Controller
             // }
 
             $table->addRow();
-            $table->addCell()->addText($item->contract->date_to . '/' . $item->contract->date_do, ['size' => 8]);
-            $table->addCell()->addText($item->price->id, ['size' => 8]);
-            $table->addCell()->addText($item->price->name, ['size' => 8]);
-            $table->addCell()->addText($item->price->price, ['size' => 8]);
+            $table->addCell()->addText($item->contract->date_to . '/' . $item->contract->date_do, ['size' => 6]);
+            $table->addCell()->addText($item->prices->id, ['size' => 6]);
+            $table->addCell()->addText($item->prices->name, ['size' => 6]);
+            $table->addCell()->addText($item->prices->price, ['size' => 6]);
         }
 
 
@@ -157,11 +159,8 @@ class ContractController extends Controller
         $templateWord->setValue('p_serial', $model->patient->passport_serial);
         $templateWord->setValue('p_number', $model->patient->passport_number);
         $templateWord->setValue('p_issued', $model->patient->passport_issued);
-        //  $templateWord->setValue('address', '');
         $templateWord->setValue('phone', $model->patient->phone);
         $templateWord->setValue('address', $model->patient->address_city . ' ' . $model->patient->address_street . ' ' . $model->patient->address_home . ' ' . $model->patient->address_room);
-        //  $templateWord->setValue('org_name', '');
-        //  $templateWord->setValue('fio_replace', '');
         $templateWord->setValue('date', $_date);
         $templateWord->setValue('date_to', $_date_to);
         $templateWord->setValue('date_do', $_date_do);
