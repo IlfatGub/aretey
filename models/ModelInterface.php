@@ -35,11 +35,16 @@ abstract class ModelInterface extends  \yii\db\ActiveRecord
         return false;
     }
 
-    public function setErrorFlash($type, $message)
+    public function unsetSessionFlash()
     {
         // Обнуляем
         Yii::$app->session->getFlash(Yii::$app->session->getFlash('type_notify'), null);
         Yii::$app->session->setFlash('type_notify', null);
+    }
+
+    public function setErrorFlash($type, $message)
+    {
+        $this->unsetSessionFlash();
         // Задачем 
         Yii::$app->session->setFlash('type_notify', $type);
         Yii::$app->session->setFlash($type, $message);

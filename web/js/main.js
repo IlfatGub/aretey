@@ -1,5 +1,5 @@
 $(function () {
-    $('.modalButton').click(function(){
+    $('.modalButton').click(function () {
         $('#modal').modal('show')
             .find('#modalContent')
             .load($(this).attr('value'));
@@ -40,21 +40,34 @@ function getUrl(controller, action, content_block, val, val2) {
 
 
 // ------------------------------ Отчет по пользователям -----------------------------------------
-const price_input = document.querySelector('.price-input');
+const price_input = document.querySelectorAll('.price-input');
 
-if (price_input){
-
-    price_input.forEach(function(price) {
-        price.addEventListener('click', function() {
-            let price_id = this.getAttribute('data-id');
-            let id = this.id;
-            let text = this.value;
-            console.log(this);
-            console.log(text);
-            console.log(id);
-            console.log(price_id);
+if (price_input) {
+    price_input.forEach(function (price) {
+        price.addEventListener('change', () => {
+            let price_id = price.getAttribute('data-id');
+            let field = price.id;
+            let text = price.value;
+            jQuery.ajax({
+                type: "GET",
+                url: "/prices/edit-field",
+                data: 'id=' + price_id + "&field=" + field + "&value=" + text,
+                success: function (data) {
+                    let r = JSON.parse(data);
+                        let div = document.createElement('div');
+                        div.className = "notify";
+                        div.innerHTML = r.message;
+                      
+                        document.body.append(div);
+                        setTimeout(() => div.remove(), 3000);
+                    // $(content_block).html(datas;
+                    // $('.progress').hide();
+        
+                    // if (remark_report) remark_report.classList.remove('op03');
+                },
+            });
         });
-    }
+    })
 
 
     // let dp = document.querySelector('#userapp-report-datepicker-kvdate');

@@ -89,7 +89,7 @@ class Prices extends ModelInterface
                 'id' => $filed,
                 'data-id' => $this->id,
                 'class' => 'form-control form-control-sm inherit border-none price-input',
-                'onchange' => '$.post(" ' . Url::toRoute(['edit-field']) . '?id=' . $this->id . '&field=' . $filed . '&value=' . '"+encodeURIComponent($(this).val()));'
+                // 'onchange' => '$.post(" ' . Url::toRoute(['edit-field']) . '?id=' . $this->id . '&field=' . $filed . '&value=' . '"+encodeURIComponent($(this).val()));'
             ]
         );
     }

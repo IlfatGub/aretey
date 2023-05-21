@@ -134,14 +134,17 @@ class PricesController extends Controller
         try {
             $model = Prices::findOne($id);
             $model->$field = $value;
-            if($model->getSave('Запись обновлена'))
-                return true;
+            if($model->getSave('Запись обновлена')){
+                $data = ['result' => true, 'message' => NotifyWidget::widget()];
+                $model->unsetSessionFlash();
+                return json_encode($data);
+            }
         } catch (\Exception $ex) {
-            echo '<pre>'; print_r($ex); echo '</pre>';
-            die();
+            $model->setErrorFlash('danger',  $ex->getMessage());
         }
-        
-        return false;
+        $data = ['result' => false, 'message' => NotifyWidget::widget()];
+        $model->unsetSessionFlash();
+        return json_encode($data);
     }
 
     /**

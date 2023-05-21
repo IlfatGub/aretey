@@ -134,3 +134,17 @@ a.desc:after {
     background: powderblue;
     cursor: pointer;
 }
+.notify {
+    max-width: 650px;
+    bottom: 10px;
+    right: 10px;
+    position: fixed;
+    z-index: 100;
+}
+.a-alert{
+    padding: 15px;
+    border: 1px solid #d6e9c6;
+    border-radius: 4px;
+    color: #3c763d;
+    background-color: #dff0d8;
+}
