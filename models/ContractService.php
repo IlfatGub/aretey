@@ -73,8 +73,8 @@ class ContractService extends ModelInterface
                 $_service->deleted = null;
                 $_service->getSave();
             } catch (\Exception $ex) {
-                echo '<pre>'; print_r($ex); echo '</pre>';
-                die();
+                $this->setErrorFlash('danger', $ex->getMessage());
+                Contract::findOne($this->id_contract)->delete(); // удаляем контракт
             }
         }
     }
@@ -89,12 +89,21 @@ class ContractService extends ModelInterface
     }
 
 
+    public function existsContractService(){
+        return ContractService::find()
+        ->where(['id_contract' => $this->id_contract])
+        ->exists();
+    }
+
     /**
      * выводим услуги по договору
      */
     public function getContratService(){
-        if(ContractService::find()->where(['id_contract' => $this->id_contract])->exists())
-            return ContractService::find()->joinWith(['prices'])->where(['id_contract' => $this->id_contract])->all();
+        if($this->existsContractService())
+            return ContractService::find()
+                ->joinWith(['prices'])
+                ->where(['id_contract' => $this->id_contract])
+                ->all();
         return false;
     }
 }

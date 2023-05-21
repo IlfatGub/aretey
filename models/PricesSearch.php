@@ -73,8 +73,11 @@ class PricesSearch extends Prices
             ->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'biom', $this->biom]);
 
-        if($record !== 'all')
+        if ($record !== 'all')
             $query->andFilterWhere(['is', 'deleted', new \yii\db\Expression('null')]);
+
+        if (!$_GET['sort'])
+            $query->orderBy(['id' => SORT_DESC]);
 
         return $dataProvider;
     }

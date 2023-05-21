@@ -44,11 +44,10 @@ class PricesController extends Controller
         $model = new Prices();
         if ($model->load($this->request->post())) {
             try {
-                Yii::$app->session->setFlash('error', 'Ticket has already been closed!');
-                $model->getSave();
+                $model->getSave('Запись добавлена');
                     return $this->redirect('index');
             } catch (\Exception $ex) {
-                echo NotifyWidget::widget(['type' => 'danger', 'message' => $ex->getMessage(), 'title' => 'Ошибка. '.Yii::$app->controller->id . '/' . Yii::$app->controller->action->id]);
+                $model->setErrorFlash('danger', $ex->getMessage());
             }
         }
 

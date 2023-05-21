@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -19,26 +20,33 @@ abstract class ModelInterface extends  \yii\db\ActiveRecord
     public $_field_val;
 
     //Вывод ошибки при сохранени
-    public function getSave($message = 'Запись добавлена'){
-        if($this->save()){
-            Yii::$app->session->setFlash('type_notify', 'success');
-            Yii::$app->session->setFlash('success', $message);
-            // echo NotifyWidget::widget(['type' => 'success', 'message' => $message, 'title' => '']);
+    public function getSave($message = 'Запись добавлена')
+    {
+        if ($this->save()) {
+            $this->setErrorFlash('success', $message);
             return true;
-        }else{
+        } else {
             $error = '';
             foreach ($this->errors as $key => $value) {
-                $error .= $key.': '.$value[0];
+                $error .= $key . ': ' . $value[0];
             }
-            Yii::$app->session->setFlash('type_notify', 'danger');
-            Yii::$app->session->setFlash('danger', $error);
-
-            // echo NotifyWidget::widget(['type' => 'danger', 'message' => $error, 'title' => 'Ошибка. '.Yii::$app->controller->id . '/' . Yii::$app->controller->action->id]);
+            $this->setErrorFlash('danger', $error);
         }
         return false;
     }
 
-    public function setVisible(){
+    public function setErrorFlash($type, $message)
+    {
+        // Обнуляем
+        Yii::$app->session->getFlash(Yii::$app->session->getFlash('type_notify'), null);
+        Yii::$app->session->setFlash('type_notify', null);
+        // Задачем 
+        Yii::$app->session->setFlash('type_notify', $type);
+        Yii::$app->session->setFlash($type, $message);
+    }
+
+    public function setVisible()
+    {
         $this->deleted = isset($this->deleted) ? null : 1;
         $this->getSave('Запись удалена');
     }
@@ -51,7 +59,8 @@ abstract class ModelInterface extends  \yii\db\ActiveRecord
      * @param ActiveRecord $size
      * 
      */
-    public function select2($form, $field, $data, $placeholder = '', $size = 'sm'){
+    public function select2($form, $field, $data, $placeholder = '', $size = 'sm')
+    {
         echo $form->field($this, $field)->widget(Select2::classname(), [
             'data' => $data,
             'options' => ['placeholder' => $placeholder],
@@ -67,7 +76,8 @@ abstract class ModelInterface extends  \yii\db\ActiveRecord
         return self::find()->where(['id' => $this->id])->exists();
     }
 
-    public function setVisibleById($vis = null){
+    public function setVisibleById($vis = null)
+    {
         $model = self::findOne(['id' => $this->id]);
         $model->visible = $vis;
         $model->save();
@@ -82,7 +92,8 @@ abstract class ModelInterface extends  \yii\db\ActiveRecord
         }
     }
 
-    public function getById(){
+    public function getById()
+    {
         return self::findOne($this->id);
     }
 
@@ -91,21 +102,22 @@ abstract class ModelInterface extends  \yii\db\ActiveRecord
     {
         $query = self::find()->where(['name' => $this->name]);
 
-        if ($this->_field):
+        if ($this->_field) :
             $model = $query->andWhere([$this->_field => $this->_field_val])->exists();
-        else:
+        else :
             $model = $query->exists();
         endif;
 
         return  $model;
     }
 
-    public function getRecord(){
+    public function getRecord()
+    {
         $query = self::find()->where(['name' => $this->name]);
 
-        if ($this->_field):
+        if ($this->_field) :
             $model = $query->andWhere([$this->_field => $this->_field_val])->one();
-        else:
+        else :
             $model = $query->one();
         endif;
 
@@ -121,7 +133,8 @@ abstract class ModelInterface extends  \yii\db\ActiveRecord
     }
 
     // Устанавливаем видимость записи как видимый
-    public function visibleOn($model = null){
+    public function visibleOn($model = null)
+    {
         $model = isset($model) ? $model : $this->getRecord();
         $model->visible = 1;
         $model->save();
@@ -130,21 +143,25 @@ abstract class ModelInterface extends  \yii\db\ActiveRecord
     }
 
     // Устанавливаем видимость записи как скрытый
-    public function visibleOff(){
+    public function visibleOff()
+    {
         $model = $this->getRecord();
         $model->visible = null;
         $model->save();
     }
 
-    public function getId(){
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function existsField($field, $value, $field2 = null, $value2 = null){
+    public function existsField($field, $value, $field2 = null, $value2 = null)
+    {
         return  $this::find()->where([$field => $value, $field2 => $value2])->one();
     }
 
-    public function getSearchField($field, $val, $field2 = null, $val2 = null, $sort = null){
+    public function getSearchField($field, $val, $field2 = null, $val2 = null, $sort = null)
+    {
         $query = $this::find()->where([$field => $val]);
 
         if ($field2 and $val2)
@@ -159,7 +176,7 @@ abstract class ModelInterface extends  \yii\db\ActiveRecord
     //выводим Все активные записи
     public function getAllListVisible($distinct = null)
     {
-        if($distinct)
+        if ($distinct)
             return self::find()->select(['name'])->where(['visible' => 1])->orderBy(['name' => SORT_ASC])->distinct()->all();
 
         return self::find()->where(['visible' => 1])->all();
@@ -168,7 +185,7 @@ abstract class ModelInterface extends  \yii\db\ActiveRecord
     //вывлдим все записи
     public function getAllList($distinct = null)
     {
-        if($distinct)
+        if ($distinct)
             return self::find()->select(['name'])->distinct()->all();
 
         return self::find()->all();

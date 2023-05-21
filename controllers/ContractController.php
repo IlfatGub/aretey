@@ -50,7 +50,7 @@ class ContractController extends Controller
         if ($model->load($this->request->post())) {
             try {
                 $model->date_ct = strtotime('now');
-                if ($model->getSave()  && $model->service) {
+                if ($model->getSave() && $model->service) {
                     // Добавляем услуги
                     $service = new ContractService();
                     $service->service_list = $model->service;
@@ -59,10 +59,7 @@ class ContractController extends Controller
                     return $this->redirect('index');
                 }
             } catch (\Exception $ex) {
-                echo '<pre>';
-                print_r($ex);
-                echo '</pre>';
-                die();
+                $model->setErrorFlash('danger', $ex->getMessage());
             }
         }
 

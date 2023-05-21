@@ -17,7 +17,7 @@ class m230507_144844_create_contract_service_table extends Migration
             'id_contract' => $this->smallInteger()->notNull()->comment('Договор'),
             'id_service' => $this->smallInteger()->notNull()->comment('Услуга'),
             'price' => $this->Integer()->notNull()->comment('Цена'),
-            'visible' => $this->smallInteger()->null()->defaultValue(null)->comment('Видимость'),
+            'deleted' => $this->smallInteger()->null()->defaultValue(null)->comment('Видимость'),
         ]);
 
         //echo shell_exec("php yii gii/model --tableName=contract_service --modelClass=ContractService --interactive=0 --overwrite=1 --ns=app\\models");
