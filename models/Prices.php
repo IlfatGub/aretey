@@ -70,11 +70,14 @@ class Prices extends ModelInterface
         // return $this->name;
     }
 
-    public function getTextarea($filed)
+    public function getTextarea($filed, $type = null)
     {
         return Html::textarea($filed, $this->$filed, [
-            'rows' => 1, 'class' => 'form-control form-control-sm  inherit border-none',
-            'onchange' => '$.post(" ' . Url::toRoute(['edit-field']) . '?id=' . $this->id . '&field=' . $filed . '&value=' . '"+encodeURIComponent($(this).val()));'
+            'rows' => 1, 
+            'id' => $filed,
+            'data-id' => $this->id,
+            'class' => 'form-control form-control-sm  inherit border-none price-input',
+            // 'onchange' => '$.post(" ' . Url::toRoute(['edit-field']) . '?id=' . $this->id . '&field=' . $filed . '&value=' . '"+encodeURIComponent($(this).val()));'
         ]);
     }
 
