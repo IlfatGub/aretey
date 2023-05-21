@@ -64,19 +64,33 @@ class Prices extends ModelInterface
         ];
     }
 
-    public function getService(){
-        return $this->category.' - '.$this->name;
+    public function getService()
+    {
+        return $this->category . ' - ' . $this->name;
         // return $this->name;
     }
 
-    public function getTextarea($filed){
-        return Html::textarea($filed, $this->$filed, ['rows' => 1, 'class' => 'form-control form-control-sm  inherit border-none',
-        'onchange' => '$.post(" '.Url::toRoute(['edit-field']).'?id='.$this->id.'&field='.$filed.'&value='.'"+encodeURIComponent($(this).val()));']);
+    public function getTextarea($filed)
+    {
+        return Html::textarea($filed, $this->$filed, [
+            'rows' => 1, 'class' => 'form-control form-control-sm  inherit border-none',
+            'onchange' => '$.post(" ' . Url::toRoute(['edit-field']) . '?id=' . $this->id . '&field=' . $filed . '&value=' . '"+encodeURIComponent($(this).val()));'
+        ]);
     }
 
-    public function getInput($filed, $type = null){
-        return Html::input($filed == 'time' ? 'times' : $filed, 'string', $this->$filed, ['type' => $type, 'class' => 'form-control form-control-sm inherit border-none',
-        'onchange' => '$.post(" '.Url::toRoute(['edit-field']).'?id='.$this->id.'&field='.$filed.'&value='.'"+encodeURIComponent($(this).val()));'
-    ]);
+    public function getInput($filed, $type = null)
+    {
+        return Html::input(
+            $filed == 'time' ? 'times' : $filed,
+            'string',
+            $this->$filed,
+            [
+                'type' => $type,
+                'id' => $filed,
+                'data-id' => $this->id,
+                'class' => 'form-control form-control-sm inherit border-none price-input',
+                'onchange' => '$.post(" ' . Url::toRoute(['edit-field']) . '?id=' . $this->id . '&field=' . $filed . '&value=' . '"+encodeURIComponent($(this).val()));'
+            ]
+        );
     }
 }
