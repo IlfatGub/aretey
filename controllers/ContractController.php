@@ -78,11 +78,16 @@ class ContractController extends Controller
         return $this->render('index', $data);
     }
 
-    public function actionDownload($id)
+    /**
+     * @param int $id ID
+     * @param int $type ID
+     */
+    public function actionDownload($id, $type)
     {
 
         $model = Contract::find()
             ->joinWith(['patient'])
+            ->joinWith(['representative'])
             ->where(['contract.id' => $id])
             ->one();
 
@@ -101,8 +106,15 @@ class ContractController extends Controller
         if (!file_exists($path))
             mkdir($path, 0777, true);
 
-        $file = str_replace(' ', '_', $path . '/asd.docx');
 
+        $_type = [
+            1 => 'Взрослый договор платных услуг',
+            2 => 'Детский договор платных услуг',
+            3 => 'Согласие для детей',
+        ];
+
+        
+        $file = str_replace(' ', '_', $path . '/'.$_type[$type].' '.$model->patient->fullname.'.docx');
 
         $table = new Table(array('borderSize' => 0, 'borderColor' => 'black', 'borderTopSize' => 1, 'width' => '100%'));
         $table->getStyle(['width' => 100]);
@@ -111,8 +123,6 @@ class ContractController extends Controller
             ->joinWith(['contract'])
             ->where(['id_contract' => $id])
             ->all();
-
-        echo '<pre>'; print_r($service_list); echo '</pre>'; die();
 
         $table->addRow();
         $table->addCell()->addText('Дата/ Срок исполнения', ['size' => 8]);
@@ -127,7 +137,6 @@ class ContractController extends Controller
             $table->addCell()->addText($item->prices->price, ['size' => 6]);
         }
 
-
         $brith = $model->patient->brithday;
         $brith = strtotime($brith);
         $model->date_to = strtotime($model->date_to);
@@ -140,12 +149,14 @@ class ContractController extends Controller
         $templateWord = new TemplateProcessor('upload/contract.docx');
         $templateWord->setValue('name', $model->name);
         $templateWord->setValue('fullname', $model->patient->fullname);
+        $templateWord->setValue('re_fullname', $model->representative ? $model->representative->fullname : '');
         $templateWord->setValue('brithday', $_brith);
         $templateWord->setValue('p_serial', $model->patient->passport_serial);
         $templateWord->setValue('p_number', $model->patient->passport_number);
         $templateWord->setValue('p_issued', $model->patient->passport_issued);
         $templateWord->setValue('phone', $model->patient->phone);
         $templateWord->setValue('address', $model->patient->address_city . ' ' . $model->patient->address_street . ' ' . $model->patient->address_home . ' ' . $model->patient->address_room);
+        $templateWord->setValue('re_address', $model->representative ? $model->representative->address_city . ' ' . $model->representative->address_street . ' ' . $model->representative->address_home . ' ' . $model->representative->address_room : '');
         $templateWord->setValue('date', $_date);
         $templateWord->setValue('date_to', $_date_to);
         $templateWord->setValue('date_do', $_date_do);
