@@ -20,6 +20,8 @@ class m230507_144844_create_contract_service_table extends Migration
             'deleted' => $this->smallInteger()->null()->defaultValue(null)->comment('Видимость'),
         ]);
 
+
+
         //echo shell_exec("php yii gii/model --tableName=contract_service --modelClass=ContractService --interactive=0 --overwrite=1 --ns=app\\models");
         //echo shell_exec("php yii gii/crud --modelClass=app\\models\\ContractService --controllerClass=app\\controllers\ContractServiceController");
     }
