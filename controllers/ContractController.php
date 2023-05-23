@@ -113,10 +113,15 @@ class ContractController extends Controller
             3 => 'Согласие для детей',
         ];
 
+        $_type_file = [
+            1 => 'upload/contract.docx',
+            2 => 'upload/contarct_child.docx',
+            3 => 'upload/child_approval.docx',
+        ];
         
         $file = str_replace(' ', '_', $path . '/'.$_type[$type].' '.$model->patient->fullname.'.docx');
 
-        $table = new Table(array('borderSize' => 0, 'borderColor' => 'black', 'borderTopSize' => 1, 'width' => '100%'));
+        $table = new Table(array('borderSize' => 0, 'borderColor' => 'black', 'borderTopSize' => 1, 'width' => '100px'));
         $table->getStyle(['width' => 100]);
         $service_list = ContractService::find()
             ->joinWith(['prices'])
@@ -125,16 +130,16 @@ class ContractController extends Controller
             ->all();
 
         $table->addRow();
-        $table->addCell()->addText('Дата/ Срок исполнения', ['size' => 8]);
-        $table->addCell()->addText('№ по прейскуранту', ['size' => 8]);
-        $table->addCell()->addText('Наименование услуги', ['size' => 8]);
-        $table->addCell()->addText('Стоимость', ['size' => 8]);
+        $table->addCell(1500)->addText('Дата/ Срок исполнения', ['size' => 8]);
+        $table->addCell(1500)->addText('№ по прейскуранту', ['size' => 8]);
+        $table->addCell(6500)->addText('Наименование услуги', ['size' => 8]);
+        $table->addCell(800)->addText('Стоимость', ['size' => 8]);
         foreach ($service_list as $item) {
             $table->addRow();
-            $table->addCell()->addText($item->contract->date_to . '/' . $item->contract->date_do, ['size' => 6]);
-            $table->addCell()->addText($item->prices->id, ['size' => 6]);
-            $table->addCell()->addText($item->prices->name, ['size' => 6]);
-            $table->addCell()->addText($item->prices->price, ['size' => 6]);
+            $table->addCell()->addText($item->contract->date_to . '/' . $item->contract->date_do, ['size' => 8]);
+            $table->addCell()->addText($item->prices->id, ['size' => 8]);
+            $table->addCell()->addText($item->prices->name, ['size' => 8]);
+            $table->addCell()->addText($item->prices->price, ['size' => 8]);
         }
 
         $brith = $model->patient->brithday;
@@ -144,25 +149,34 @@ class ContractController extends Controller
         $_brith = '"' . date('d', $brith) . '" ' . $model->month()[date('n', $brith)] . ' ' . date('Y', $brith) . 'г.';
         $_date_to = '"' . date('d', $model->date_to) . '" ' . $model->month()[date('n', $model->date_to)] . ' ' . date('Y', $model->date_to) . 'г.';
         $_date_do = '"' . date('d', $model->date_do) . '" ' . $model->month()[date('n', $model->date_do)] . ' ' . date('Y', $model->date_do) . 'г.';
-        $_date = '«' . date('d') . '» ' . $model->month()[date('n')] . ' ' . date('Y') . 'г.';
+        $_date = '« ' . date('d') . ' »    ' . $model->month()[date('n')] . '   ' . date('Y') . ' г.';
 
-        $templateWord = new TemplateProcessor('upload/contract.docx');
-        $templateWord->setValue('name', $model->name);
-        $templateWord->setValue('fullname', $model->patient->fullname);
-        $templateWord->setValue('re_fullname', $model->representative ? $model->representative->fullname : '');
-        $templateWord->setValue('brithday', $_brith);
-        $templateWord->setValue('p_serial', $model->patient->passport_serial);
-        $templateWord->setValue('p_number', $model->patient->passport_number);
-        $templateWord->setValue('p_issued', $model->patient->passport_issued);
-        $templateWord->setValue('phone', $model->patient->phone);
-        $templateWord->setValue('address', $model->patient->address_city . ' ' . $model->patient->address_street . ' ' . $model->patient->address_home . ' ' . $model->patient->address_room);
-        $templateWord->setValue('re_address', $model->representative ? $model->representative->address_city . ' ' . $model->representative->address_street . ' ' . $model->representative->address_home . ' ' . $model->representative->address_room : '');
-        $templateWord->setValue('date', $_date);
-        $templateWord->setValue('date_to', $_date_to);
-        $templateWord->setValue('date_do', $_date_do);
-        $templateWord->setComplexBlock('service', $table);
-        $templateWord->saveAs($file);
-        Yii::$app->response->sendFile($file);
+        if (file_exists($_type_file[$type])){
+            $templateWord = new TemplateProcessor($_type_file[$type]);
+            $templateWord->setValue('name', $model->name);
+            $templateWord->setValue('fullname', $model->patient->fullname);
+            $templateWord->setValue('re_fullname', $model->representative ? $model->representative->fullname : '');
+            $templateWord->setValue('brithday', $_brith);
+            $templateWord->setValue('p_serial', $model->patient->passport_serial);
+            $templateWord->setValue('p_number', $model->patient->passport_number);
+            $templateWord->setValue('p_issued', $model->patient->passport_issued);
+            $templateWord->setValue('re_p_serial', $model->representative->passport_serial);
+            $templateWord->setValue('re_p_number', $model->representative->passport_number);
+            $templateWord->setValue('re_p_issued', $model->representative->passport_issued);
+            $templateWord->setValue('phone', $model->patient->phone);
+            $templateWord->setValue('re_phone', $model->representative->phone);
+            $templateWord->setValue('address', $model->patient->address_city . ' ' . $model->patient->address_street . ' ' . $model->patient->address_home . ' ' . $model->patient->address_room);
+            $templateWord->setValue('re_address', $model->representative ? $model->representative->address_city . ' ' . $model->representative->address_street . ' ' . $model->representative->address_home . ' ' . $model->representative->address_room : '');
+            $templateWord->setValue('date', $_date);
+            $templateWord->setValue('date_to', $_date_to);
+            $templateWord->setValue('date_do', $_date_do);
+            $templateWord->setComplexBlock('service', $table);
+            $templateWord->saveAs($file);
+            Yii::$app->response->sendFile($file);
+        }else{
+            echo 'Шаблон не найден. Путь до файла - /web/'.$_type_file[$type]; 
+        }
+
     }
 
     /**

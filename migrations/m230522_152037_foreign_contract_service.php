@@ -12,23 +12,23 @@ class m230522_152037_foreign_contract_service extends Migration
      */
     public function safeUp()
     {
-        $this->addForeignKey(
-            'fk-price-service',
-            'price',
-            'id',
-            'contract_service',
-            'id_service',
-            'CASCADE'
-        );
+        // $this->addForeignKey(
+        //     'fk-price-service',
+        //     'price',
+        //     'id',
+        //     'contract_service',
+        //     'id_service',
+        //     'CASCADE'
+        // );
 
-        $this->addForeignKey(
-            'fk-contract-service',
-            'contract',
-            'id',
-            'contract_service',
-            'id_contract',
-            'CASCADE'
-        );
+        // $this->addForeignKey(
+        //     'fk-contract-service',
+        //     'contract',
+        //     'id',
+        //     'contract_service',
+        //     'id_contract',
+        //     'CASCADE'
+        // );
     }
 
     /**
