@@ -140,11 +140,11 @@ class PatientController extends Controller
 
         if ($this->request->isPost && $model->load($this->request->post())) {
             try {
-                $model->getSave();
+                $model->getSave('Запись обновлена');
             } catch (\Exception $ex) {
                 echo '<pre>'; print_r($ex);echo '</pre>';  die();
             }
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['update', 'id' => $model->id]);
         }
 
         return $this->render('update', [

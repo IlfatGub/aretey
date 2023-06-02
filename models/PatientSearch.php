@@ -79,6 +79,7 @@ class PatientSearch extends Patient
             ->andFilterWhere(['like', 'phone', $this->phone]);
 
         $query->andFilterWhere(['is', 'deleted', new \yii\db\Expression('null')]);
+        $query->orderBy(['id' => SORT_DESC]);
 
         return $dataProvider;
     }
