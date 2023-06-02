@@ -58,7 +58,7 @@ class PatientController extends Controller
 
             try {
                 $model->fullname = $model->surname . ' ' . $model->name . ' ' . $model->patronymic;
-                $model->brithday = strtotime($model->brithday);
+                $model->brithday = $model->brithday;
                 $model->getSave();
                     // return $this->redirect('index');
             } catch (\Exception $ex) {
