@@ -53,7 +53,7 @@ abstract class ModelInterface extends  \yii\db\ActiveRecord
     public function setVisible()
     {
         $this->deleted = isset($this->deleted) ? null : 1;
-        $this->getSave('Запись удалена');
+        $this->getSave('Запись обновлена');
     }
 
     /**

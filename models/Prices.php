@@ -70,6 +70,16 @@ class Prices extends ModelInterface
         // return $this->name;
     }
 
+    public function duplicatePrice(){
+        if($upd = self::findOne(['name' => $this->name, 'category' => $this->category, 'deleted' => 1])){
+            $upd->deleted = null;
+            $upd->price = $this->price;
+            $upd->getSave();
+            return true;
+        }
+        return false;
+    }
+
     public function getTextarea($filed, $type = null)
     {
         return Html::textarea($filed, $this->$filed, [

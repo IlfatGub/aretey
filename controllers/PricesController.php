@@ -44,8 +44,9 @@ class PricesController extends Controller
         $model = new Prices();
         if ($model->load($this->request->post())) {
             try {
-                $model->getSave('Запись добавлена');
-                    return $this->redirect('index');
+                if(!$model->duplicatePrice())
+                    $model->getSave('Запись добавлена');
+                return $this->redirect('index');
             } catch (\Exception $ex) {
                 $model->setErrorFlash('danger', $ex->getMessage());
             }
