@@ -45,7 +45,7 @@ $patronymic = $model->arrayFilter($patient, 'patronymic');
             <?= TypeheadWidget::widget(['form' => $form, 'model' => $model, 'field' => 'patronymic', 'local' => $patronymic, 'placeholder' => 'Отчество']) ?>
         </div>
         <div class="col">
-            <?= $form->field($model, 'phone')->textInput(['maxlength' => true, 'class' => 'form-control', 'autocomplete' => 'off', 'placeholder' => 'Телефон'])->label() ?>
+            <?= $form->field($model, 'phone')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'autocomplete' => 'off', 'placeholder' => 'Телефон'])->label() ?>
         </div>
         <div class="col">
             <?php
@@ -70,10 +70,10 @@ $patronymic = $model->arrayFilter($patient, 'patronymic');
             <?= TypeheadWidget::widget(['form' => $form, 'model' => $model, 'field' => 'address_street', 'local' => $street, 'placeholder' => 'Улица']) ?>
         </div>
         <div class="col-2">
-            <?= $form->field($model, 'address_home')->textInput(['maxlength' => true, 'class' => 'form-control', 'autocomplete' => 'off', 'placeholder' => 'Дом'])->label() ?>
+            <?= $form->field($model, 'address_home')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'autocomplete' => 'off', 'placeholder' => 'Дом'])->label() ?>
         </div>
         <div class="col-2">
-            <?= $form->field($model, 'address_room')->textInput(['maxlength' => true, 'class' => 'form-control', 'autocomplete' => 'off', 'placeholder' => 'Квартира'])->label() ?>
+            <?= $form->field($model, 'address_room')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'autocomplete' => 'off', 'placeholder' => 'Квартира'])->label() ?>
         </div>
     </div>
 
@@ -82,10 +82,10 @@ $patronymic = $model->arrayFilter($patient, 'patronymic');
             <?= TypeheadWidget::widget(['form' => $form, 'model' => $model, 'field' => 'document', 'local' => $document, 'placeholder' => 'Документ']) ?>
         </div>
         <div class="col">
-            <?= $form->field($model, 'passport_serial')->textInput(['maxlength' => true, 'class' => 'form-control', 'autocomplete' => 'off', 'placeholder' => 'Серия'])->label() ?>
+            <?= $form->field($model, 'passport_serial')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'autocomplete' => 'off', 'placeholder' => 'Серия'])->label() ?>
         </div>
         <div class="col">
-            <?= $form->field($model, 'passport_number')->textInput(['maxlength' => true, 'class' => 'form-control', 'autocomplete' => 'off',  'placeholder' => 'Номер'])->label() ?>
+            <?= $form->field($model, 'passport_number')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'autocomplete' => 'off',  'placeholder' => 'Номер'])->label() ?>
         </div>
         <div class="col-5">
             <?= TypeheadWidget::widget(['form' => $form, 'model' => $model, 'field' => 'passport_issued', 'local' => $passport_issued, 'placeholder' => 'Когда, кем выдано']) ?>
