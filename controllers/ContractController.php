@@ -244,7 +244,7 @@ class ContractController extends Controller
                 echo '</pre>';
                 die();
             }
-            return $this->redirect(Url::previous());
+            // return $this->redirect(Url::previous());
         }
 
         return $this->render('update', [
