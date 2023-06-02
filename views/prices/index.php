@@ -19,8 +19,6 @@ Pjax::begin();
         'model' => $model,
     ]) ?>
 
-    <?= Html::a($_GET['record'] ? 'Показать активные' : 'Показать все(вместе с удаленными)', ['index', 'record' => $_GET['record'] ? null : 'all'], ['class' => 'float-right btn btn-sm btn-primary',])  ?>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
