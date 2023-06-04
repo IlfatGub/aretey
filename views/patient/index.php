@@ -43,7 +43,12 @@ use yii\grid\GridView;
             'passport_issued',
             'phone',
             //'parent_id',
-            'brithday',
+            [
+                'attribute' => 'brithday',
+                'content'=>function($data){
+                    return $data->brithday.' ('.$data->age.')';
+                },
+            ],
             [
                 'class' => ActionColumn::className(),
                 'contentOptions' => ['style' => 'width:20px;'],

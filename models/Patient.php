@@ -111,4 +111,14 @@ class Patient extends ModelInterface
     public function getContract(){
         return Contract::find()->where(['id_patient' => $this->id])->all();
     }
+
+    public function getAge(){
+        $borndate = strtotime($this->brithday);
+        $date = strtotime('now');
+        if (date('m', $borndate) > date('m', $date) || date('m', $borndate) == date('m', $date) && date('d', $borndate) > date('d')) {
+            return (date('Y', $date) - date('Y', $borndate) - 1); // если в текущем году я ещё не отмечал День рождение, вернуть значение на 1 меньше
+        }
+        return (date('Y', $date) - date('Y', $borndate));
+    }
+    
 }

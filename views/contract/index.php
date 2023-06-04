@@ -116,6 +116,9 @@ $ajax = $_GET['ajax'] ?? null;
             'contentOptions' => ['class' => 'table_class '],
             'value' => 'patient.brithday',
             'label' => 'Дата рождения',
+            'content'=>function($data){
+                return $data->patient->brithday.' ('.$data->patient->age.')';
+            },
         ],
         [
             'attribute' => 'patient_role',
