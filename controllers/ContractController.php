@@ -121,6 +121,12 @@ class ContractController extends Controller
         
         $file = str_replace(' ', '_', $path . '/'.$_type[$type].' '.$model->patient->fullname.'.docx');
 
+
+        $config  = [
+            'space' => ['before' => 0, 'after' => 0],
+            'indentation' => ['left' => 0, 'right' => 0]
+        ];
+
         $table = new Table(array('borderSize' => 0, 'borderColor' => 'black', 'borderTopSize' => 1, 'width' => '100px'));
         $table->getStyle(['width' => 100]);
         $service_list = ContractService::find()
@@ -130,16 +136,16 @@ class ContractController extends Controller
             ->all();
 
         $table->addRow();
-        $table->addCell(1500)->addText('Дата/ Срок исполнения', ['size' => 8]);
-        $table->addCell(1500)->addText('№ по прейскуранту', ['size' => 8]);
-        $table->addCell(6500)->addText('Наименование услуги', ['size' => 8]);
-        $table->addCell(800)->addText('Стоимость', ['size' => 8]);
+        $table->addCell(2100)->addText('Дата/ Срок исполнения', ['size' => 8, 'bold' =>true], $config);
+        $table->addCell(1700)->addText('№ по прейскуранту', ['size' => 8, 'bold' =>true], $config);
+        $table->addCell(5900)->addText('Наименование услуги', ['size' => 8, 'bold' =>true], $config);
+        $table->addCell(800)->addText('Стоимость', ['size' => 8, 'bold' =>true], $config);
         foreach ($service_list as $item) {
             $table->addRow();
-            $table->addCell()->addText($item->contract->date_to . '/' . $item->contract->date_do, ['size' => 8]);
-            $table->addCell()->addText($item->prices->id, ['size' => 8]);
-            $table->addCell()->addText($item->prices->name, ['size' => 8]);
-            $table->addCell()->addText($item->prices->price, ['size' => 8]);
+            $table->addCell()->addText($item->contract->date_to . '/' . $item->contract->date_do, ['size' => 8], $config);
+            $table->addCell()->addText($item->prices->id, ['size' => 8], $config);
+            $table->addCell()->addText($item->prices->name, ['size' => 8], $config);
+            $table->addCell()->addText($item->prices->price, ['size' => 8], $config);
         }
 
         $brith = $model->patient->brithday;

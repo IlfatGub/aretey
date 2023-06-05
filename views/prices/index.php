@@ -30,7 +30,10 @@ Pjax::begin();
 			return ['class' => $model->deleted ? 'bgr-red' : ''];},
         'columns' => [
             // ['class' => 'yii\grid\SerialColumn'],
-            // 'id',
+            [
+                'attribute' => 'id',
+                'filterInputOptions' => ['class' => 'form-control form-control-sm'],
+            ],
             [
                 'attribute' => 'name',
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],
@@ -43,7 +46,7 @@ Pjax::begin();
             [
                 'attribute' => 'category',
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],
-                'contentOptions' => ['class' => ''],
+                'contentOptions' => ['class' => 'col-4'],
                 'content' => function ($data) {
                     return $data->getTextarea('category');
                 }
@@ -51,7 +54,7 @@ Pjax::begin();
             [
                 'attribute' => 'price',
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],
-                'contentOptions' => ['class' => ''],
+                'contentOptions' => ['class' => 'col-1'],
                 'content' => function ($data) {
                     return $data->getInput('price', 'number');
                 }
