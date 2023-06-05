@@ -193,10 +193,10 @@ $ajax = $_GET['ajax'] ?? null;
     ]); 
     
     // Renders a export dropdown menu
-    echo ExportMenu::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => $column
-    ]);
+    // echo ExportMenu::widget([
+    //     'dataProvider' => $dataProvider,
+    //     'columns' => $column
+    // ]);
 
     ?>
 
