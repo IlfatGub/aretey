@@ -140,6 +140,7 @@ class PatientController extends Controller
 
         if ($this->request->isPost && $model->load($this->request->post())) {
             try {
+                $model->fullname = $model->surname . ' ' . $model->name . ' ' . $model->patronymic;
                 $model->getSave('Запись обновлена');
             } catch (\Exception $ex) {
                 echo '<pre>'; print_r($ex);echo '</pre>';  die();
