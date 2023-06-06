@@ -1,10 +1,9 @@
 <?php
-use app\components\TexareaWidget;
-use app\models\Prices;
+
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
 use yii\widgets\Pjax;
 
 /** @var yii\web\View $this */
@@ -25,9 +24,10 @@ Pjax::begin();
         'tableOptions' => [
             'class' => 'table table-hover table-bordered table-sm color-black'
         ],
-        
-	'rowOptions' => function($model, $key, $index, $grid) {
-			return ['class' => $model->deleted ? 'bgr-red' : ''];},
+
+        'rowOptions' => function ($model, $key, $index, $grid) {
+            return ['class' => $model->deleted ? 'bgr-red' : ''];
+        },
         'columns' => [
             // ['class' => 'yii\grid\SerialColumn'],
             [
@@ -45,6 +45,7 @@ Pjax::begin();
             ],
             [
                 'attribute' => 'category',
+                'filter' =>  ArrayHelper::map($model::find()->distinct('category')->select('category')->orderBy(['category' => SORT_DESC])->all(), 'category', 'category'),
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],
                 'contentOptions' => ['class' => 'col-4'],
                 'content' => function ($data) {
