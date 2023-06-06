@@ -5,16 +5,20 @@ use app\models\Patient;
 use kartik\date\DatePicker;
 use kartik\daterange\DateRangePicker;
 use kartik\export\ExportMenu;
+use kartik\select2\Select2;
 use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Php;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
 use yii\widgets\ListView;
 
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 /** @var $model */
+
+$fullname = ArrayHelper::map(Patient::find()->distinct('fullname')->select('fullname')->orderBy(['fullname' => SORT_DESC])->all(), 'fullname', 'fullname');
 
 $patient = new Patient();
 $patinet_list = $patient->PatientList;
@@ -99,6 +103,17 @@ $ajax = $_GET['ajax'] ?? null;
         // ],
         [
             'attribute' => 'patient_fullname',
+            'filter' => Select2::widget([
+                'model' => $searchModel,
+                'attribute' => 'patient_fullname',
+                'size' => Select2::SMALL,
+                'data' =>  $fullname,
+                'options' => ['placeholder' => '', 'class' =>'fs-8'],
+                'pluginOptions' => [
+                    'tags' => true,
+                    'allowClear' => true
+                ],
+            ]),
             'filterInputOptions' => ['class' => 'form-control form-control-sm'],
             'contentOptions' => ['class' => 'table_class col-3'],
             'value' => 'patient.fullname',
