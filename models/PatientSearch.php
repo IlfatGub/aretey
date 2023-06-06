@@ -67,7 +67,7 @@ class PatientSearch extends Patient
         $query->andFilterWhere(['like', 'surname', $this->surname])
             ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'patronymic', $this->patronymic])
-            ->andFilterWhere(['like', 'fullname', $this->fullname])
+            ->andFilterWhere(['LIKE', 'fullname', $this->fullname])
             ->andFilterWhere(['like', 'address_city', $this->address_city])
             ->andFilterWhere(['like', 'address_street', $this->address_street])
             ->andFilterWhere(['like', 'address_home', $this->address_home])

@@ -1,5 +1,7 @@
 <?php
 
+use kartik\select2\Select2;
+use kartik\typeahead\Typeahead;
 use yii\helpers\Html;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
@@ -45,7 +47,17 @@ Pjax::begin();
             ],
             [
                 'attribute' => 'category',
-                'filter' =>  ArrayHelper::map($model::find()->distinct('category')->select('category')->orderBy(['category' => SORT_DESC])->all(), 'category', 'category'),
+                'filter' => Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'category',
+                    'size' => Select2::SMALL,
+                    'data' =>  ArrayHelper::map($model::find()->distinct('category')->select('category')->orderBy(['category' => SORT_DESC])->all(), 'category', 'category'),
+                    'options' => ['placeholder' => '', ],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]),
+                // 'filter' =>  ArrayHelper::map($model::find()->distinct('category')->select('category')->orderBy(['category' => SORT_DESC])->all(), 'category', 'category'),
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],
                 'contentOptions' => ['class' => 'col-4'],
                 'content' => function ($data) {
