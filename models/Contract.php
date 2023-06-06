@@ -63,9 +63,9 @@ class Contract extends ModelInterface
 
     public function afterFind()
     {
-        $this->date_to = date('Y-m-d',$this->date_to);
-        $this->date_do = date('Y-m-d',$this->date_do);
-        $this->date_ct = date('Y-m-d',$this->date_ct);
+        $this->date_to = date('d.m.Y',$this->date_to);
+        $this->date_do = date('d.m.Y',$this->date_do);
+        $this->date_ct = date('d.m.Y',$this->date_ct);
     }
 
 

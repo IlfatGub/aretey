@@ -55,7 +55,7 @@ $patronymic = $model->arrayFilter($patient, 'patronymic');
                 'size' => 'sm',
                 'pluginOptions' => [
                     'autoclose' => true,
-                    'format' => 'yyyy-mm-dd',
+                    'format' => 'dd.mm.yyyy',
                 ],
             ])->label();
             ?>

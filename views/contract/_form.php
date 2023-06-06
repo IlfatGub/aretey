@@ -25,9 +25,9 @@ $service->id_contract = $id;
 
 $model->service = $id ? $service->getServieByContract() : null; // указываем услуги
 
-$model->date_ct = date('Y-m-d H:i:s'); // задаем дату
-$model->date_to = $model->date_to ?? date('Y-m-d'); // задаем дату
-$model->date_do = $model->date_do ?? date('Y-m-d'); // задаем дату
+$model->date_ct = date('d.m.Y H:i:s'); // задаем дату
+$model->date_to = $model->date_to ?? date('d.m.Y'); // задаем дату
+$model->date_do = $model->date_do ?? date('d.m.Y'); // задаем дату
 $model->id_patient = $id_patient ?? $model->id_patient; // Задаем пациента
 $model->id_patient_representative = $id_patient_representative ?? $model->id_patient_representative; // Задаем законного представителя
 
@@ -71,9 +71,9 @@ $patient_list = ArrayHelper::map(Patient::find()->orderBy(['fullname' => SORT_AS
                 'options' => ['placeholder' => 'Дата начала'],
                 'size' => 'sm',
                 'pluginOptions' => [
-                    'startDate' => date('Y-m-d', time()),
+                    'startDate' => date('d.m.Y', time()),
                     'autoclose' => true,
-                    'format' => 'yyyy-mm-dd'
+                    'format' => 'dd.mm.yyyy'
                 ],
             ])->label();
             ?>
@@ -83,9 +83,9 @@ $patient_list = ArrayHelper::map(Patient::find()->orderBy(['fullname' => SORT_AS
                 'options' => ['placeholder' => 'Дата окончания'],
                 'size' => 'sm',
                 'pluginOptions' => [
-                    'startDate' => date('Y-m-d', time()),
+                    'startDate' => date('d.m.Y', time()),
                     'autoclose' => true,
-                    'format' => 'yyyy-mm-dd'
+                    'format' => 'dd.mm.yyy'
                 ],
             ])->label();
             ?>

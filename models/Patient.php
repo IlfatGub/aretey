@@ -76,7 +76,7 @@ class Patient extends ModelInterface
 
     public function afterFind()
     {
-        $this->brithday = date('Y-m-d',$this->brithday);
+        $this->brithday = date('d.m.Y',$this->brithday);
     }
 
     public function beforeSave($insert)
