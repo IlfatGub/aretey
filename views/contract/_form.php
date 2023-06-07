@@ -85,7 +85,7 @@ $patient_list = ArrayHelper::map(Patient::find()->orderBy(['fullname' => SORT_AS
                 'pluginOptions' => [
                     'startDate' => date('d.m.Y', time()),
                     'autoclose' => true,
-                    'format' => 'dd.mm.yyy'
+                    'format' => 'dd.mm.yyyy'
                 ],
             ])->label();
             ?>

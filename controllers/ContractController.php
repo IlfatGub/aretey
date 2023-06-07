@@ -152,10 +152,10 @@ class ContractController extends Controller
         $brith = strtotime($brith);
         $model->date_to = strtotime($model->date_to);
         $model->date_do = strtotime($model->date_do);
-        $_brith = '"' . date('d', $brith) . '" ' . $model->month()[date('n', $brith)] . ' ' . date('Y', $brith) . 'г.';
-        $_date_to = '"' . date('d', $model->date_to) . '" ' . $model->month()[date('n', $model->date_to)] . ' ' . date('Y', $model->date_to) . 'г.';
-        $_date_do = '"' . date('d', $model->date_do) . '" ' . $model->month()[date('n', $model->date_do)] . ' ' . date('Y', $model->date_do) . 'г.';
-        $_date = '« ' . date('d') . ' »    ' . $model->month()[date('n')] . '   ' . date('Y') . ' г.';
+        $_brith = '"' . date('d', $brith) . '" ' . $model->month_incline()[date('n', $brith)] . ' ' . date('Y', $brith) . 'г.';
+        $_date_to = '"' . date('d', $model->date_to) . '" ' . $model->month_incline()[date('n', $model->date_to)] . ' ' . date('Y', $model->date_to) . 'г.';
+        $_date_do = '"' . date('d', $model->date_do) . '" ' . $model->month_incline()[date('n', $model->date_do)] . ' ' . date('Y', $model->date_do) . 'г.';
+        $_date = '« ' . date('d') . ' »    ' . $model->month_incline()[date('n')] . '   ' . date('Y') . ' г.';
 
         if (file_exists($_type_file[$type])){
             $templateWord = new TemplateProcessor($_type_file[$type]);
