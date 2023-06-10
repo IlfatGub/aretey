@@ -80,18 +80,19 @@ class Prices extends ModelInterface
         return false;
     }
 
-    public function getTextarea($filed, $type = null)
+    public function getTextarea($filed, $val,  $type = null)
     {
         return Html::textarea($filed, $this->$filed, [
             'rows' => 1, 
             'id' => $filed,
             'data-id' => $this->id,
+            'data-old' => $val,
             'class' => 'form-control form-control-sm  inherit border-none price-input',
             // 'onchange' => '$.post(" ' . Url::toRoute(['edit-field']) . '?id=' . $this->id . '&field=' . $filed . '&value=' . '"+encodeURIComponent($(this).val()));'
         ]);
     }
 
-    public function getInput($filed, $type = null)
+    public function getInput($filed, $val, $type = null)
     {
         return Html::input(
             $filed == 'time' ? 'times' : $filed,
@@ -101,6 +102,7 @@ class Prices extends ModelInterface
                 'type' => $type,
                 'id' => $filed,
                 'data-id' => $this->id,
+                'data-old' => $val,
                 'class' => 'form-control form-control-sm inherit border-none price-input',
                 // 'onchange' => '$.post(" ' . Url::toRoute(['edit-field']) . '?id=' . $this->id . '&field=' . $filed . '&value=' . '"+encodeURIComponent($(this).val()));'
             ]

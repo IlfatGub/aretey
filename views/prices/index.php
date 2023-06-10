@@ -42,7 +42,7 @@ Pjax::begin();
                 'contentOptions' => ['class' => 'col-7'],
                 'headerOptions' => [],
                 'content' => function ($data) {
-                    return $data->getTextarea('name');
+                    return $data->getTextarea('name', $data->name);
                 }
             ],
             [
@@ -61,7 +61,7 @@ Pjax::begin();
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],
                 'contentOptions' => ['class' => 'col-4'],
                 'content' => function ($data) {
-                    return $data->getTextarea('category');
+                    return $data->getTextarea('category', $data->category);
                 }
             ],
             [
@@ -69,7 +69,7 @@ Pjax::begin();
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],
                 'contentOptions' => ['class' => 'col-1'],
                 'content' => function ($data) {
-                    return $data->getInput('price', 'number');
+                    return $data->getInput('price', $data->price, 'number');
                 }
             ],
             [

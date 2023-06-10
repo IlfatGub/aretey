@@ -48,10 +48,19 @@ if (price_input) {
             let price_id = price.getAttribute('data-id');
             let field = price.id;
             let text = price.value;
+            let old_data = price.getAttribute('data-old');
             jQuery.ajax({
                 type: "GET",
                 url: "/prices/edit-field",
                 data: 'id=' + price_id + "&field=" + field + "&value=" + text,
+                beforeSend:function(){
+                    if(confirm("Вы точно хотите изменить данные?")){
+                        return true;
+                    }else{
+                        price.value = old_data;
+                        return false;
+                    }
+                },
                 success: function (data) {
                     let r = JSON.parse(data);
                         let div = document.createElement('div');
@@ -60,10 +69,6 @@ if (price_input) {
                       
                         document.body.append(div);
                         setTimeout(() => div.remove(), 3000);
-                    // $(content_block).html(datas;
-                    // $('.progress').hide();
-        
-                    // if (remark_report) remark_report.classList.remove('op03');
                 },
             });
         });
