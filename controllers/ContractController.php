@@ -178,7 +178,9 @@ class ContractController extends Controller
             $templateWord->setValue('date_do', $_date_do);
             $templateWord->setComplexBlock('service', $table);
             $templateWord->saveAs($file);
-            Yii::$app->response->sendFile($file);
+            echo Url::to([$file], true);
+
+            // Yii::$app->response->sendFile($file);
         }else{
             echo 'Шаблон не найден. Путь до файла - /web/'.$_type_file[$type]; 
         }
