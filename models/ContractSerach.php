@@ -126,7 +126,7 @@ class ContractSerach extends Contract
         $query->andFilterWhere(['is', 'contract.deleted', new \yii\db\Expression('null')]);
 
         if(!$_GET['sort'])
-            $query->orderBy(['date_ct' => SORT_DESC]);
+            $query->orderBy(['id' => SORT_DESC]);
 
         return $dataProvider;
     }

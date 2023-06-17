@@ -62,6 +62,7 @@ class Contract extends ModelInterface
         ];
     }
 
+    //  меняем дату на понтяный вид при выводе
     public function afterFind()
     {
         $this->date_to = date('d.m.Y',$this->date_to);
@@ -69,7 +70,7 @@ class Contract extends ModelInterface
         $this->date_ct = date('d.m.Y',$this->date_ct);
     }
 
-
+    // перед сохранением меняем дату на strtotime
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {

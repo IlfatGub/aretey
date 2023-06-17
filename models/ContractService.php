@@ -96,9 +96,9 @@ class ContractService extends ModelInterface
 
     public function existsContractService(){
         return ContractService::find()
-        ->where(['id_contract' => $this->id_contract])
-        ->andFilterWhere(['is', 'deleted', new \yii\db\Expression('null')])
-        ->exists();
+            ->where(['id_contract' => $this->id_contract])
+            ->andFilterWhere(['is', 'deleted', new \yii\db\Expression('null')])
+            ->exists();
     }
 
     /**

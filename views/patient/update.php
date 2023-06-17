@@ -40,11 +40,13 @@ use yii\helpers\Url;
                             <td><?= $item->date_do ?></td>
                             <td>
                                 <?php $service = new ContractService(['id_contract' => $item->id]); ?>
-                                <?php foreach($service->getContratService() as $item): ?>
+                                <?php if($service->existsContractService()): ?>
+                                    <?php foreach($service->getContratService() as $item): ?>
                                     <?php $summ += $item->price; ?>
                                     <?php echo $item->name. ' ' .'<b>'.$item->price .'</b><br>'?>
                                 <?php endforeach; ?>
                                 <?php echo "<b>Общая сумма:</b> ".$summ; ?>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
