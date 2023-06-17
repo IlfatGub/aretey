@@ -12,7 +12,6 @@ use yii\widgets\ActiveForm;
 $biom = $model::find()->distinct('biom')->select('biom')->column();
 $type = $model::find()->distinct('type')->select('type')->column();
 $category = $model::find()->distinct('category')->select('category')->column();
-
 ?>
 
 <style>
@@ -22,11 +21,10 @@ $category = $model::find()->distinct('category')->select('category')->column();
 </style>
 
 <div class="prices-form">
-
     <?php $form = ActiveForm::begin(); ?>
-
     <div class="row">
-        <div class="col-5"><?= $form->field($model, 'name')->textInput(['class' => 'form-control form-control-sm']) ?></div>
+        <div class="col-1"><?= $form->field($model, 'code')->textInput(['class' => 'form-control form-control-sm']) ?></div>
+        <div class="col-4"><?= $form->field($model, 'name')->textInput(['class' => 'form-control form-control-sm']) ?></div>
         <div class="col-3">
             <?= TypeheadWidget::widget(['form' => $form, 'model' => $model, 'field' => 'category', 'local' => $category, 'placeholder' => 'Категория']) ?>
         </div>
@@ -38,28 +36,6 @@ $category = $model::find()->distinct('category')->select('category')->column();
             </div>
         </div>
     </div>
-<hr>
-    <!-- <div class="row">
-        <div class="col"><?= $form->field($model, 'code')->textInput(['maxlength' => true, 'class' => 'form-control']) ?></div>
-        <div class="col"><?= $form->field($model, 'time')->textInput(['maxlength' => true, 'class' => 'form-control']) ?></div>
-        <div class="col"><?= $form->field($model, 'price')->textInput(['type' => 'number', 'class' => 'form-control']) ?></div>
-        <div class="col">
-            <?= TypeheadWidget::widget(['form' => $form, 'model' => $model, 'field' => 'type', 'local' => $type, 'placeholder' => 'Тип']) ?>
-        </div>
-        <div class="col">
-            <?= TypeheadWidget::widget(['form' => $form, 'model' => $model, 'field' => 'biom', 'local' => $biom, 'placeholder' => 'Биоматераил']) ?>
-        </div>
-        <div class="col">
-            <label for="" style="color:inherit !important"> - </label>
-
-            <div class="form-group">
-                <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
-            </div>
-        </div>
-    </div> -->
-
-
-
+    <hr>
     <?php ActiveForm::end(); ?>
-
 </div>

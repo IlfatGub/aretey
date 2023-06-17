@@ -6,6 +6,7 @@ use app\models\Contract;
 use app\models\ContractSerach;
 use app\models\ContractService;
 use app\models\Patient;
+use Mpdf\Tag\Code;
 use PhpOffice\PhpWord\TemplateProcessor;
 use PhpOffice\PhpWord\Element\Table;
 use Yii;
@@ -121,7 +122,6 @@ class ContractController extends Controller
         
         $file = str_replace(' ', '_', $path . '/'.$_type[$type].' '.$model->patient->fullname.'.docx');
 
-
         $config  = [
             'space' => ['before' => 0, 'after' => 0],
             'indentation' => ['left' => 0, 'right' => 0]
@@ -133,6 +133,7 @@ class ContractController extends Controller
             ->joinWith(['prices'])
             ->joinWith(['contract'])
             ->where(['id_contract' => $id])
+            ->andFilterWhere(['is', 'contract_service.deleted', new \yii\db\Expression('null')])
             ->all();
 
         $table->addRow();
@@ -143,7 +144,7 @@ class ContractController extends Controller
         foreach ($service_list as $item) {
             $table->addRow();
             $table->addCell()->addText($item->contract->date_to . '/' . $item->contract->date_do, ['size' => 8], $config);
-            $table->addCell()->addText($item->prices->id, ['size' => 8], $config);
+            $table->addCell()->addText($item->prices->code, ['size' => 8], $config);
             $table->addCell()->addText($item->prices->name, ['size' => 8], $config);
             $table->addCell()->addText($item->prices->price, ['size' => 8], $config);
         }
@@ -178,9 +179,7 @@ class ContractController extends Controller
             $templateWord->setValue('date_do', $_date_do);
             $templateWord->setComplexBlock('service', $table);
             $templateWord->saveAs($file);
-            echo Url::to([$file], true);
-
-            // Yii::$app->response->sendFile($file);
+            Yii::$app->response->sendFile($file);
         }else{
             echo 'Шаблон не найден. Путь до файла - /web/'.$_type_file[$type]; 
         }
@@ -252,12 +251,26 @@ class ContractController extends Controller
                 echo '</pre>';
                 die();
             }
-            // return $this->redirect(Url::previous());
+            return $this->redirect(['update', 'id' => $id]);
         }
 
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+
+    public function actionDogovorName(){
+        $model = new Contract();
+        $list = $model::find()->all();
+
+        foreach($list as $item){
+            $date_ct = strtotime($item->date_ct);
+            echo date('Y-m-d', $date_ct).'..'.$model->getDogovorName($date_ct).'<br>';
+            $upd = $model::findOne($item->id);
+            $upd->name = $model->getDogovorName($date_ct);
+            // $upd->getSave();
+        }
     }
 
     /**

@@ -11,6 +11,7 @@ use yii\helpers\ArrayHelper;
  * @property int $id
  * @property int $id_contract Договор
  * @property int $id_service Услуга
+ * @property int $date_ct Дата
  * @property int|null $visible Видимость
  */
 class ContractService extends ModelInterface
@@ -32,7 +33,7 @@ class ContractService extends ModelInterface
     {
         return [
             [['id_contract', 'id_service'], 'required'],
-            [['id_contract', 'id_service', 'deleted'], 'integer'],
+            [['id_contract', 'id_service', 'deleted', 'date_ct'], 'integer'],
         ];
     }
 
@@ -70,6 +71,8 @@ class ContractService extends ModelInterface
                 $_service->id_contract = $this->id_contract;
                 $_service->id_service = $items;
                 $_service->price = Prices::findOne($items)->price;
+                $_service->name = Prices::findOne($items)->name;
+                $_service->date_ct = strtotime('now');
                 $_service->deleted = null;
                 $_service->getSave();
             } catch (\Exception $ex) {
@@ -80,18 +83,21 @@ class ContractService extends ModelInterface
     }
 
     public function deleteServiceForContract(){
-        if(self::find()->where(['id_contract' => $this->id_contract])->exists())
-            return self::deleteAll(['id_contract' => $this->id_contract]);
+        if(self::find()->where(['id_contract' => $this->id_contract])->exists()){
+            self::updateAll(['deleted' => 1], ['id_contract' => $this->id_contract]);
+        }
+        return true;
     }
 
     public function getServieByContract(){
-        return ArrayHelper::map(self::findAll(['id_contract' => $this->id_contract]), 'id', 'id_service');
+        return ArrayHelper::map(self::findAll(['id_contract' => $this->id_contract], ['is', 'deleted', new \yii\db\Expression('null')]), 'id', 'id_service');
     }
 
 
     public function existsContractService(){
         return ContractService::find()
         ->where(['id_contract' => $this->id_contract])
+        ->andFilterWhere(['is', 'deleted', new \yii\db\Expression('null')])
         ->exists();
     }
 
@@ -103,6 +109,7 @@ class ContractService extends ModelInterface
             return ContractService::find()
                 ->joinWith(['prices'])
                 ->where(['id_contract' => $this->id_contract])
+                ->andFilterWhere(['is', 'contract_service.deleted', new \yii\db\Expression('null')])
                 ->all();
         return false;
     }

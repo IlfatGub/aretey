@@ -1,7 +1,5 @@
 <?php
-
 use kartik\select2\Select2;
-use kartik\typeahead\Typeahead;
 use yii\helpers\Html;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
@@ -33,13 +31,17 @@ Pjax::begin();
         'columns' => [
             // ['class' => 'yii\grid\SerialColumn'],
             [
-                'attribute' => 'id',
+                'attribute' => 'code',
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],
+                'contentOptions' => ['class' => 'col-1'],
+                'content' => function ($data) {
+                    return $data->getInput('code', $data->code);
+                }
             ],
             [
                 'attribute' => 'name',
                 'filterInputOptions' => ['class' => 'form-control form-control-sm'],
-                'contentOptions' => ['class' => 'col-7'],
+                'contentOptions' => ['class' => 'col-6'],
                 'headerOptions' => [],
                 'content' => function ($data) {
                     return $data->getTextarea('name', $data->name);
@@ -52,7 +54,7 @@ Pjax::begin();
                     'attribute' => 'category',
                     'size' => Select2::SMALL,
                     'data' =>  ArrayHelper::map($model::find()->distinct('category')->select('category')->orderBy(['category' => SORT_DESC])->all(), 'category', 'category'),
-                    'options' => ['placeholder' => '', ],
+                    'options' => ['placeholder' => '',],
                     'pluginOptions' => [
                         'allowClear' => true
                     ],

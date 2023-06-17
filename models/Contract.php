@@ -38,8 +38,9 @@ class Contract extends ModelInterface
     {
         return [
             [['id_patient', 'date_ct', 'name'], 'required'],
-            [['id_patient', 'id_patient_representative',  'name', 'deleted'], 'integer'],
+            [['id_patient', 'id_patient_representative', 'deleted'], 'integer'],
             [['date_to', 'date_do', 'service', 'date_ct', 'date_range'], 'safe'],
+            [['name',], 'string'],
         ];
     }
 
@@ -91,6 +92,25 @@ class Contract extends ModelInterface
 	{
 		return $this->hasOne(Patient::className(), ['id' => 'id_patient_representative']);
 	}
+
+    public function getDogovorName($date = null){
+        $_date = $date ?? strtotime('now');
+
+        $d = date('d', $_date);
+        $m = date('m', $_date);
+        $_y = date('y', $_date);
+        $y = date('Y', $_date);
+
+        $_date_to = "01.$m.$y 00:00:00";
+        $_date_do = "$d.$m.$y 23:59:59";
+
+        $count = Contract::find()
+            ->andFilterWhere(['>=', 'date_ct', strtotime($_date_to)])
+            ->andFilterWhere(['<=', 'date_ct', strtotime($_date_do)])
+            ->count();
+
+        return sprintf("%'03d\n", ++$count)."-$m/$_y";
+    }
 
     public function month(){
         return [

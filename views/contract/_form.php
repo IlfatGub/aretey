@@ -15,6 +15,7 @@ use yii\widgets\ActiveForm;
 /** @var yii\web\View $this */
 /** @var app\models\Contract $model */
 /** @var yii\widgets\ActiveForm $form */
+$model->getDogovorName();
 
 $id_patient = $_GET['id_patient'] ?? null;
 $id_patient_representative = $_GET['id_patient_representative'] ?? null;
@@ -38,7 +39,7 @@ $patient_list = ArrayHelper::map(Patient::find()->orderBy(['fullname' => SORT_AS
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
         <div class="col">
-            <?= $form->field($model, 'name')->textInput(['class' => 'form-control form-control-sm', 'value' => strtotime('now')]) ?>
+            <?= $form->field($model, 'name')->textInput(['class' => 'form-control form-control-sm', 'value' => $model->getDogovorName()]) ?>
         </div>
         <div class="col">
             <div class="row">
@@ -92,7 +93,7 @@ $patient_list = ArrayHelper::map(Patient::find()->orderBy(['fullname' => SORT_AS
         </div>
         <div class="col-8">
             <?php echo $form->field($model, 'service')->widget(Select2::classname(), [
-                'data' => ArrayHelper::map(Prices::find()->orderBy(['category' => SORT_ASC])->all(), 'id', 'service', 'category'),
+                'data' => ArrayHelper::map(Prices::find()->where(['is', 'deleted', new \yii\db\Expression('null')])->orderBy(['category' => SORT_ASC])->all(), 'id', 'service', 'category'),
                 'size' => 'sm',
                 'theme' => Select2::THEME_KRAJEE,
                 'options' => ['placeholder' => 'Услуги', 'multiple' => true, 'autocomplete' => 'off'],

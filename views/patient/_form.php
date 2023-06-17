@@ -45,20 +45,21 @@ $patronymic = $model->arrayFilter($patient, 'patronymic');
             <?= TypeheadWidget::widget(['form' => $form, 'model' => $model, 'field' => 'patronymic', 'local' => $patronymic, 'placeholder' => 'Отчество']) ?>
         </div>
         <div class="col">
-            <?= $form->field($model, 'phone')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'autocomplete' => 'off', 'placeholder' => 'Телефон'])->label() ?>
-        </div>
-        <div class="col">
             <?php
             // Usage with model and Active Form (with no default initial value)
             echo $form->field($model, 'brithday')->widget(DatePicker::classname(), [
-                'options' => ['placeholder' => 'Дата рождения', 'autocomplete' => 'off',],
+                'options' => ['placeholder' => 'Дата рождения', 'autocomplete' => 'off', 'class' => 'form-control form-control-sm',],
                 'size' => 'sm',
+                'type' => DatePicker::TYPE_INPUT,
                 'pluginOptions' => [
                     'autoclose' => true,
                     'format' => 'dd.mm.yyyy',
                 ],
             ])->label();
             ?>
+        </div>
+        <div class="col">
+            <?= $form->field($model, 'phone')->textInput(['maxlength' => true, 'class' => 'form-control form-control-sm', 'autocomplete' => 'off', 'placeholder' => 'Телефон'])->label() ?>
         </div>
     </div>
 

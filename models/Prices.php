@@ -66,7 +66,7 @@ class Prices extends ModelInterface
 
     public function getService()
     {
-        return $this->category . ' - ' . $this->name;
+        return $this->code.'. '.$this->category . ' - ' . $this->name . ' - ' . $this->price;
         // return $this->name;
     }
 
@@ -103,7 +103,7 @@ class Prices extends ModelInterface
                 'id' => $filed,
                 'data-id' => $this->id,
                 'data-old' => $val,
-                'class' => 'form-control form-control-sm inherit border-none price-input',
+                'class' => 'form-control form-control-sm inherit border-none price-input fs-8',
                 // 'onchange' => '$.post(" ' . Url::toRoute(['edit-field']) . '?id=' . $this->id . '&field=' . $filed . '&value=' . '"+encodeURIComponent($(this).val()));'
             ]
         );
