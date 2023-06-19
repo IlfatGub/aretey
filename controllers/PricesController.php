@@ -5,12 +5,12 @@ namespace app\controllers;
 use app\components\NotifyWidget;
 use app\models\Prices;
 use app\models\PricesSearch;
+use PHPExcel_IOFactory;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
 /**
  * PricesController implements the CRUD actions for Prices model.
  */
@@ -60,6 +60,18 @@ class PricesController extends Controller
             'searchModel' => $searchModel,
             'model' => $model,
         ]);
+    }
+
+    public function actionImport(){
+        $data = \moonland\phpexcel\Excel::import("upload/price.xlsx");
+        foreach($data as $item){
+            $n = new Prices();
+            $n->code = $item['code'];
+            $n->name = ucfirst(strtolower($item['name']));
+            $n->category = ucfirst(strtolower($item['category']));
+            $n->price = $item['price'];
+            $n->save();
+        }
     }
 
     /**

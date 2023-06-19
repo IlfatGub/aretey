@@ -109,7 +109,7 @@ class Patient extends ModelInterface
     }
 
     public function getContract(){
-        return Contract::find()->where(['id_patient' => $this->id])->all();
+        return Contract::find()->where(['id_patient' => $this->id])->orderBy(['date_ct' => SORT_DESC])->all();
     }
 
     public function getAge(){

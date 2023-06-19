@@ -28,7 +28,8 @@
         "kartik-v/yii2-field-range": "*",
         "kartik-v/yii2-widget-datetimepicker": "dev-master",
         "phpoffice/phpword": "^1.0",
-        "kartik-v/yii2-date-range": "dev-master"
+        "kartik-v/yii2-date-range": "dev-master",
+        "moonlandsoft/yii2-phpexcel": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
