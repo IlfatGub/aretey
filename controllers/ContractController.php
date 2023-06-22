@@ -137,26 +137,30 @@ class ContractController extends Controller
             ->all();
 
         $table->addRow();
-        $table->addCell(2100)->addText('Дата/ Срок исполнения', ['size' => 8, 'bold' =>true], $config);
-        $table->addCell(1700)->addText('№ по прейскуранту', ['size' => 8, 'bold' =>true], $config);
-        $table->addCell(5900)->addText('Наименование услуги', ['size' => 8, 'bold' =>true], $config);
+        $table->addCell(2000)->addText('Дата/ Срок исполнения', ['size' => 8, 'bold' =>true], $config);
+        $table->addCell(1000)->addText('№ по прейскуранту', ['size' => 8, 'bold' =>true], $config);
+        $table->addCell(6700)->addText('Наименование услуги', ['size' => 8, 'bold' =>true], $config);
         $table->addCell(800)->addText('Стоимость', ['size' => 8, 'bold' =>true], $config);
         foreach ($service_list as $item) {
             $table->addRow();
             $table->addCell()->addText($item->contract->date_to . '/' . $item->contract->date_do, ['size' => 8], $config);
             $table->addCell()->addText($item->prices->code, ['size' => 8], $config);
-            $table->addCell()->addText($item->prices->name, ['size' => 8], $config);
+            $table->addCell()->addText($item->prices->category.'. '.$item->prices->name, ['size' => 8], $config);
             $table->addCell()->addText($item->prices->price, ['size' => 8], $config);
         }
 
         $brith = $model->patient->brithday;
+        $brith_re = $model->representative->brithday;
         $brith = strtotime($brith);
+        $brith_re = strtotime($brith_re);
         $model->date_to = strtotime($model->date_to);
         $model->date_do = strtotime($model->date_do);
-        $_brith = '"' . date('d', $brith) . '" ' . $model->month_incline()[date('n', $brith)] . ' ' . date('Y', $brith) . 'г.';
-        $_date_to = '"' . date('d', $model->date_to) . '" ' . $model->month_incline()[date('n', $model->date_to)] . ' ' . date('Y', $model->date_to) . 'г.';
-        $_date_do = '"' . date('d', $model->date_do) . '" ' . $model->month_incline()[date('n', $model->date_do)] . ' ' . date('Y', $model->date_do) . 'г.';
-        $_date = '« ' . date('d') . ' »    ' . $model->month_incline()[date('n')] . '   ' . date('Y') . ' г.';
+        $model->date_ct = strtotime($model->date_ct);
+        $_brith_re = '"' . date('d', $brith_re) . '" ' . $model->month_incline()[date('n', $brith_re)] . ' ' . date('Y', $brith_re) . '';
+        $_brith = '"' . date('d', $brith) . '" ' . $model->month_incline()[date('n', $brith)] . ' ' . date('Y', $brith) . '';
+        $_date_to = '"' . date('d', $model->date_to) . '" ' . $model->month_incline()[date('n', $model->date_to)] . ' ' . date('Y', $model->date_to) . 'г';
+        $_date_do = '"' . date('d', $model->date_do) . '" ' . $model->month_incline()[date('n', $model->date_do)] . ' ' . date('Y', $model->date_do) . 'г';
+        $_date = '« ' . date('d', $model->date_ct) . ' »    ' . $model->month_incline()[date('n', $model->date_ct)] . '   ' . date('Y', $model->date_ct) . 'г';
 
         if (file_exists($_type_file[$type])){
             $templateWord = new TemplateProcessor($_type_file[$type]);
@@ -164,6 +168,7 @@ class ContractController extends Controller
             $templateWord->setValue('fullname', $model->patient->fullname);
             $templateWord->setValue('re_fullname', $model->representative ? $model->representative->fullname : '');
             $templateWord->setValue('brithday', $_brith);
+            $templateWord->setValue('brithday_re', $_brith_re);
             $templateWord->setValue('p_serial', $model->patient->passport_serial);
             $templateWord->setValue('p_number', $model->patient->passport_number);
             $templateWord->setValue('p_issued', $model->patient->passport_issued);
@@ -285,7 +290,7 @@ class ContractController extends Controller
 
         $this->findModel($id)->setVisible();
 
-        return $this->redirect(Yii::$app->request->referrer);
+        return $this->redirect('/contract/index');
     }
 
     /**

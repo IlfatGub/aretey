@@ -110,6 +110,19 @@ $patient_list = ArrayHelper::map(Patient::find()->orderBy(['fullname' => SORT_AS
 
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
+
+        <?php if (Yii::$app->controller->action->id == 'update') : ?>
+        <?=
+            Html::a('Удалить', ['delete', 'id' => $_GET['id']], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => 'Вы уверены, что хотите удалить этот элемент?',
+                    'method' => 'post',
+                    'autocomplete' => 'off',
+                ],
+            ])
+            ?>
+        <?php endif; ?>
     </div>
     <?php ActiveForm::end(); ?>
 </div>
