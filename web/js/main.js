@@ -40,54 +40,73 @@ function getUrl(controller, action, content_block, val, val2) {
 
 
 // ------------------------------ Отчет по пользователям -----------------------------------------
-const price_input = document.querySelectorAll('.price-input');
+// const price_input = document.querySelectorAll('.price-input');
 
-if (price_input) {
-    price_input.forEach(function (price) {
-        price.addEventListener('change', () => {
-            let price_id = price.getAttribute('data-id');
-            let field = price.id;
-            let text = price.value;
-            let old_data = price.getAttribute('data-old');
-            jQuery.ajax({
-                type: "GET",
-                url: "/prices/edit-field",
-                data: 'id=' + price_id + "&field=" + field + "&value=" + text,
-                beforeSend:function(){
-                    if(confirm("Вы точно хотите изменить данные?")){
-                        return true;
-                    }else{
-                        price.value = old_data;
-                        return false;
-                    }
-                },
-                success: function (data) {
-                    let r = JSON.parse(data);
-                        let div = document.createElement('div');
-                        div.className = "notify";
-                        div.innerHTML = r.message;
-                      
-                        document.body.append(div);
-                        setTimeout(() => div.remove(), 3000);
-                },
-            });
+
+document.body.addEventListener("change", function(event){
+    if (event.target.classList.contains('price-input')){
+        let price = event.target;
+        let price_id = price.getAttribute('data-id');
+        let field = price.id;
+        let text = price.value;
+        let old_data = price.getAttribute('data-old');
+        jQuery.ajax({
+            type: "GET",
+            url: "/prices/edit-field",
+            data: 'id=' + price_id + "&field=" + field + "&value=" + text,
+            beforeSend:function(){
+                if(confirm("Вы точно хотите изменить данные?")){
+                    return true;
+                }else{
+                    price.value = old_data;
+                    return false;
+                }
+            },
+            success: function (data) {
+                let r = JSON.parse(data);
+                    let div = document.createElement('div');
+                    div.className = "notify";
+                    div.innerHTML = r.message;
+                  
+                    document.body.append(div);
+                    setTimeout(() => div.remove(), 3000);
+            },
         });
-    })
+    }
+});
 
-
-    // let dp = document.querySelector('#userapp-report-datepicker-kvdate');
-    // let select = document.querySelector('#userapp-report-select');
-
-    // setFilter('userapp-report-datepicker-kvdate', '#userapp-report-select', userapp_report_btn); //устанавливаем значения фильтра
-
-    // userapp_report_btn.addEventListener('click', function(){
-    //     let user_id = getOptionsValue(select); //получаем данные из выпадающего списка
-
-    //     getReportRemark('report', 'get-user-app', '#userapp-remark-content', dp.firstElementChild.value, dp.lastElementChild.value, JSON.stringify(user_id));
-
-    // });
-
-}
+// if (price_input) {
+//     price_input.forEach(function (price) {
+//         price.addEventListener('change', () => {
+//             let price_id = price.getAttribute('data-id');
+//             let field = price.id;
+//             let text = price.value;
+//             let old_data = price.getAttribute('data-old');
+//             jQuery.ajax({
+//                 type: "GET",
+//                 url: "/prices/edit-field",
+//                 data: 'id=' + price_id + "&field=" + field + "&value=" + text,
+//                 beforeSend:function(){
+//                     if(confirm("Вы точно хотите изменить данные?")){
+//                         return true;
+//                     }else{
+//                         price.value = old_data;
+//                         return false;
+//                     }
+//                 },
+//                 success: function (data) {
+//                     let r = JSON.parse(data);
+//                         let div = document.createElement('div');
+//                         div.className = "notify";
+//                         div.innerHTML = r.message;
+                      
+//                         document.body.append(div);
+//                         setTimeout(() => div.remove(), 3000);
+//                 },
+//             });
+//         });
+//     })
+// }
 
 // $(document).ready( //Выполнить, когда дерево элементов готово (jQuery)
 //     function(){
