@@ -58,9 +58,11 @@ class ContractController extends Controller
                     $service->id_contract = $model->id;
                     $service->addService();
                     $model->summ = $service->_summ ?? 0;
+                    $model->date_to = date('Y-m-d',$model->date_to);
+                    $model->date_do = date('Y-m-d',$model->date_do);
                     $model->getSave();
-                    return $this->redirect('index');
                 }
+                return $this->redirect('index');
             } catch (\Exception $ex) {
                 $model->setErrorFlash('danger', $ex->getMessage());
             }
@@ -252,6 +254,8 @@ class ContractController extends Controller
                     $service->id_contract = $model->id;
                     $service->addService();
                     $model->summ = $service->_summ ?? 0;
+                    $model->date_to = date('Y-m-d',$model->date_to);
+                    $model->date_do = date('Y-m-d',$model->date_do);
                     $model->getSave();
                 }
             } catch (\Exception $ex) {
@@ -278,7 +282,6 @@ class ContractController extends Controller
             foreach($service as $_s){
                 $_summ += $_s->price;
             }
-
             $cont = Contract::findOne($item->id);
             $cont->summ = $_summ;
             $cont->date_ct = strtotime($cont->date_to);

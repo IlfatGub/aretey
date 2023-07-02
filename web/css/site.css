@@ -134,6 +134,12 @@ a.desc:after {
     background: powderblue;
     cursor: pointer;
 }
+.pagination >.active {
+    background: #007BFF !important;
+}
+.pagination >.active >a {
+    color: white !important;
+}
 .notify {
     max-width: 650px;
     bottom: 10px;
