@@ -28,7 +28,7 @@ class ContractSerach extends Contract
     {
         return [
             [['id', 'id_patient', 'id_patient_representative', 'date_to', 'date_do', 'date_ct', 'deleted'], 'safe'],
-            [['name', 'date_ct_to', 'date_ct_do'], 'safe'],
+            [['name', 'date_ct_to', 'date_ct_do', 'summ'], 'safe'],
             [['patient_patronymic', 'patient_role', 'patient_surname', 'patient_brithday', 'patient_name', 'patient_name','patient_fullname','date_range','patient_id'], 'safe'],
         ];
     }
@@ -114,6 +114,7 @@ class ContractSerach extends Contract
         $query->andFilterWhere(['like', Patient::tableName().'.id', $this->patient_id]);
         $query->andFilterWhere(['like', Patient::tableName().'.patronymic', $this->patient_patronymic]);
         $query->andFilterWhere(['like', 'contract.name', $this->name]);
+        $query->andFilterWhere(['like', 'contract.summ', $this->summ]);
 
         if ($this->patient_brithday)
             $query->andFilterWhere(['>=', Patient::tableName().'.brithday', strtotime($this->patient_brithday . '00:00:00')])
