@@ -151,6 +151,7 @@ $ajax = $_GET['ajax'] ?? null;
             'filterInputOptions' => ['class' => 'form-control form-control-sm'],
         ],
         [
+            'label' => 'Сумма',
             'attribute'=>'summ',
             'filterInputOptions' => ['class' => 'form-control form-control-sm'],
             'content'=>function($data){
