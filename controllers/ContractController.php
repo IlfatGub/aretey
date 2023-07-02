@@ -281,6 +281,7 @@ class ContractController extends Controller
 
             $cont = Contract::findOne($item->id);
             $cont->summ = $_summ;
+            $cont->date_ct = strtotime($cont->date_to);
             $cont->save();
         }
     }
