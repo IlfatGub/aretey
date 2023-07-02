@@ -113,6 +113,17 @@ class Contract extends ModelInterface
         return sprintf("%'03d\n", ++$count)."-$m/$_y";
     }
 
+    public function getSumm(){
+        if(ContractService::find()->select('price')->where(['id_contract' => $this->id])->exists()){
+            return ContractService::find()
+                ->select('price')
+                ->where(['id_contract' => $this->id])
+                ->andFilterWhere(['is', 'deleted', new \yii\db\Expression('null')])
+                ->sum('price');
+        }
+        echo 0;
+    }
+
     public function month(){
         return [
             1 => 'Январь',

@@ -150,6 +150,13 @@ $ajax = $_GET['ajax'] ?? null;
             'attribute'=>'date_do',
             'filterInputOptions' => ['class' => 'form-control form-control-sm'],
         ],
+        [
+            'attribute'=>'summ',
+            'filterInputOptions' => ['class' => 'form-control form-control-sm'],
+            'content'=>function($data){
+                return $data->getSumm();
+            },
+        ],
         // [
         //     'attribute'=>'date_ct',
         //     'filterInputOptions' => ['class' => 'form-control form-control-sm'],
