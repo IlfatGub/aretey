@@ -57,6 +57,8 @@ class ContractController extends Controller
                     $service->service_list = $model->service;
                     $service->id_contract = $model->id;
                     $service->addService();
+                    $model->summ = $service->_summ ?? 0;
+                    $model->getSave();
                     return $this->redirect('index');
                 }
             } catch (\Exception $ex) {
@@ -249,6 +251,8 @@ class ContractController extends Controller
                     $service->service_list = $model->service;
                     $service->id_contract = $model->id;
                     $service->addService();
+                    $model->summ = $service->_summ ?? 0;
+                    $model->getSave();
                 }
             } catch (\Exception $ex) {
                 echo '<pre>';

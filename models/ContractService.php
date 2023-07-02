@@ -17,6 +17,7 @@ use yii\helpers\ArrayHelper;
 class ContractService extends ModelInterface
 {
     public $service_list;
+    public $_summ;
 
     /**
      * {@inheritdoc}
@@ -64,9 +65,11 @@ class ContractService extends ModelInterface
 	}
     public function addService()
     {
+        $this->_summ = 0;
         $this->deleteServiceForContract();
         foreach ($this->service_list as $items) {
             try {
+                $this->_summ += Prices::findOne($items)->price;
                 $_service = new ContractService();
                 $_service->id_contract = $this->id_contract;
                 $_service->id_service = $items;

@@ -15,6 +15,7 @@ use Yii;
  * @property int|null $date_do Дата окончания
  * @property int $date_ct Дата
  * @property int $name Наименование договора
+ * @property int $summ Сумма по договору
  * @property int|null $visible Видимость
  * @property int|null $service Услуга
  */
@@ -38,7 +39,7 @@ class Contract extends ModelInterface
     {
         return [
             [['id_patient', 'date_ct', 'name'], 'required'],
-            [['id_patient', 'id_patient_representative', 'deleted'], 'integer'],
+            [['id_patient', 'id_patient_representative', 'deleted', 'summ'], 'integer'],
             [['date_to', 'date_do', 'service', 'date_ct', 'date_range'], 'safe'],
             [['name',], 'string'],
         ];
@@ -59,6 +60,7 @@ class Contract extends ModelInterface
             'name' => 'Договора №',
             'deleted' => 'Видмость',
             'service' => 'Услуга',
+            'summ' => 'Сумма',
         ];
     }
 
@@ -114,14 +116,15 @@ class Contract extends ModelInterface
     }
 
     public function getSumm(){
-        if(ContractService::find()->select('price')->where(['id_contract' => $this->id])->exists()){
-            return ContractService::find()
-                ->select('price')
-                ->where(['id_contract' => $this->id])
-                ->andFilterWhere(['is', 'deleted', new \yii\db\Expression('null')])
-                ->sum('price');
-        }
-        echo 0;
+        if(!$this->summ)
+            if(ContractService::find()->select('price')->where(['id_contract' => $this->id])->exists()){
+                return ContractService::find()
+                    ->select('price')
+                    ->where(['id_contract' => $this->id])
+                    ->andFilterWhere(['is', 'deleted', new \yii\db\Expression('null')])
+                    ->sum('price');
+            }
+        return $this->summ ?? 0;
     }
 
     public function month(){

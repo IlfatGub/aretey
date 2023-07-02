@@ -19,6 +19,7 @@ class m230505_164358_create_contract_table extends Migration
             'date_to' => $this->integer()->null()->defaultValue(null)->comment('Дата начала'),
             'date_do' => $this->integer()->null()->defaultValue(null)->comment('Дата окончания'),
             'date_ct' => $this->integer()->notNull()->comment('Дата'),
+            'summ' => $this->integer()->notNull()->comment('Сумма по договору'),
             'name' => $this->string(255)->notNull()->comment('Наименование договора'),
             'deleted' => $this->smallInteger()->null()->defaultValue(null)->comment('Видимость'),
         ]);
