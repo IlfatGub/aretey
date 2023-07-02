@@ -268,6 +268,22 @@ class ContractController extends Controller
         ]);
     }
 
+    public function actionDogovorPrice(){
+        $model = new Contract();
+        $list = $model::find()->all();
+
+        foreach($list as $item){
+            $_summ = 0;
+            $service = ContractService::find()->where(['id_contract' => $item->id])->andWhere(['is', 'deleted', new \yii\db\Expression('null')])->all();
+            foreach($service as $_s){
+                $_summ += $_s->price;
+            }
+
+            $cont = Contract::findOne($item->id);
+            $cont->summ = $_summ;
+            $cont->save();
+        }
+    }
 
     public function actionDogovorName(){
         $model = new Contract();
